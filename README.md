@@ -17,6 +17,7 @@ $ dotnet retire
 ```
 
 ### Sample output:
+![image](https://cloud.githubusercontent.com/assets/206726/26074074/d5bc2ee4-39b0-11e7-9018-08dd305b96a9.png)
 
-```
-
+# How does it work?
+It fetches the packages listed in the corresponding `packages` repo in this GitHub organization ([link](https://github.com/RetireNet/Packages/blob/master/Content/1.json)), and checks your projects `obj\project.assets.json` file for any match (direct, or transient). Keeping the list of packages up to date will be done via updating that repo when announcements occur from Microsoft with additional json files with links to announcements from Microsofts security team.
