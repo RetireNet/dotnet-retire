@@ -22,5 +22,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
+    <DotNetCliToolReference Include="dotnet-retire" Version="1.0.0-*" />
   </ItemGroup>
 </Project>
