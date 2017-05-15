@@ -17,6 +17,4 @@ $ dotnet retire
 ```
 
 ### Sample output:
-
-```
-
+![image](https://cloud.githubusercontent.com/assets/206726/26074074/d5bc2ee4-39b0-11e7-9018-08dd305b96a9.png)
