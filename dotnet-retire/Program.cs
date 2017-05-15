@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace dotnet_retire
@@ -9,24 +8,11 @@ namespace dotnet_retire
         
         static void Main(string[] args)
         {
-            var url = "https://raw.githubusercontent.com/RetireNet/Packages/master/index.json";
-            var retireJsonUrl = new Uri(url);
-            var start = HttpService.Get<Start>(retireJsonUrl);
-
-            var packagesToRetire = new List<Package>();
-            Console.WriteLine($"Fetching known vulnerable packages from {url}".Blue());
-            foreach (var link in start.Links)
-            {
-                var packagesResponse = HttpService.Get<PackagesResponse>(link);
-                foreach (var p in packagesResponse.Packages)
-                {
-                    Console.WriteLine($"Checking for {p.Id}/{p.Affected}".Orange());
-                }
-                packagesToRetire.AddRange(packagesResponse.Packages);
-            }
+            var packagesToRetire = RetireService.GetPackagesToRetire();
 
             var jObject = FileService.GetProjectAssetsJsonObject();
             var nugetReferences = NugetReferenceService.GetNugetReferences(jObject);
+
             Console.WriteLine($"Found in total {nugetReferences.Count()} references of NuGets (direct & transient)");
 
             var usages = UsagesFinder.FindUsagesOf(nugetReferences, packagesToRetire);
