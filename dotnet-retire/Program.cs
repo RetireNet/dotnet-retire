@@ -14,6 +14,7 @@ namespace dotnet_retire
             {
                 Console.WriteLine($"Looking for {p.Id}/{p.Affected}".Orange());
             }
+
             var nugetReferences = NugetReferenceService.GetNugetReferences();
             Console.WriteLine($"Found in total {nugetReferences.Count()} references of NuGets (direct & transient)");
 
