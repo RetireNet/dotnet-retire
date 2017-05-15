@@ -6,10 +6,11 @@ namespace dotnet_retire
 {
     public class NugetReferenceService
     {
-        public static IEnumerable<NugetReference> GetNugetReferences(JObject jObject)
+        public static IEnumerable<NugetReference> GetNugetReferences(JObject test = null)
         {
-            var assets = new List<NugetReference>();
+            var jObject = test ?? FileService.GetProjectAssetsJsonObject();
             var targets = jObject.Property("targets").Value as JObject;
+            var assets = new List<NugetReference>();
 
             foreach (var x in targets)
             {

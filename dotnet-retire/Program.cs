@@ -5,14 +5,16 @@ namespace dotnet_retire
 {
     public class Program
     {
-        
         static void Main(string[] args)
         {
-            var packagesToRetire = RetireService.GetPackagesToRetire();
-
-            var jObject = FileService.GetProjectAssetsJsonObject();
-            var nugetReferences = NugetReferenceService.GetNugetReferences(jObject);
-
+            var rootApiUrl = "https://raw.githubusercontent.com/RetireNet/Packages/master/index.json";
+            Console.WriteLine($"Fetching known vulnerable packages from {rootApiUrl}".Blue());
+            var packagesToRetire = RetireService.GetPackagesToRetire(rootApiUrl);
+            foreach (var p in packagesToRetire)
+            {
+                Console.WriteLine($"Looking for {p.Id}/{p.Affected}".Orange());
+            }
+            var nugetReferences = NugetReferenceService.GetNugetReferences();
             Console.WriteLine($"Found in total {nugetReferences.Count()} references of NuGets (direct & transient)");
 
             var usages = UsagesFinder.FindUsagesOf(nugetReferences, packagesToRetire);
