@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp1.0</TargetFramework>
+    <PackageId>dotnet-retire</PackageId>
+    <PackageVersion>1.0.1</PackageVersion>
+    <Authors>John Korsnes</Authors>
+    <Description>
+        A tool to check dependencies for known vulnerabilities.
+    </Description>
+    <Copyright>John Korsnes</Copyright>
+    <PackageTags>dotnet cli tool vulnerable scanning</PackageTags>
+    <PackageType>DotnetCliTool</PackageType>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/retirenet</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/retirenet</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/retirenet</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>
+     * Microsoft Security Advisory 4021279: Vulnerabilities in .NET Core, ASP.NET Core Could Allow Elevation of Privilege
+     * https://github.com/dotnet/announcements/issues/12
+    </PackageReleaseNotes>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="NewtonSoft.Json" Version="10.0.2" />
+  </ItemGroup>
+</Project>
