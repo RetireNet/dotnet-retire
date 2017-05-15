@@ -11,7 +11,6 @@ namespace dotnet_retire
             var start = HttpService.Get<Start>(retireJsonUrl);
 
             var packagesToRetire = new List<Package>();
-            Console.WriteLine($"Fetching known vulnerable packages from {rootUrl}".Blue());
             foreach (var link in start.Links)
             {
                 var packagesResponse = HttpService.Get<PackagesResponse>(link);
