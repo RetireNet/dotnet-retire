@@ -3,7 +3,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp1.0</TargetFramework>
     <PackageId>dotnet-retire</PackageId>
-    <PackageVersion>1.0.0-beta001</PackageVersion>
+    <PackageVersion>1.0.0-beta002</PackageVersion>
     <Authors>John Korsnes</Authors>
     <Description>
         A tool to check dependencies for versions with known vulnerabilities.
@@ -13,11 +13,10 @@
     <PackageType>DotnetCliTool</PackageType>
     <PackageProjectUrl>https://github.com/RetireNet/dotnet-retire</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/RetireNet/dotnet-retire/master/LICENSE</PackageLicenseUrl>
-    <RepositoryUrl>https://github.com/retirenet</RepositoryUrl>
+    <RepositoryUrl>https://github.com/RetireNet/dotnet-retire</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReleaseNotes>
-     * Fetching list of vulnerable packages from json API hosted at GitHub.
-     * https://raw.githubusercontent.com/RetireNet/Packages/master/index.json
+     * Fetching list of vulnerable packages from json API hosted at GitHub. (https://raw.githubusercontent.com/RetireNet/Packages/master/index.json)
     </PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
