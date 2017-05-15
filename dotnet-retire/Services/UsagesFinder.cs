@@ -5,7 +5,7 @@ namespace dotnet_retire
 {
     public static class UsagesFinder
     {
-        public static IEnumerable<Usage> FindUsagesOf(IEnumerable<Asset> assets, IEnumerable<Package> knownVulnerables)
+        public static IEnumerable<Usage> FindUsagesOf(IEnumerable<NugetReference> assets, IEnumerable<Package> knownVulnerables)
         {
             var usages = new List<Usage>();
 
@@ -17,7 +17,7 @@ namespace dotnet_retire
                 {
                     usages.Add(new Usage
                     {
-                        Asset = asset,
+                        NugetReference = asset,
                         Package = directPackage
                     });
                 }
@@ -29,8 +29,8 @@ namespace dotnet_retire
                     {
                         usages.Add(new TransientUsage
                         {
-                            ParentAsset = asset,
-                            Asset = transientAsset,
+                            ParentNugetReference = asset,
+                            NugetReference = transientAsset,
                             Package = transientPackage
                         });
                     }

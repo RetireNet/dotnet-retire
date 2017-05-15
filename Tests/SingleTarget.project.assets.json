@@ -1,0 +1,13 @@
+﻿{
+  "version": 2,
+  "targets": {
+    ".NETCoreApp,Version=v1.0": {
+      "Libuv/1.9.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "1.0.1"
+        }
+      }
+    }
+  }
+}

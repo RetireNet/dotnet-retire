@@ -1,17 +1,16 @@
 using System;
 using System.IO;
 using System.Linq;
-using dotnet_retire;
+using Newtonsoft.Json.Linq;
 
 namespace dotnet_retire
 {
     public static class FileService
     {
-        public static string GetAssetsFile()
+        public static JObject GetProjectAssetsJsonObject()
         {
             var currentDirectory = Directory.GetCurrentDirectory() + "\\obj\\";
-            var assetsFile = Directory.EnumerateFiles(currentDirectory, "project.assets.json", SearchOption.TopDirectoryOnly)
-                .FirstOrDefault();
+            var assetsFile = Directory.EnumerateFiles(currentDirectory, "project.assets.json", SearchOption.TopDirectoryOnly).FirstOrDefault();
 
 
             if (assetsFile == null)
@@ -24,7 +23,8 @@ namespace dotnet_retire
                 Console.WriteLine($"Found assets file: {assetsFile}".Green());
             }
             
-            return File.ReadAllText(assetsFile);
+            var fileContents = File.ReadAllText(assetsFile);
+            return JObject.Parse(fileContents);
         }
     }
 }

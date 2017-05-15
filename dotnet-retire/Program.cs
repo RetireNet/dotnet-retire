@@ -13,7 +13,7 @@ namespace dotnet_retire
             var retireJsonUrl = new Uri(url);
             var start = HttpService.Get<Start>(retireJsonUrl);
 
-            var allPackages = new List<Package>();
+            var packagesToRetire = new List<Package>();
             Console.WriteLine($"Fetching known vulnerable packages from {url}".Blue());
             foreach (var link in start.Links)
             {
@@ -22,13 +22,14 @@ namespace dotnet_retire
                 {
                     Console.WriteLine($"Checking for {p.Id}/{p.Affected}".Orange());
                 }
-                allPackages.AddRange(packagesResponse.Packages);
+                packagesToRetire.AddRange(packagesResponse.Packages);
             }
 
-            var projectAssets = AssetsService.GetAssets();
-            Console.WriteLine($"Found {projectAssets.Assets.Count} assets");
+            var jObject = FileService.GetProjectAssetsJsonObject();
+            var nugetReferences = NugetReferenceService.GetNugetReferences(jObject);
+            Console.WriteLine($"Found in total {nugetReferences.Count()} references of NuGets (direct & transient)");
 
-            var usages = UsagesFinder.FindUsagesOf(projectAssets.Assets, allPackages);
+            var usages = UsagesFinder.FindUsagesOf(nugetReferences, packagesToRetire);
 
             if (usages.Any())
             {
@@ -37,13 +38,12 @@ namespace dotnet_retire
                     if (usage is TransientUsage)
                     {
                         var tUsage = usage as TransientUsage;
-                        Console.WriteLine($"Found transient usage of {usage.Asset} via {tUsage.ParentAsset}".Red());
+                        Console.WriteLine($"Found transient reference of {usage.NugetReference} via {tUsage.ParentNugetReference}".Red());
                     }
                     else
                     {
-                        Console.WriteLine($"Found direct usage of {usage.Asset}".Red());
+                        Console.WriteLine($"Found direct reference to {usage.NugetReference}".Red());
                     }
-
                 }
             }
             else

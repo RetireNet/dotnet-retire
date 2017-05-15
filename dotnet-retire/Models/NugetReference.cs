@@ -2,16 +2,16 @@
 
 namespace dotnet_retire
 {
-    public class Asset
+    public class NugetReference
     {
-        public Asset()
+        public NugetReference()
         {
-            Dependencies = new List<Asset>();
+            Dependencies = new List<NugetReference>();
         }
         public string Id { get; set; }
         public string Version { get; set; }
 
-        public List<Asset> Dependencies { get; set; }
+        public List<NugetReference> Dependencies { get; set; }
 
         public override string ToString()
         {

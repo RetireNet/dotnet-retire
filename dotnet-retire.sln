@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.4
+VisualStudioVersion = 15.0.26403.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnet-retire", "dotnet-retire\dotnet-retire.csproj", "{8571DB94-0361-414B-AEF3-95B43A8049E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{D8B60967-7764-41B7-BA96-3B70E77D953A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{8571DB94-0361-414B-AEF3-95B43A8049E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8571DB94-0361-414B-AEF3-95B43A8049E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8571DB94-0361-414B-AEF3-95B43A8049E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8B60967-7764-41B7-BA96-3B70E77D953A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8B60967-7764-41B7-BA96-3B70E77D953A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8B60967-7764-41B7-BA96-3B70E77D953A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8B60967-7764-41B7-BA96-3B70E77D953A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
