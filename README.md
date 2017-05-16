@@ -1,5 +1,5 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/6y4yrtkhofgcswqt?svg=true)](https://ci.appveyor.com/project/JohnKorsnes/dotnet-retire)
-[![NuGet](https://img.shields.io/nuget/dt/dotnet-retire.svg)]()
+[![Build status](https://ci.appveyor.com/api/projects/status/6y4yrtkhofgcswqt?svg=true)](https://ci.appveyor.com/project/JohnKorsnes/dotnet-retire) [![NuGet](https://img.shields.io/nuget/v/dotnet-retire.svg)](https://www.nuget.org/packages/dotnet-retire/)
+[![NuGet](https://img.shields.io/nuget/dt/dotnet-retire.svg)](https://www.nuget.org/packages/dotnet-retire/)
 ## dotnet-retire
 A `dotnet` CLI extension to check your project for known vulnerabilities.
 
