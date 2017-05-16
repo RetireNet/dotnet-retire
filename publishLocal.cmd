@@ -1,1 +1,1 @@
-dotnet pack  -o "C:\nugetfeed"
+dotnet pack dotnet-retire  -o "C:\nugetfeed"

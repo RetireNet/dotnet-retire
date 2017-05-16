@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace dotnet_retire
@@ -15,7 +16,19 @@ namespace dotnet_retire
                 Console.WriteLine($"Looking for {p.Id}/{p.Affected}".Orange());
             }
 
-            var nugetReferences = NugetReferenceService.GetNugetReferences();
+            IEnumerable<NugetReference> nugetReferences = new List<NugetReference>();
+            new List<NugetReference>();
+            try
+            {
+                 nugetReferences = NugetReferenceService.GetNugetReferences();
+            }
+            catch (NoAssetsFoundException)
+            {
+                Console.WriteLine($"No assets found. Could not check dependencies. Missing 'dotnet restore'?");
+                Environment.Exit(0);
+                return;
+            }
+
             Console.WriteLine($"Found in total {nugetReferences.Count()} references of NuGets (direct & transient)");
 
             var usages = UsagesFinder.FindUsagesOf(nugetReferences, packagesToRetire);
