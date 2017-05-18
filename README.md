@@ -29,3 +29,9 @@ $ dotnet retire
 It fetches the packages listed in the corresponding `packages` repo in this GitHub organization ([link](https://github.com/RetireNet/Packages/blob/master/Content/1.json)), and checks your projects `obj\project.assets.json` or `project.lock.json`  file for any match (direct, or transient). 
 
 Keeping the list of packages up to date will be done via updating that repo when announcements occur from Microsoft with additional json files with links to announcements from Microsofts security team.
+
+## Other projects with similar functionality:
+### [SafeNuGet](https://github.com/owasp/safenuget)
+Runs as part of the build (MSBuild target). Analyzes packages.config, does not handle transient dependencies.
+### [DevAudit](https://github.com/OSSIndex/DevAudit) 
+Standalone .NET console app that analyzes a packages.config. Analyzes packages.config, does not handle transient dependencies.
