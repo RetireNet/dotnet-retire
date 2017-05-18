@@ -14,6 +14,7 @@
     <PackageProjectUrl>https://github.com/RetireNet/dotnet-retire</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/RetireNet/dotnet-retire/master/LICENSE</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/RetireNet/dotnet-retire</RepositoryUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/RetireNet/images/master/nuget/dotnet-retire/icon.512x512.png</PackageIconUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReleaseNotes>
      * Added support for project.json (preview tooling and project system)
