@@ -1,1 +1,1 @@
-dotnet pack dotnet-retire -o .\deploy
+dotnet pack dotnet-retire -o .\deploy -c Release
