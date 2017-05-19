@@ -10,19 +10,22 @@ namespace dotnet_retire
         public static JObject GetProjectAssetsJsonObject()
         {
             var currentDirectory = Directory.GetCurrentDirectory();
+            var objDirectory = Path.Combine(currentDirectory, "obj");
             string assetsFile = null;
             try
             {
-                assetsFile = Directory.EnumerateFiles(currentDirectory, "\\obj\\project.assets.json", SearchOption.TopDirectoryOnly).FirstOrDefault();
+                
+                assetsFile = Directory.EnumerateFiles(objDirectory, "project.assets.json", SearchOption.TopDirectoryOnly).FirstOrDefault();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Console.WriteLine($"Could not find assets file. Looking for project.lock.json instead".Orange());
+                Console.WriteLine($"Could not find project.assets.json file at '{objDirectory}'. Looking for project.lock.json instead".Orange());
+                Console.WriteLine(e);
             }
 
             if (assetsFile != null)
             {
-                Console.WriteLine($"Found assets file: {assetsFile}".Green());
+                Console.WriteLine($"Found project.assets.json file at '{assetsFile}'".Green());
                 var fileContents = File.ReadAllText(assetsFile);
                 return JObject.Parse(fileContents);
             }
@@ -33,14 +36,19 @@ namespace dotnet_retire
 
                 if (assetsFile != null)
                 {
-                    Console.WriteLine($"Found assets file: {assetsFile}".Green());
+                    Console.WriteLine($"Found project.lock.json file at '{assetsFile}'".Green());
                     var fileContents = File.ReadAllText(assetsFile);
                     return JObject.Parse(fileContents);
                 }
+                else
+                {
+                    Console.WriteLine($"Could not find project.lock.json file in  '{currentDirectory}'".Orange());
+                }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
+                Console.WriteLine($"Could not find project.lock.json file in  '{currentDirectory}'".Orange());
+                Console.WriteLine(e);
             }
 
             throw new NoAssetsFoundException();
