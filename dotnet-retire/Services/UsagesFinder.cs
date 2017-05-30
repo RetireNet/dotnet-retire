@@ -3,9 +3,9 @@ using System.Linq;
 
 namespace dotnet_retire
 {
-    public static class UsagesFinder
+    public class UsagesFinder
     {
-        public static IEnumerable<Usage> FindUsagesOf(IEnumerable<NugetReference> assets, IEnumerable<Package> knownVulnerables)
+        public IEnumerable<Usage> FindUsagesOf(IEnumerable<NugetReference> assets, IEnumerable<Package> knownVulnerables)
         {
             var usages = new List<Usage>();
 

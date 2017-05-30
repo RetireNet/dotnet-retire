@@ -2,9 +2,14 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace dotnet_retire
 {
+    public static class ConfigurationExtensions
+    {
+    }
+
     public class Program
     {
         public static void Main(string[] args)
@@ -17,12 +22,17 @@ namespace dotnet_retire
             var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
             Configuration = builder.Build();
 
-            var rootUrl = Configuration.GetValue<string>("RetireServiceOptions:RootUrl");
+            var options = new RetireServiceOptions();
+            Configuration.GetSection("RetireServiceOptions").Bind(options);
+            
             Services = new ServiceCollection()
                 .AddLogging()
                 .AddOptions()
-                .Configure<RetireServiceOptions>(o => o.RootUrl = rootUrl)
+                .Configure<RetireServiceOptions>(o => o.RootUrl = options.RootUrl)
                 .AddSingleton<RetireApiClient>()
+                .AddSingleton<FileService>()
+                .AddSingleton<NugetReferenceService>()
+                .AddSingleton<UsagesFinder>()
                 .AddSingleton<RetireLogger>()
                 .BuildServiceProvider();
 

@@ -6,9 +6,16 @@ namespace dotnet_retire
 {
     public class NugetReferenceService
     {
-        public static IEnumerable<NugetReference> GetNugetReferences(JObject test = null)
+        private readonly FileService _fileService;
+
+        public NugetReferenceService(FileService fileService)
         {
-            var jObject = test ?? FileService.GetProjectAssetsJsonObject();
+            _fileService = fileService;
+        }
+
+        public IEnumerable<NugetReference> GetNugetReferences(JObject test = null)
+        {
+            var jObject = test ?? _fileService.GetProjectAssetsJsonObject();
             var targets = jObject.Property("targets").Value as JObject;
             var assets = new List<NugetReference>();
 
