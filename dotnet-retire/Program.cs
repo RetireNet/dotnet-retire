@@ -1,57 +1,46 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace dotnet_retire
 {
     public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            var rootApiUrl = "https://raw.githubusercontent.com/RetireNet/Packages/master/index.json";
-            Console.WriteLine($"Fetching known vulnerable packages from {rootApiUrl}".Blue());
-            var packagesToRetire = RetireService.GetPackagesToRetire(rootApiUrl);
-            foreach (var p in packagesToRetire)
-            {
-                Console.WriteLine($"Looking for {p.Id}/{p.Affected}".Orange());
-            }
+            new Program().Execute(args);
+        }
 
-            IEnumerable<NugetReference> nugetReferences = new List<NugetReference>();
-            new List<NugetReference>();
-            try
-            {
-                 nugetReferences = NugetReferenceService.GetNugetReferences();
-            }
-            catch (NoAssetsFoundException)
-            {
-                Console.WriteLine($"No assets found. Could not check dependencies. Missing 'dotnet restore'?");
-                Environment.Exit(0);
-                return;
-            }
+        public Program()
+        {
+            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
+            Configuration = builder.Build();
 
-            Console.WriteLine($"Found in total {nugetReferences.Count()} references of NuGets (direct & transient)");
+            var rootUrl = Configuration.GetValue<string>("RetireServiceOptions:RootUrl");
+            Services = new ServiceCollection()
+                .AddLogging()
+                .AddOptions()
+                .Configure<RetireServiceOptions>(o => o.RootUrl = rootUrl)
+                .AddSingleton<RetireApiClient>()
+                .AddSingleton<RetireLogger>()
+                .BuildServiceProvider();
 
-            var usages = UsagesFinder.FindUsagesOf(nugetReferences, packagesToRetire);
 
-            if (usages.Any())
-            {
-                foreach (var usage in usages)
-                {
-                    if (usage is TransientUsage)
-                    {
-                        var tUsage = usage as TransientUsage;
-                        Console.WriteLine($"Found transient reference of {usage.NugetReference} via {tUsage.ParentNugetReference}".Red());
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Found direct reference to {usage.NugetReference}".Red());
-                    }
-                }
-            }
-            else
-            {
-                Console.WriteLine($"Found no usages of vulnerable libs!".Green());
-            }
+            Services
+                .GetService<ILoggerFactory>()
+                .AddConsole(LogLevel.Debug);
+
+        }
+
+        public IServiceProvider Services { get; set; }
+
+        public IConfigurationRoot Configuration { get; set; }
+
+        public void Execute(string[] args)
+        {
+            var retireLogger = Services.GetService<RetireLogger>();
+            retireLogger.LogPackagesToRetire();
         }
     }
 }
