@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 
 namespace dotnet_retire
 {
-    public class FileService
+    public class FileService : IFileService
     {
         private readonly ILogger<FileService> _logger;
 
@@ -15,7 +15,7 @@ namespace dotnet_retire
             _logger = loggerFactory.CreateLogger<FileService>();
         }
 
-        public JObject GetProjectAssetsJsonObject()
+        public string GetFileContents()
         {
             var currentDirectory = Directory.GetCurrentDirectory();
             var objDirectory = Path.Combine(currentDirectory, "obj");
@@ -34,8 +34,7 @@ namespace dotnet_retire
             if (assetsFile != null)
             {
                 _logger.LogInformation($"Found project.assets.json file at '{assetsFile}'".Green());
-                var fileContents = File.ReadAllText(assetsFile);
-                return JObject.Parse(fileContents);
+                return File.ReadAllText(assetsFile);
             }
 
             try
@@ -45,8 +44,7 @@ namespace dotnet_retire
                 if (assetsFile != null)
                 {
                     _logger.LogInformation($"Found project.lock.json file at '{assetsFile}'".Green());
-                    var fileContents = File.ReadAllText(assetsFile);
-                    return JObject.Parse(fileContents);
+                    return File.ReadAllText(assetsFile);
                 }
                 else
                 {
