@@ -3,7 +3,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp1.0</TargetFramework>
     <PackageId>dotnet-retire</PackageId>
-    <PackageVersion>1.0.2</PackageVersion>
+    <PackageVersion>1.0.3-beta006</PackageVersion>
     <Authors>John Korsnes</Authors>
     <Description>
         A tool to check dependencies for versions with known vulnerabilities.
@@ -30,11 +30,12 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="1.1.2" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
-    <DotNetCliToolReference Include="dotnet-retire" Version="1.0.0-*" />
+    <DotNetCliToolReference Include="dotnet-retire" Version="1.0.3-beta*" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="appsettings.json">
+    <Content Include="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+      <PackagePath>lib\netcoreapp1.0</PackagePath>
+    </Content>
   </ItemGroup>
 </Project>

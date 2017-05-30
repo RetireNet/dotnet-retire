@@ -4,11 +4,11 @@ using Newtonsoft.Json.Linq;
 
 namespace dotnet_retire
 {
-    public class NugetReferenceService
+    public class AssetsFileParser
     {
         private readonly IFileService _fileService;
 
-        public NugetReferenceService(IFileService fileService)
+        public AssetsFileParser(IFileService fileService)
         {
             _fileService = fileService;
         }

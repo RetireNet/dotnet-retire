@@ -7,11 +7,11 @@ namespace Tests
 {
     public class AssetServiceTests
     {
-        public NugetReferenceService NugetReferenceService(string prefix)
+        public AssetsFileParser NugetReferenceService(string prefix)
         {
             var mock = new MockFileService();
             mock.SetAssetFile(prefix);
-            return new NugetReferenceService(mock);
+            return new AssetsFileParser(mock);
         }
 
         [Fact]
