@@ -27,7 +27,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="1.1.2" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
-    <DotNetCliToolReference Include="dotnet-retire" Version="1.0.3-beta*" />
+    <DotNetCliToolReference Include="dotnet-retire" Version="1.0.3-*" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="appsettings.json">
