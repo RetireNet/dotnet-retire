@@ -6,4 +6,8 @@
     <ItemGroup>
         <DotNetCliToolReference Include="dotnet-retire" Version="1.0.3" />
     </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="Dapper" Version="1.50.2" />
+      <PackageReference Include="System.Net.Security" Version="4.3.1" />
+    </ItemGroup>
 </Project>

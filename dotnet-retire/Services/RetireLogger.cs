@@ -48,14 +48,7 @@ namespace dotnet_retire
             {
                 foreach (var usage in usages)
                 {
-                    if (usage is TransientUsage tUsage)
-                    {
-                        _logger.LogInformation($"Found transient reference of {usage.NugetReference} via {tUsage.ParentNugetReference}".Red());
-                    }
-                    else
-                    {
-                        _logger.LogInformation($"Found direct reference to {usage.NugetReference}".Red());
-                    }
+                    _logger.LogError($"Found direct reference to {usage.NugetReference}".Red());
                 }
             }
             else

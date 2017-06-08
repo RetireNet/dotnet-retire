@@ -1,0 +1,83 @@
+﻿{
+  "version": 2,
+  "targets": {
+    ".NETCoreApp,Version=v1.0": {
+        "Dapper/1.50.2": {
+            "type": "package",
+            "dependencies": {
+                "System.Collections": "4.0.11",
+                "System.Collections.Concurrent": "4.0.12",
+                "System.Collections.NonGeneric": "4.0.1",
+                "System.Data.SqlClient": "4.1.0",
+                "System.Dynamic.Runtime": "4.0.11",
+                "System.Linq": "4.1.0",
+                "System.Reflection": "4.1.0",
+                "System.Reflection.Emit": "4.0.1",
+                "System.Reflection.Emit.Lightweight": "4.0.1",
+                "System.Reflection.Extensions": "4.0.1",
+                "System.Reflection.TypeExtensions": "4.1.0",
+                "System.Runtime": "4.1.0",
+                "System.Runtime.Extensions": "4.1.0",
+                "System.Runtime.InteropServices": "4.1.0",
+                "System.Text.RegularExpressions": "4.1.0",
+                "System.Threading": "4.0.11",
+                "System.Xml.XDocument": "4.0.11",
+                "System.Xml.XmlDocument": "4.0.1"
+            },
+            "compile": {
+                "lib/netstandard1.3/Dapper.dll": {}
+            },
+            "runtime": {
+                "lib/netstandard1.3/Dapper.dll": {}
+            }
+        },
+
+        "System.Net.Security/4.3.1": {
+            "type": "package",
+            "dependencies": {
+                "Microsoft.NETCore.Platforms": "1.1.0",
+                "Microsoft.Win32.Primitives": "4.3.0",
+                "System.Collections": "4.3.0",
+                "System.Collections.Concurrent": "4.3.0",
+                "System.Diagnostics.Tracing": "4.3.0",
+                "System.Globalization": "4.3.0",
+                "System.Globalization.Extensions": "4.3.0",
+                "System.IO": "4.3.0",
+                "System.Net.Primitives": "4.3.0",
+                "System.Resources.ResourceManager": "4.3.0",
+                "System.Runtime": "4.3.0",
+                "System.Runtime.Extensions": "4.3.0",
+                "System.Runtime.Handles": "4.3.0",
+                "System.Runtime.InteropServices": "4.3.0",
+                "System.Security.Claims": "4.3.0",
+                "System.Security.Cryptography.Algorithms": "4.3.0",
+                "System.Security.Cryptography.Encoding": "4.3.0",
+                "System.Security.Cryptography.OpenSsl": "4.3.0",
+                "System.Security.Cryptography.Primitives": "4.3.0",
+                "System.Security.Cryptography.X509Certificates": "4.3.0",
+                "System.Security.Principal": "4.3.0",
+                "System.Text.Encoding": "4.3.0",
+                "System.Threading": "4.3.0",
+                "System.Threading.Tasks": "4.3.0",
+                "System.Threading.ThreadPool": "4.3.0",
+                "runtime.native.System": "4.3.0",
+                "runtime.native.System.Net.Security": "4.3.0",
+                "runtime.native.System.Security.Cryptography.OpenSsl": "4.3.0"
+            },
+            "compile": {
+                "ref/netstandard1.3/System.Net.Security.dll": {}
+            },
+            "runtimeTargets": {
+                "runtimes/unix/lib/netstandard1.6/System.Net.Security.dll": {
+                    "assetType": "runtime",
+                    "rid": "unix"
+                },
+                "runtimes/win/lib/netstandard1.3/System.Net.Security.dll": {
+                    "assetType": "runtime",
+                    "rid": "win"
+                }
+            }
+        }
+    }
+  }
+}

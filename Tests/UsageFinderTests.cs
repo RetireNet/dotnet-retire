@@ -31,7 +31,7 @@ namespace Tests
         }
 
         [Fact]
-        public void TransientDependencyIsUsage()
+        public void TransientDependencyWhenOverriddenWithDirectReferenceIsNotVulnerableUsage()
         {
             var assets = new List<NugetReference>
             {
@@ -47,6 +47,11 @@ namespace Tests
                             Version = "1.0.0"
                         }
                     }
+                },
+                new NugetReference
+                {
+                    Id = "SomePackageId",
+                    Version = "2.0.0"
                 }
             };
 
@@ -57,8 +62,7 @@ namespace Tests
             }};
 
             var usages = UsagesFinder.FindUsagesOf(assets, packages);
-            Assert.Equal(1, usages.Count());
-            Assert.True(usages.First() is TransientUsage);
+            Assert.Equal(0, usages.Count());
         }
     }
 }

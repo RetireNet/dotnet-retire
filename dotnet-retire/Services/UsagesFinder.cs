@@ -21,20 +21,6 @@ namespace dotnet_retire
                         Package = directPackage
                     });
                 }
-
-                foreach (var transientAsset in asset.Dependencies)
-                {
-                    var transientPackage = knownVulnerables.FirstOrDefault(k => k.Id == transientAsset.Id && k.Affected == transientAsset.Version);
-                    if (transientPackage != null)
-                    {
-                        usages.Add(new TransientUsage
-                        {
-                            ParentNugetReference = asset,
-                            NugetReference = transientAsset,
-                            Package = transientPackage
-                        });
-                    }
-                }
             }
 
             return usages;
