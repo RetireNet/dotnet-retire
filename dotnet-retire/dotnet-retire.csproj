@@ -17,6 +17,7 @@
     <PackageIconUrl>https://raw.githubusercontent.com/RetireNet/images/master/nuget/dotnet-retire/icon.512x512.png</PackageIconUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReleaseNotes>
+     * Remove reporting on transient vulnerabilities.
      * Bugfix: Change to in-mem appSettings, as dotnet tools don't have access to NuGet content folder the same way as regular NuGets when they're run (path issues).
     </PackageReleaseNotes>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
