@@ -14,10 +14,16 @@ namespace dotnet_retire
 
         public Program()
         {
+            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
+            Configuration = builder.Build();
+
+            var options = new RetireServiceOptions();
+            Configuration.GetSection("RetireServiceOptions").Bind(options);
+            
             Services = new ServiceCollection()
                 .AddLogging()
                 .AddOptions()
-                .Configure<RetireServiceOptions>(o => o.RootUrl = "https://raw.githubusercontent.com/RetireNet/Packages/master/index.json")
+                .Configure<RetireServiceOptions>(o => o.RootUrl = options.RootUrl)
                 .AddSingleton<RetireApiClient>()
                 .AddSingleton<IFileService,FileService>()
                 .AddSingleton<AssetsFileParser>()

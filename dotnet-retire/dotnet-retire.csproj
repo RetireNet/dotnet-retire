@@ -3,7 +3,13 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp1.0</TargetFramework>
     <PackageId>dotnet-retire</PackageId>
-    <PackageVersion>1.0.3</PackageVersion>
+    <Version>1.0.3</Version> <!-- The SDK now sets both dll and nuget package data correctly using this single prop -->
+    <!--
+        // Nuget package Version
+        <PackageVersion>2.0.3-beta008</PackageVersion>
+        //The SDK sets dll versioninfo by creating dotnet-retire.AssemblyInfo.cs. See obj folder
+        <Version>2.0.3-beta008</Version>
+    -->
     <Authors>John Korsnes</Authors>
     <Description>
         A tool to check dependencies for versions with known vulnerabilities.
@@ -22,12 +28,15 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="1.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="1.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="1.1.2" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
-    <DotNetCliToolReference Include="dotnet-retire" Version="1.0.3-beta*" />
+    <DotNetCliToolReference Include="dotnet-retire" Version="1.0.2" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="appsettings.json">
