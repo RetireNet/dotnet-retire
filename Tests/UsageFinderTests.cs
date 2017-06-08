@@ -27,7 +27,7 @@ namespace Tests
                 Affected = "1.0.0"
             }};
             var usages = UsagesFinder.FindUsagesOf(assets, packages);
-            Assert.Equal(1, usages.Count());
+            Assert.Equal(100000, usages.Count());
         }
 
         [Fact]
