@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -14,12 +15,18 @@ namespace dotnet_retire
 
         public Program()
         {
-            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
+            // var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
+            var builder = new ConfigurationBuilder();
             Configuration = builder.Build();
 
-            var options = new RetireServiceOptions();
-            Configuration.GetSection("RetireServiceOptions").Bind(options);
-            
+            var options = new RetireServiceOptions
+            {
+                RootUrl =  "https://raw.githubusercontent.com/RetireNet/Packages/master/index.json"
+            };
+
+            // var options = new RetireServiceOptions();
+            //Configuration.GetSection("RetireServiceOptions").Bind(options);
+
             Services = new ServiceCollection()
                 .AddLogging()
                 .AddOptions()
