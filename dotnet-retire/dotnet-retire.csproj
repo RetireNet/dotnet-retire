@@ -3,13 +3,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp1.0</TargetFramework>
     <PackageId>dotnet-retire</PackageId>
-    <Version>1.0.4-alfa01</Version> <!-- The SDK now sets both dll and nuget package data correctly using this single prop -->
-    <!--
-        // Nuget package Version
-        <PackageVersion>2.0.3-beta008</PackageVersion>
-        //The SDK sets dll versioninfo by creating dotnet-retire.AssemblyInfo.cs. See obj folder
-        <Version>2.0.3-beta008</Version>
-    -->
+    <Version>1.0.3</Version>
     <Authors>John Korsnes</Authors>
     <Description>
         A tool to check dependencies for versions with known vulnerabilities.
