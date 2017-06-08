@@ -43,6 +43,23 @@ namespace Tests
             Assert.Equal("4.3.0", references.First().Dependencies.Last().Version);
         }
 
+        [Fact]
+        public void GetVulnerableDapperButWithManuallyUpdateSystemNetSecurity()
+        {
+            var references = NugetReferenceService("SingleTarget.ManuallyFixedUpgrade").GetNugetReferences().ToArray();
+
+            Assert.Equal(3, references.Count());
+
+            Assert.Equal("Dapper", references[0].Id);
+            Assert.Equal("1.50.2", references[0].Version);
+            Assert.Equal(18, references[0].Dependencies.Count);
+
+            Assert.Equal("System.Data.SqlClient", references[1].Id);
+            Assert.Equal("4.1.0", references[1].Version);
+
+            Assert.Equal("System.Net.Security", references[2].Id);
+            Assert.Equal("4.3.1", references[2].Version);
+        }
     }
 
     public class MockFileService : IFileService

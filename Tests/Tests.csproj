@@ -20,6 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="SingleTarget.ManuallyFixedUpgrade.project.assets.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="SingleTarget-MultipleDependencies.project.assets.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

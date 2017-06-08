@@ -3,7 +3,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp1.0</TargetFramework>
     <PackageId>dotnet-retire</PackageId>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <Authors>John Korsnes</Authors>
     <Description>
         A tool to check dependencies for versions with known vulnerabilities.
@@ -17,7 +17,8 @@
     <PackageIconUrl>https://raw.githubusercontent.com/RetireNet/images/master/nuget/dotnet-retire/icon.512x512.png</PackageIconUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReleaseNotes>
-     * Added support for project.json (preview tooling and project system)
+     * Remove reporting on transient vulnerabilities.
+     * Bugfix: Change to in-mem appSettings, as dotnet tools don't have access to NuGet content folder the same way as regular NuGets when they're run (path issues).
     </PackageReleaseNotes>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
