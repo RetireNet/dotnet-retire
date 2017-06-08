@@ -1,13 +1,21 @@
 using System;
 using System.IO;
 using System.Linq;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 
 namespace dotnet_retire
 {
-    public static class FileService
+    public class FileService : IFileService
     {
-        public static JObject GetProjectAssetsJsonObject()
+        private readonly ILogger<FileService> _logger;
+
+        public FileService(ILoggerFactory loggerFactory)
+        {
+            _logger = loggerFactory.CreateLogger<FileService>();
+        }
+
+        public string GetFileContents()
         {
             var currentDirectory = Directory.GetCurrentDirectory();
             var objDirectory = Path.Combine(currentDirectory, "obj");
@@ -19,15 +27,14 @@ namespace dotnet_retire
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Could not find project.assets.json file at '{objDirectory}'. Looking for project.lock.json instead".Orange());
-                Console.WriteLine(e);
+                _logger.LogWarning($"Could not find project.assets.json file at '{objDirectory}'. Looking for project.lock.json instead".Orange());
+                _logger.LogDebug(e.ToString());
             }
 
             if (assetsFile != null)
             {
-                Console.WriteLine($"Found project.assets.json file at '{assetsFile}'".Green());
-                var fileContents = File.ReadAllText(assetsFile);
-                return JObject.Parse(fileContents);
+                _logger.LogInformation($"Found project.assets.json file at '{assetsFile}'".Green());
+                return File.ReadAllText(assetsFile);
             }
 
             try
@@ -36,19 +43,18 @@ namespace dotnet_retire
 
                 if (assetsFile != null)
                 {
-                    Console.WriteLine($"Found project.lock.json file at '{assetsFile}'".Green());
-                    var fileContents = File.ReadAllText(assetsFile);
-                    return JObject.Parse(fileContents);
+                    _logger.LogInformation($"Found project.lock.json file at '{assetsFile}'".Green());
+                    return File.ReadAllText(assetsFile);
                 }
                 else
                 {
-                    Console.WriteLine($"Could not find project.lock.json file in  '{currentDirectory}'".Orange());
+                    _logger.LogWarning($"Could not find project.lock.json file in  '{currentDirectory}'".Orange());
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Could not find project.lock.json file in  '{currentDirectory}'".Orange());
-                Console.WriteLine(e);
+                _logger.LogError($"Could not find project.lock.json file in  '{currentDirectory}'".Orange());
+                _logger.LogDebug(e.ToString());
             }
 
             throw new NoAssetsFoundException();

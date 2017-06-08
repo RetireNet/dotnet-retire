@@ -1,18 +1,23 @@
 using System.IO;
 using System.Linq;
 using dotnet_retire;
-using Newtonsoft.Json.Linq;
 using Xunit;
 
 namespace Tests
 {
     public class AssetServiceTests
     {
+        public AssetsFileParser NugetReferenceService(string prefix)
+        {
+            var mock = new MockFileService();
+            mock.SetAssetFile(prefix);
+            return new AssetsFileParser(mock);
+        }
+
         [Fact]
         public void GetDirectReferencesWithSingleDependency()
         {
-            var jObject = GetTestAssetFile("SingleTarget");
-            var references = NugetReferenceService.GetNugetReferences(jObject);
+            var references = NugetReferenceService("SingleTarget").GetNugetReferences();
 
             Assert.Equal(1, references.Count());
             Assert.Equal("Libuv", references.First().Id);
@@ -25,8 +30,7 @@ namespace Tests
         [Fact]
         public void GetDirectReferenceWithMultipleDependencies()
         {
-            var jObject = GetTestAssetFile("SingleTarget-MultipleDependencies");
-            var references = NugetReferenceService.GetNugetReferences(jObject);
+            var references = NugetReferenceService("SingleTarget-MultipleDependencies").GetNugetReferences();
 
             Assert.Equal(1, references.Count());
             Assert.Equal("Newtonsoft.Json", references.First().Id);
@@ -39,14 +43,26 @@ namespace Tests
             Assert.Equal("4.3.0", references.First().Dependencies.Last().Version);
         }
 
+    }
 
+    public class MockFileService : IFileService
+    {
+        public string GetProjectAssetsJsonObject()
+        {
+            return FileContents;
+        }
 
-        private static JObject GetTestAssetFile(string prefix)
+        public string FileContents { get; set; }
+
+        public void SetAssetFile(string prefix)
         {
             var directory = Directory.GetCurrentDirectory();
-            var testJson = File.ReadAllText($@"{directory}\\{prefix}.project.assets.json");
-            var jObject = JObject.Parse(testJson);
-            return jObject;
+            FileContents = File.ReadAllText($@"{directory}\\{prefix}.project.assets.json");
+        }
+
+        public string GetFileContents()
+        {
+            return FileContents;
         }
     }
 }

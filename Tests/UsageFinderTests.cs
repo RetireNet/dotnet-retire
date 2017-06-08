@@ -7,6 +7,8 @@ namespace Tests
 {
     public class UsageFinderTests
     {
+        public UsagesFinder UsagesFinder => new UsagesFinder();
+
         [Fact]
         public void DirectDependencyIsUsage()
         {

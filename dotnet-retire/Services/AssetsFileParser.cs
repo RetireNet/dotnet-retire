@@ -4,11 +4,19 @@ using Newtonsoft.Json.Linq;
 
 namespace dotnet_retire
 {
-    public class NugetReferenceService
+    public class AssetsFileParser
     {
-        public static IEnumerable<NugetReference> GetNugetReferences(JObject test = null)
+        private readonly IFileService _fileService;
+
+        public AssetsFileParser(IFileService fileService)
         {
-            var jObject = test ?? FileService.GetProjectAssetsJsonObject();
+            _fileService = fileService;
+        }
+
+        public IEnumerable<NugetReference> GetNugetReferences()
+        {
+            var fileContents = _fileService.GetFileContents();
+            var jObject = JObject.Parse(fileContents);
             var targets = jObject.Property("targets").Value as JObject;
             var assets = new List<NugetReference>();
 
