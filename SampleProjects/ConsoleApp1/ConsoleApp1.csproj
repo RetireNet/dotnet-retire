@@ -4,7 +4,7 @@
         <TargetFramework>netcoreapp1.0</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
-        <DotNetCliToolReference Include="dotnet-retire" Version="1.0.4-beta002" />
+        <DotNetCliToolReference Include="dotnet-retire" Version="1.0.3" />
     </ItemGroup>
     <ItemGroup>
       <PackageReference Include="Dapper" Version="1.50.2" />
