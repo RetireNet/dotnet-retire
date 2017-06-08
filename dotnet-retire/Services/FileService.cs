@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Linq;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
 
 namespace dotnet_retire
 {
@@ -10,9 +9,9 @@ namespace dotnet_retire
     {
         private readonly ILogger<FileService> _logger;
 
-        public FileService(ILoggerFactory loggerFactory)
+        public FileService(ILogger<FileService> logger)
         {
-            _logger = loggerFactory.CreateLogger<FileService>();
+            _logger = logger;
         }
 
         public string GetFileContents()

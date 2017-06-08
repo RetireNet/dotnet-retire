@@ -10,9 +10,9 @@ namespace dotnet_retire
         private readonly string _rootUrl;
         private readonly ILogger<RetireApiClient> _logger;
 
-        public RetireApiClient(ILoggerFactory loggerFactory, IOptions<RetireServiceOptions> options)
+        public RetireApiClient(ILogger<RetireApiClient> logger, IOptions<RetireServiceOptions> options)
         {
-            _logger = loggerFactory.CreateLogger<RetireApiClient>();
+            _logger = logger;
             _rootUrl = options.Value.RootUrl;
         }
 
