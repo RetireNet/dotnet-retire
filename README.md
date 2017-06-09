@@ -5,16 +5,19 @@ A `dotnet` CLI extension to check your project for known vulnerabilities.
 
 ## Install
 As the CLI don't currently allows us to install tools from the cmdline, you'll need to modify your csproj manually.
+
+```xml
+<ItemGroup>
+  <DotNetCliToolReference Include="dotnet-retire" Version="1.0.1" />
+</ItemGroup>
 ```
-  <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-retire" Version="1.0.1" />
-  </ItemGroup>
-```
+
 Or if your project is still using the preview2 tooling, modify your `project.json`
-```
-  "tools": {
-    "dotnet-retire": "1.0.1"
-  }
+
+```json
+"tools": {
+  "dotnet-retire": "1.0.1"
+}
 ```
 
 ## Usage
