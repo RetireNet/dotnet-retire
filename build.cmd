@@ -1,4 +1,8 @@
 @echo off
+dotnet
+dotnet --info
+dotnet --version
+
 dotnet restore dotnet-retire.sln
 IF %errorlevel% neq 0 exit /b %errorlevel%
 
