@@ -1,42 +1,40 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp1.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <PackageId>dotnet-retire</PackageId>
-    <Version>1.0.4</Version>
+    <Version>2.0.0</Version>
     <Authors>John Korsnes</Authors>
     <Description>
         A tool to check dependencies for versions with known vulnerabilities.
     </Description>
     <Copyright>John Korsnes</Copyright>
-    <PackageTags>dotnet cli tool vulnerable scanning</PackageTags>
-    <PackageType>DotnetCliTool</PackageType>
+    <PackageTags>dotnet;retire;vulnerable;scanning;security</PackageTags>
+    <PackAsTool>true</PackAsTool>
     <PackageProjectUrl>https://github.com/RetireNet/dotnet-retire</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/RetireNet/dotnet-retire/master/LICENSE</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/RetireNet/dotnet-retire</RepositoryUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/RetireNet/images/master/nuget/dotnet-retire/icon.512x512.png</PackageIconUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>
-     * Remove reporting on transient vulnerabilities.
-     * Bugfix: Change to in-mem appSettings, as dotnet tools don't have access to NuGet content folder the same way as regular NuGets when they're run (path issues).
+    <PackageReleaseNotes> * Makes feed URL configurable (cmd-line or appsettings.json i)
+        * Upgrades target framework to netcoreapp2.1 (clients now need 2.1 SDK)
+        * Convert to .NET Core Global Tool
     </PackageReleaseNotes>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.2" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="1.1.2" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.2" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="1.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="1.1.2" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.2" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="1.1.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
-    <DotNetCliToolReference Include="dotnet-retire" Version="1.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="2.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <PackagePath>lib\netcoreapp1.0</PackagePath>
-    </Content>
-  </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="appsettings.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <PackagePath>tools\netcoreapp2.1\any\</PackagePath>
+        </Content>
+    </ItemGroup>
 </Project>

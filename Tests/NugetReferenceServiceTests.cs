@@ -19,10 +19,10 @@ namespace Tests
         {
             var references = NugetReferenceService("SingleTarget").GetNugetReferences();
 
-            Assert.Equal(1, references.Count());
+            Assert.Single(references);
             Assert.Equal("Libuv", references.First().Id);
             Assert.Equal("1.9.1", references.First().Version);
-            Assert.Equal(1, references.First().Dependencies.Count);
+            Assert.Single(references.First().Dependencies);
             Assert.Equal("Microsoft.NETCore.Platforms", references.First().Dependencies.First().Id);
             Assert.Equal("1.0.1", references.First().Dependencies.First().Version);
         }
@@ -32,7 +32,7 @@ namespace Tests
         {
             var references = NugetReferenceService("SingleTarget-MultipleDependencies").GetNugetReferences();
 
-            Assert.Equal(1, references.Count());
+            Assert.Single(references);
             Assert.Equal("Newtonsoft.Json", references.First().Id);
             Assert.Equal("10.0.2", references.First().Version);
             Assert.Equal(6, references.First().Dependencies.Count);

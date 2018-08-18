@@ -7,7 +7,7 @@ namespace dotnet_retire
 {
     public class RetireApiClient
     {
-        private readonly string _rootUrl;
+        private readonly Uri _rootUrl;
         private readonly ILogger<RetireApiClient> _logger;
 
         public RetireApiClient(ILogger<RetireApiClient> logger, IOptions<RetireServiceOptions> options)
@@ -19,7 +19,7 @@ namespace dotnet_retire
         public IEnumerable<Package> GetPackagesToRetire()
         {
             _logger.LogInformation($"Fetching known vulnerable packages from {_rootUrl}".Blue());
-            var retireJsonUrl = new Uri(_rootUrl);
+            var retireJsonUrl = _rootUrl;
             var start = HttpService.Get<Start>(retireJsonUrl);
 
             var packagesToRetire = new List<Package>();
