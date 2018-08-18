@@ -74,7 +74,7 @@ namespace Tests
         public void SetAssetFile(string prefix)
         {
             var directory = Directory.GetCurrentDirectory();
-            FileContents = File.ReadAllText($@"{directory}\\{prefix}.project.assets.json");
+            FileContents = File.ReadAllText($@"{directory}/{prefix}.project.assets.json");
         }
 
         public string GetFileContents()
