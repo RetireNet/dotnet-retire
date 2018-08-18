@@ -1,1 +1,1 @@
-nuget push ./deploy/dotnet-retire.1.0.4.nupkg -Source https://www.nuget.org/api/v2/package -ApiKey %nugetorgapikey%
+nuget push ./deploy/dotnet-retire.2.0.0.nupkg -src https://api.nuget.org/v3/index.json
