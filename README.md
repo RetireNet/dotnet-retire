@@ -13,6 +13,18 @@ $ dotnet tool install -g dotnet-retire
 $ dotnet retire
 ```
 
+Additional options:
+
+  - `loglevel=Trace|Debug|Information|Warning|Error|Critical` (default:`Information`)
+
+  - `rooturl=<url>` to feed> (default:[https://raw.githubusercontent.com/RetireNet/Packages/master/index.json](https://raw.githubusercontent.com/RetireNet/Packages/master/index.json))
+
+Sample:
+
+```
+$ dotnet retire loglevel=debug
+```
+
 ### Sample output:
 ![image](https://user-images.githubusercontent.com/206726/26968418-3c4c6296-4d02-11e7-9cf9-754533c1a594.png)
 

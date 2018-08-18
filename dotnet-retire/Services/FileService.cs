@@ -21,18 +21,18 @@ namespace dotnet_retire
             string assetsFile = null;
             try
             {
-                
+
                 assetsFile = Directory.EnumerateFiles(objDirectory, "project.assets.json", SearchOption.TopDirectoryOnly).FirstOrDefault();
             }
             catch (Exception e)
             {
-                _logger.LogWarning($"Could not find project.assets.json file at '{objDirectory}'. Looking for project.lock.json instead".Orange());
+                _logger.LogDebug($"Could not find project.assets.json file at '{objDirectory}'. Looking for project.lock.json instead".Orange());
                 _logger.LogDebug(e.ToString());
             }
 
             if (assetsFile != null)
             {
-                _logger.LogInformation($"Found project.assets.json file at '{assetsFile}'".Green());
+                _logger.LogDebug($"Found project.assets.json file at '{assetsFile}'".Green());
                 return File.ReadAllText(assetsFile);
             }
 
@@ -42,17 +42,17 @@ namespace dotnet_retire
 
                 if (assetsFile != null)
                 {
-                    _logger.LogInformation($"Found project.lock.json file at '{assetsFile}'".Green());
+                    _logger.LogDebug($"Found project.lock.json file at '{assetsFile}'".Green());
                     return File.ReadAllText(assetsFile);
                 }
                 else
                 {
-                    _logger.LogWarning($"Could not find project.lock.json file in  '{currentDirectory}'".Orange());
+                    _logger.LogDebug($"Could not find project.lock.json file in  '{currentDirectory}'".Orange());
                 }
             }
             catch (Exception e)
             {
-                _logger.LogError($"Could not find project.lock.json file in  '{currentDirectory}'".Orange());
+                _logger.LogDebug($"Could not find project.lock.json file in  '{currentDirectory}'".Orange());
                 _logger.LogDebug(e.ToString());
             }
 

@@ -18,23 +18,19 @@ namespace dotnet_retire
 
 
             var rootUrlFromConfig = config.GetValue<Uri>("RootUrl");
-
+            var logLevel = config.GetValue<LogLevel>("LogLevel");
 
             _services = new ServiceCollection()
-                .AddLogging()
+                .AddLogging(c => c.AddConsole().AddDebug().SetMinimumLevel(logLevel))
                 .AddOptions()
                 .Configure<RetireServiceOptions>(o => o.RootUrl = rootUrlFromConfig)
-                .AddSingleton<RetireApiClient>()
-                .AddSingleton<IFileService,FileService>()
-                .AddSingleton<AssetsFileParser>()
-                .AddSingleton<UsagesFinder>()
-                .AddSingleton<RetireLogger>()
+                .AddTransient<RetireApiClient>()
+                .AddTransient<IFileService,FileService>()
+                .AddTransient<AssetsFileParser>()
+                .AddTransient<UsagesFinder>()
+                .AddTransient<RetireLogger>()
                 .BuildServiceProvider();
 
-
-            _services
-                .GetService<ILoggerFactory>()
-                .AddConsole(LogLevel.Debug);
             return this;
         }
 

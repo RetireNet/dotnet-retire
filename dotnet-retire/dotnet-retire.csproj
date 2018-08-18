@@ -3,7 +3,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <PackageId>dotnet-retire</PackageId>
-    <Version>2.0.0</Version>
+    <Version>2.1.0</Version>
     <Authors>John Korsnes</Authors>
     <Description>
         A tool to check dependencies for versions with known vulnerabilities.
@@ -16,10 +16,7 @@
     <RepositoryUrl>https://github.com/RetireNet/dotnet-retire</RepositoryUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/RetireNet/images/master/nuget/dotnet-retire/icon.512x512.png</PackageIconUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes> * Makes feed URL configurable (cmd-line or appsettings.json i)
-        * Upgrades target framework to netcoreapp2.1 (clients now need 2.1 SDK)
-        * Convert to .NET Core Global Tool
-    </PackageReleaseNotes>
+    <PackageReleaseNotes>Makes output logging verbosity configurable</PackageReleaseNotes>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
@@ -27,8 +24,9 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="2.1.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />      
   </ItemGroup>
 
     <ItemGroup>
