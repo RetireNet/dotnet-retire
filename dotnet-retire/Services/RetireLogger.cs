@@ -22,10 +22,13 @@ namespace dotnet_retire
 
         public void LogPackagesToRetire()
         {
+            // removing this line breaks logging somehow.
+            _logger.LogInformation("Scan starting".Green());
+
             var packagesToRetire = _retireApiClient.GetPackagesToRetire();
             foreach (var p in packagesToRetire)
             {
-                _logger.LogDebug($"Looking for {p.Id}/{p.Affected}".Orange());
+                _logger.LogTrace($"Looking for {p.Id}/{p.Affected}".Orange());
             }
 
             IEnumerable<NugetReference> nugetReferences = new List<NugetReference>();
@@ -35,12 +38,12 @@ namespace dotnet_retire
             }
             catch (NoAssetsFoundException)
             {
-                _logger.LogWarning($"No assets found. Could not check dependencies. Missing 'dotnet restore'?");
-                Environment.Exit(0);
+                _logger.LogError("No assets found. Could not check dependencies. Missing 'dotnet restore' or are you running the tool from a folder missing a csproj?");
+                Environment.Exit(-1);
                 return;
             }
 
-            _logger.LogInformation($"Found in total {nugetReferences.Count()} references of NuGets (direct & transient)");
+            _logger.LogDebug($"Found in total {nugetReferences.Count()} references of NuGets (direct & transient)");
 
             var usages = _usageFinder.FindUsagesOf(nugetReferences, packagesToRetire);
 
@@ -55,6 +58,9 @@ namespace dotnet_retire
             {
                 _logger.LogInformation($"Found no usages of vulnerable libs!".Green());
             }
+
+            _logger.LogInformation($"Scan complete.".Green());
+
         }
     }
 }

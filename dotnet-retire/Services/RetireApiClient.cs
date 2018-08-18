@@ -18,7 +18,7 @@ namespace dotnet_retire
 
         public IEnumerable<Package> GetPackagesToRetire()
         {
-            _logger.LogInformation($"Fetching known vulnerable packages from {_rootUrl}".Blue());
+            _logger.LogDebug($"Fetching known vulnerable packages from {_rootUrl}".Blue());
             var retireJsonUrl = _rootUrl;
             var start = HttpService.Get<Start>(retireJsonUrl);
 
