@@ -6,6 +6,6 @@ dotnet build dotnet-retire.sln -c Release
 IF %errorlevel% neq 0 exit /b %errorlevel%
 
 cd Tests
-dotnet xunit -c Release
+dotnet test -c Release
 IF %errorlevel% neq 0 exit /b %errorlevel%
 cd ..
