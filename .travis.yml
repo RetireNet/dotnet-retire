@@ -6,3 +6,4 @@ services:
 
 script:
   - docker build -f Linux.Dockerfile .
+  - docker build -f Linux.Vulnerable.Dockerfile .
