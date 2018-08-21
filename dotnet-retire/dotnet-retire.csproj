@@ -4,7 +4,6 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <PackageId>dotnet-retire</PackageId>
     <Version>2.1.0</Version>
-    <VersionSuffix>$(VersionSuffix)</VersionSuffix>
     <Authors>John Korsnes</Authors>
     <Description>
         A tool to check dependencies for versions with known vulnerabilities.

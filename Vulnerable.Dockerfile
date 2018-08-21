@@ -8,7 +8,7 @@ RUN dotnet restore
 WORKDIR ../dotnet-retire
 COPY ./dotnet-retire ./
 RUN dotnet restore
-RUN dotnet pack --no-build -o ../Deploy /p:Version=2.3-PR
+RUN dotnet pack -o ../Deploy /p:Version=2.3-PR
 
 # install dotnet-retire from local feed
 WORKDIR ../VulnerableApp
