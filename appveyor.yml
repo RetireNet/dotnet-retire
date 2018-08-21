@@ -2,4 +2,5 @@ image:
 - Visual Studio 2017
 
 build_script:
-  -  docker build -f Windows.Dockerfile .
+  - docker build -f Windows.Dockerfile .
+  - docker build -f Vulnerable.Dockerfile .
