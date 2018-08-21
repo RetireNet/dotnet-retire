@@ -3,4 +3,4 @@ image:
 
 build_script:
   - docker build -f Windows.Dockerfile .
-  - docker build -f Vulnerable.Dockerfile .
+  - docker build -f Windows.Vulnerable.Dockerfile .
