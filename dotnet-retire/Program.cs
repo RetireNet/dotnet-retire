@@ -4,7 +4,10 @@
     {
         public static void Main(string[] args)
         {
-            new Host().Build(args).Run();
+            using (var h = new Host())
+            {
+                h.Build(args).Run();
+            }
         }
     }
 }
