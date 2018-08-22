@@ -39,7 +39,6 @@ namespace dotnet_retire
             catch (NoAssetsFoundException)
             {
                 _logger.LogError("No assets found. Could not check dependencies. Missing 'dotnet restore' or are you running the tool from a folder missing a csproj?");
-                Environment.Exit(-1);
                 return;
             }
 
@@ -59,7 +58,7 @@ namespace dotnet_retire
                 _logger.LogInformation($"Found no usages of vulnerable libs!".Green());
             }
 
-            _logger.LogInformation($"Scan complete.".Green());
+            _logger.LogInformation($"Scan complete.");
 
         }
     }

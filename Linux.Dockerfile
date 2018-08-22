@@ -20,6 +20,7 @@ ENV DOTNET_SKIP_FIRST_TIME_EXPERIENCE 1
 
 WORKDIR /build
 COPY ./ .
-RUN dotnet tool install -g cake
+RUN dotnet tool install -g Cake.Tool --version 0.30.0
+RUN dotnet tool list -g
 ARG cakeargs=""
 RUN dotnet cake
