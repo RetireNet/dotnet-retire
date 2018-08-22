@@ -14,7 +14,8 @@ RUN Remove-Item -Force dotnet.zip
 ENV PATH="${PATH};C:\\dotnet\\;"
 # Pre-pre dotnet
 RUN dotnet --info
+RUN dotnet tool install -g cake
 
 WORKDIR \build
 COPY .\ .
-RUN .\build.ps1
+RUN dotnet cake
