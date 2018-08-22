@@ -5,9 +5,9 @@ using Microsoft.Extensions.Logging;
 
 namespace dotnet_retire
 {
-    public class Host
+    public class Host : IDisposable
     {
-        private IServiceProvider _services;
+        private ServiceProvider _services;
 
         public Host Build(string[] args)
         {
@@ -34,13 +34,15 @@ namespace dotnet_retire
             return this;
         }
 
-
-
-
         public void Run()
         {
             var retireLogger = _services.GetService<RetireLogger>();
             retireLogger.LogPackagesToRetire();
+        }
+
+        public void Dispose()
+        {
+            _services.Dispose();
         }
     }
 }
