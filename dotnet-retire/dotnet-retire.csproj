@@ -1,38 +1,37 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-    <PackageId>dotnet-retire</PackageId>
-    <Version>2.1.1</Version>
-    <Authors>John Korsnes</Authors>
-    <Description>
-        A tool to check dependencies for versions with known vulnerabilities.
-    </Description>
-    <Copyright>John Korsnes</Copyright>
-    <PackageTags>dotnet;retire;vulnerable;scanning;security</PackageTags>
-    <PackAsTool>true</PackAsTool>
-    <PackageProjectUrl>https://github.com/RetireNet/dotnet-retire</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/RetireNet/dotnet-retire/master/LICENSE</PackageLicenseUrl>
-    <RepositoryUrl>https://github.com/RetireNet/dotnet-retire</RepositoryUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/RetireNet/images/master/nuget/dotnet-retire/icon.512x512.png</PackageIconUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>Makes output logging verbosity configurable</PackageReleaseNotes>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="2.1.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="2.1.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-  </ItemGroup>
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+        <PackageId>dotnet-retire</PackageId>
+        <Authors>John Korsnes</Authors>
+        <Description>
+            A tool to check dependencies for versions with known vulnerabilities.
+        </Description>
+        <Copyright>John Korsnes</Copyright>
+        <PackageTags>dotnet;retire;vulnerable;scanning;security</PackageTags>
+        <PackAsTool>true</PackAsTool>
+        <PackageProjectUrl>https://github.com/RetireNet/dotnet-retire</PackageProjectUrl>
+        <PackageLicenseUrl>https://raw.githubusercontent.com/RetireNet/dotnet-retire/master/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/RetireNet/dotnet-retire</RepositoryUrl>
+        <PackageIconUrl>https://raw.githubusercontent.com/RetireNet/images/master/nuget/dotnet-retire/icon.512x512.png</PackageIconUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageReleaseNotes>Makes output logging verbosity configurable</PackageReleaseNotes>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="2.1.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.0" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="2.1.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    </ItemGroup>
 
     <ItemGroup>
         <Content Include="appsettings.json">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-            <PackagePath>tools\netcoreapp2.1\any\</PackagePath>
         </Content>
     </ItemGroup>
+
 </Project>
