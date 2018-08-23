@@ -15,6 +15,7 @@ ENV PATH="${PATH};C:\\dotnet\\;"
 # Pre-pre dotnet
 RUN dotnet --info
 RUN dotnet tool install -g Cake.Tool --version 0.30.0
+RUN setx PATH "%PATH%;C:\Users\ContainerAdministrator\.dotnet\tools"
 RUN dotnet tool list -g
 WORKDIR \build
 COPY .\ .
