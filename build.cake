@@ -1,6 +1,7 @@
 var target = Argument("target", "Pack");
 var configuration = Argument("configuration", "Release");
-var proj = $"./dotnet-retire/dotnet-retire.csproj";
+var projName = "dotnet-retire";
+var proj = $"./{projName}/{projName}.csproj";
 
 var version = "2.2.0";
 var outputDir = "./output";
@@ -32,16 +33,16 @@ Task("Pack")
         DotNetCorePack(proj, coresettings);
 });
 
-Task("PublishToNugetOrg")
+Task("Publish")
     .IsDependentOn("Pack")
     .Does(() => {
         var settings = new DotNetCoreNuGetPushSettings
         {
             Source = "https://api.nuget.org/v3/index.json",
-            ApiKey = Argument("nugetapikey", "must-be-given")
+            ApiKey = EnvironmentVariable("NUGET_API_KEY")
         };
 
-        DotNetCoreNuGetPush($"{outputDir}/PayEx.Client.{version}.nupkg", settings);
+        DotNetCoreNuGetPush($"{outputDir}/{projName}.{version}.nupkg", settings);
 });
 
 RunTarget(target);
