@@ -9,11 +9,11 @@ WORKDIR ../dotnet-retire
 COPY ./dotnet-retire ./
 
 RUN dotnet build
-RUN dotnet pack -o ../Deploy /p:Version=2.3.1
+RUN dotnet pack -o ../deploy /p:Version=999.0.0
 
 # install dotnet-retire from local feed
 WORKDIR ../VulnerableApp
-RUN dotnet tool install -g dotnet-retire --add-source ../Deploy --version=2.3.1
+RUN dotnet tool install -g dotnet-retire --add-source ../deploy --version=999.0.0
 
 RUN dotnet tool list -g
 

@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace dotnet_retire
 {
-    public class AssetsFileParser
+    public class AssetsFileParser : IAssetsFileParser
     {
         private readonly IFileService _fileService;
 

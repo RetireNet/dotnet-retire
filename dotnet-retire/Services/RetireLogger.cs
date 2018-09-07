@@ -9,10 +9,10 @@ namespace dotnet_retire
     {
         private readonly ILogger<RetireLogger> _logger;
         private readonly RetireApiClient _retireApiClient;
-        private readonly AssetsFileParser _nugetreferenceservice;
+        private readonly IAssetsFileParser _nugetreferenceservice;
         private readonly UsagesFinder _usageFinder;
 
-        public RetireLogger(ILogger<RetireLogger> logger, RetireApiClient retireApiClient, AssetsFileParser nugetreferenceservice, UsagesFinder usageFinder)
+        public RetireLogger(ILogger<RetireLogger> logger, RetireApiClient retireApiClient, IAssetsFileParser nugetreferenceservice, UsagesFinder usageFinder)
         {
             _logger = logger;
             _retireApiClient = retireApiClient;

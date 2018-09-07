@@ -26,7 +26,7 @@ namespace dotnet_retire
                 .Configure<RetireServiceOptions>(o => o.RootUrl = rootUrlFromConfig)
                 .AddTransient<RetireApiClient>()
                 .AddTransient<IFileService,FileService>()
-                .AddTransient<AssetsFileParser>()
+                .AddTransient<IAssetsFileParser, NugetProjectModelAssetsFileParser>()
                 .AddTransient<UsagesFinder>()
                 .AddTransient<RetireLogger>()
                 .BuildServiceProvider();
