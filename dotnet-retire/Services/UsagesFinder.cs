@@ -5,7 +5,7 @@ namespace dotnet_retire
 {
     public class UsagesFinder
     {
-        public IEnumerable<Usage> FindUsagesOf(IEnumerable<NugetReference> assets, IEnumerable<Package> knownVulnerables)
+        public List<Usage> FindUsagesOf(List<NugetReference> assets, List<Package> knownVulnerables)
         {
             var usages = new List<Usage>();
 
@@ -15,15 +15,36 @@ namespace dotnet_retire
 
                 if (directPackage != null)
                 {
-                    usages.Add(new Usage
+                    var usage = new Usage
                     {
-                        NugetReference = asset,
                         Package = directPackage
-                    });
+                    };
+                    usage.Add(asset);
+                    var differentUsages = FindPathsTo(usage, assets);
+                    usages.AddRange(differentUsages);
                 }
             }
 
             return usages;
+        }
+
+        private static IEnumerable<Usage> FindPathsTo(Usage usage, List<NugetReference> assets)
+        {
+            var allWithThisChild = assets.Where(d => d.Dependencies.Any(c => c.Id == usage.OuterMostId)).ToList();
+            if (allWithThisChild.Count == 0)
+                yield return usage;
+            else
+            {
+                foreach (var withThisChild in allWithThisChild)
+                {
+                    var copy = usage.Copy();
+                    copy.Add(withThisChild);
+                    foreach (var usagePath in FindPathsTo(copy, assets))
+                    {
+                        yield return usagePath;
+                    }
+                }
+            }
         }
     }
 }

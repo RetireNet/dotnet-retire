@@ -19,29 +19,24 @@ namespace dotnet_retire
         {
             var lockfile = ReadLockFile();
 
-            var assets = new List<NugetReference>();
-
             foreach (var x in lockfile.Targets)
             {
                 foreach (var lib in x.Libraries)
                 {
-                    foreach (var d in lib.Dependencies)
-                    {
-                        assets.Add(new NugetReference
-                        {
-                            Id = d.Id,
-                            Version = d.VersionRange.ToNormalizedString()
-                        });
-                    }
-                    assets.Add(new NugetReference
+                    yield return new NugetReference
                     {
                         Id = lib.Name,
-                        Version = lib.Version.OriginalVersion
-                    });
+                        Version = lib.Version.OriginalVersion,
+                        Dependencies = lib.Dependencies.Select(d =>
+                            new NugetReference
+                            {
+                                Id = d.Id,
+                                Version = d.VersionRange.ToNormalizedString()
+                            }).ToList()
+                        
+                    };
                 }
             }
-
-            return assets;
         }
 
         private static LockFile ReadLockFile()
