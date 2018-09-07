@@ -50,7 +50,7 @@ namespace dotnet_retire
             {
                 foreach (var usage in usages)
                 {
-                    _logger.LogError($"Found direct reference to {usage.NugetReference} {(usage.IsDirect ? "" : usage.ReadPath())}".Red());
+                    _logger.LogError($"Found direct reference to {usage.NugetReference} {(usage.IsDirect ? "" : $"via {usage.ReadPath()}")}".Red());
                 }
             }
             else

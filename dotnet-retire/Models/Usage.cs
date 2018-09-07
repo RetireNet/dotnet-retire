@@ -32,7 +32,7 @@ namespace dotnet_retire
 
         public string ReadPath()
         {
-            return string.Join(" > ", _referenceDepth.Select(r => $"{r.Id}/{r.Version}"));
+            return string.Join(" > ", _referenceDepth.Skip(1).Select(r => $"{r.Id}/{r.Version}"));
         }
     }
 }
