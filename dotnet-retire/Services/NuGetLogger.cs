@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using NuGet.Common;
@@ -9,9 +8,9 @@ namespace dotnet_retire
 {
     public class NuGetLogger : ILogger
     {
-        private readonly ILogger<NuGetLogger> _logger;
+        private readonly Microsoft.Extensions.Logging.ILogger _logger;
 
-        public NuGetLogger(ILogger<NuGetLogger> logger)
+        public NuGetLogger(Microsoft.Extensions.Logging.ILogger logger)
         {
             _logger = logger;
         }
@@ -53,7 +52,7 @@ namespace dotnet_retire
 
         public void Log(LogLevel level, string data)
         {
-            var mslevel = Microsoft.Extensions.Logging.LogLevel.Debug;
+            Microsoft.Extensions.Logging.LogLevel mslevel;
             switch (level)
             {
                 case LogLevel.Debug:
@@ -75,7 +74,8 @@ namespace dotnet_retire
                     mslevel = Microsoft.Extensions.Logging.LogLevel.Error;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(level), level, null);
+                    mslevel = Microsoft.Extensions.Logging.LogLevel.Debug;
+                    break;
             }
             _logger.Log(mslevel, data);
         }

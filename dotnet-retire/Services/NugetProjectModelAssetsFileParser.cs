@@ -1,23 +1,20 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using Microsoft.Extensions.Logging;
-using NuGet.ProjectModel;
 
 namespace dotnet_retire
 {
     public class NugetProjectModelAssetsFileParser : IAssetsFileParser
     {
-        private static NuGetLogger _nugetLogger;
+        private readonly IFileService _fileService;
 
-        public NugetProjectModelAssetsFileParser(ILoggerFactory loggerFactory)
+        public NugetProjectModelAssetsFileParser(IFileService fileService)
         {
-            _nugetLogger = new NuGetLogger(loggerFactory.CreateLogger<NuGetLogger>());
+            _fileService = fileService;
         }
 
         public IEnumerable<NugetReference> GetNugetReferences()
         {
-            var lockfile = ReadLockFile();
+            var lockfile = _fileService.ReadLockFile();
 
             foreach (var x in lockfile.Targets)
             {
@@ -31,21 +28,11 @@ namespace dotnet_retire
                             new NugetReference
                             {
                                 Id = d.Id,
-                                Version = d.VersionRange.ToNormalizedString()
+                                Version = d.VersionRange.MinVersion.OriginalVersion
                             }).ToList()
-                        
                     };
                 }
             }
-        }
-
-        private static LockFile ReadLockFile()
-        {
-            var currentDirectory = Directory.GetCurrentDirectory();
-            var objDirectory = Path.Combine(currentDirectory, "obj");
-            var lockFilePath = Directory.EnumerateFiles(objDirectory, "project.assets.json", SearchOption.TopDirectoryOnly).FirstOrDefault();
-            var lockfile = LockFileUtilities.GetLockFile(lockFilePath, _nugetLogger);
-            return lockfile;
         }
     }
 }

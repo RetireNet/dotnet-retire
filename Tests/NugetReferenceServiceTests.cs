@@ -1,17 +1,17 @@
-using System.IO;
 using System.Linq;
 using dotnet_retire;
+using NuGet.ProjectModel;
 using Xunit;
 
 namespace Tests
 {
     public class AssetServiceTests
     {
-        public AssetsFileParser NugetReferenceService(string prefix)
+        public NugetProjectModelAssetsFileParser NugetReferenceService(string prefix)
         {
-            var mock = new MockFileService();
-            mock.SetAssetFile(prefix);
-            return new AssetsFileParser(mock);
+            var mock = new MockFileService(prefix);
+
+            return new NugetProjectModelAssetsFileParser(mock);
         }
 
         [Fact]
@@ -59,27 +59,6 @@ namespace Tests
 
             Assert.Equal("System.Net.Security", references[2].Id);
             Assert.Equal("4.3.1", references[2].Version);
-        }
-    }
-
-    public class MockFileService : IFileService
-    {
-        public string GetProjectAssetsJsonObject()
-        {
-            return FileContents;
-        }
-
-        public string FileContents { get; set; }
-
-        public void SetAssetFile(string prefix)
-        {
-            var directory = Directory.GetCurrentDirectory();
-            FileContents = File.ReadAllText($@"{directory}/{prefix}.project.assets.json");
-        }
-
-        public string GetFileContents()
-        {
-            return FileContents;
         }
     }
 }
