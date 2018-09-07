@@ -25,16 +25,16 @@ namespace dotnet_retire
             // removing this line breaks logging somehow.
             _logger.LogInformation("Scan starting".Green());
 
-            var packagesToRetire = _retireApiClient.GetPackagesToRetire();
+            var packagesToRetire = _retireApiClient.GetPackagesToRetire().ToList();
             foreach (var p in packagesToRetire)
             {
                 _logger.LogTrace($"Looking for {p.Id}/{p.Affected}".Orange());
             }
 
-            IEnumerable<NugetReference> nugetReferences = new List<NugetReference>();
+            List<NugetReference> nugetReferences;
             try
             {
-                nugetReferences = _nugetreferenceservice.GetNugetReferences();
+                nugetReferences = _nugetreferenceservice.GetNugetReferences().ToList();
             }
             catch (NoAssetsFoundException)
             {
@@ -42,7 +42,7 @@ namespace dotnet_retire
                 return;
             }
 
-            _logger.LogDebug($"Found in total {nugetReferences.Count()} references of NuGets (direct & transient)");
+            _logger.LogDebug($"Found in total {nugetReferences.Count} references of NuGets (direct & transient)");
 
             var usages = _usageFinder.FindUsagesOf(nugetReferences, packagesToRetire);
 
@@ -50,7 +50,7 @@ namespace dotnet_retire
             {
                 foreach (var usage in usages)
                 {
-                    _logger.LogError($"Found direct reference to {usage.NugetReference}".Red());
+                    _logger.LogError($"Found direct reference to {usage.NugetReference} {(usage.IsDirect ? "" : $"via {usage.ReadPath()}")}".Red());
                 }
             }
             else

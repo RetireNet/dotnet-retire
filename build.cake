@@ -2,7 +2,7 @@ var target = Argument("target", "Pack");
 var configuration = Argument("configuration", "Release");
 var proj = $"./dotnet-retire/dotnet-retire.csproj";
 
-var version = "2.1.0";
+var version = "2.2.0";
 var outputDir = "./output";
 
 Task("Build")
