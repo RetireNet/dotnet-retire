@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using Microsoft.Extensions.Logging;
+using NuGet.ProjectModel;
 
 namespace dotnet_retire
 {
@@ -14,49 +15,39 @@ namespace dotnet_retire
             _logger = logger;
         }
 
-        public string GetFileContents()
+        public LockFile ReadLockFile()
         {
-            var currentDirectory = Directory.GetCurrentDirectory();
-            var objDirectory = Path.Combine(currentDirectory, "obj");
+
             string assetsFile = null;
             try
             {
-
-                assetsFile = Directory.EnumerateFiles(objDirectory, "project.assets.json", SearchOption.TopDirectoryOnly).FirstOrDefault();
+                assetsFile = Directory.EnumerateFiles(PathOfAssetsFile(), NameOfAssetsJsonFile(), SearchOption.TopDirectoryOnly).FirstOrDefault();
             }
             catch (Exception e)
             {
-                _logger.LogDebug($"Could not find project.assets.json file at '{objDirectory}'. Looking for project.lock.json instead".Orange());
+                _logger.LogDebug($"Could not find project.assets.json file at '{PathOfAssetsFile()}'");
                 _logger.LogDebug(e.ToString());
             }
 
             if (assetsFile != null)
             {
                 _logger.LogDebug($"Found project.assets.json file at '{assetsFile}'".Green());
-                return File.ReadAllText(assetsFile);
-            }
-
-            try
-            {
-                assetsFile = Directory.EnumerateFiles(currentDirectory, "project.lock.json", SearchOption.TopDirectoryOnly).FirstOrDefault();
-
-                if (assetsFile != null)
-                {
-                    _logger.LogDebug($"Found project.lock.json file at '{assetsFile}'".Green());
-                    return File.ReadAllText(assetsFile);
-                }
-                else
-                {
-                    _logger.LogDebug($"Could not find project.lock.json file in  '{currentDirectory}'".Orange());
-                }
-            }
-            catch (Exception e)
-            {
-                _logger.LogDebug($"Could not find project.lock.json file in  '{currentDirectory}'".Orange());
-                _logger.LogDebug(e.ToString());
+                return LockFileUtilities.GetLockFile(assetsFile, new NuGetLogger(_logger));
             }
 
             throw new NoAssetsFoundException();
+        }
+
+
+        public virtual string NameOfAssetsJsonFile()
+        {
+            return "project.assets.json";
+        }
+
+        public virtual string PathOfAssetsFile()
+        {
+            var currentDirectory = Directory.GetCurrentDirectory();
+            return Path.Combine(currentDirectory, "obj");
         }
     }
 }

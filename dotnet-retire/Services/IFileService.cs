@@ -1,8 +1,10 @@
 
+using NuGet.ProjectModel;
+
 namespace dotnet_retire
 {
     public interface IFileService
     {
-        string GetFileContents();
+        LockFile ReadLockFile();
     }
 }
