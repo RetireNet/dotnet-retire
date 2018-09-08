@@ -41,7 +41,7 @@ namespace dotnet_retire
                 str += $"\n {whitespace} {prefix} {_referenceDepth[i]}";
             }
 
-            return str + "\n";
+            return str;
         }
     }
 }

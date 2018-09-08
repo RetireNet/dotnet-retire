@@ -49,12 +49,21 @@ namespace dotnet_retire
             if (usages.Any())
             {
                 var plural = usages.Count > 1 ? "s" : "";
-                var errorLog = $"Found usage of vulnerable libs in {usages.Count} dependency path{plural}.";
-                foreach (var usage in usages)
+                var grouped = usages.GroupBy(g => g.NugetReference.ToString());
+                var errorLog = $"Found use of {grouped.Count()} vulnerable libs in {usages.Count} dependency path{plural}.";
+
+                foreach (var group in grouped)
                 {
-                    errorLog +=$"\n* {usage.NugetReference}".Red() + $"{(usage.IsDirect ? "\n" : $"\n{usage.ReadPath()}")}";
+                    errorLog += $"\n\n* {group.Key}".Red();
+
+                    foreach (var usage in group)
+                    {
+                        if(!usage.IsDirect)
+                            errorLog += $"\n{usage.ReadPath()}";
+                    }
                 }
 
+                errorLog += "\n";
                 _logger.LogError(errorLog);
             }
             else
