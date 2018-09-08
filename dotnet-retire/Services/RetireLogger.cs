@@ -11,13 +11,15 @@ namespace dotnet_retire
         private readonly RetireApiClient _retireApiClient;
         private readonly IAssetsFileParser _nugetreferenceservice;
         private readonly UsagesFinder _usageFinder;
+        private readonly DotNetRestorer _restorer;
 
-        public RetireLogger(ILogger<RetireLogger> logger, RetireApiClient retireApiClient, IAssetsFileParser nugetreferenceservice, UsagesFinder usageFinder)
+        public RetireLogger(ILogger<RetireLogger> logger, RetireApiClient retireApiClient, IAssetsFileParser nugetreferenceservice, UsagesFinder usageFinder, DotNetRestorer restorer)
         {
             _logger = logger;
             _retireApiClient = retireApiClient;
             _nugetreferenceservice = nugetreferenceservice;
             _usageFinder = usageFinder;
+            _restorer = restorer;
         }
 
         public void LogPackagesToRetire()
@@ -31,16 +33,22 @@ namespace dotnet_retire
                 _logger.LogTrace($"Looking for {p.Id}/{p.Affected}".Orange());
             }
 
-            List<NugetReference> nugetReferences;
-            try
+            var status = _restorer.Restore();
+            if (status.IsSuccess)
             {
-                nugetReferences = _nugetreferenceservice.GetNugetReferences().ToList();
+                _logger.LogDebug("`dotnet restore:`" + status.Output);
             }
-            catch (NoAssetsFoundException)
+            else
             {
-                _logger.LogError("No assets found. Could not check dependencies. Missing 'dotnet restore' or are you running the tool from a folder missing a csproj?");
+                _logger.LogDebug("`dotnet restore output:`" + status.Output);
+                _logger.LogDebug("`dotnet restore errors:`" + status.Errors);
+                _logger.LogDebug("`dotnet restore exitcode:`" + status.ExitCode);
+
+                _logger.LogError("Failed to `dotnet restore`. Is the current dir missing a csproj?");
                 return;
             }
+
+            var nugetReferences = _nugetreferenceservice.GetNugetReferences().ToList();
 
             _logger.LogDebug($"Found in total {nugetReferences.Count} references of NuGets (direct & transient)");
 
