@@ -6,5 +6,6 @@ namespace dotnet_retire
     public interface IFileService
     {
         LockFile ReadLockFile();
+        string GetCurrentDirectory();
     }
 }

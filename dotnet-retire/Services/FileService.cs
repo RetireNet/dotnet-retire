@@ -46,8 +46,12 @@ namespace dotnet_retire
 
         public virtual string PathOfAssetsFile()
         {
-            var currentDirectory = Directory.GetCurrentDirectory();
-            return Path.Combine(currentDirectory, "obj");
+            return Path.Combine(GetCurrentDirectory(), "obj");
+        }
+
+        public string GetCurrentDirectory()
+        {
+            return Directory.GetCurrentDirectory();
         }
     }
 }
