@@ -86,7 +86,7 @@ namespace Tests
                 new NugetReference
                 {
                     Id = "B",
-                    Version = "2.0.0",
+                    Version = "3.0.0",
                     Dependencies = new List<NugetReference>
                     {
                         new NugetReference
@@ -111,8 +111,11 @@ namespace Tests
 
             var usages = UsagesFinder.FindUsagesOf(assets, packages);
             Assert.Equal(2, usages.Count);
-            Assert.Equal(1, usages.Count(u => u.OuterMostId == "A"));
-            Assert.Equal(1, usages.Count(u => u.OuterMostId == "B"));
+            Assert.Equal(1, usages.Count(u => u.OuterMostPackage.Id == "A"));
+            Assert.Equal(1, usages.Count(u => u.OuterMostPackage.Version == "2.0.0"));
+
+            Assert.Equal(1, usages.Count(u => u.OuterMostPackage.Id == "B"));
+            Assert.Equal(1, usages.Count(u => u.OuterMostPackage.Version == "3.0.0"));
         }
 
         [Fact]
@@ -162,7 +165,8 @@ namespace Tests
             var usages = UsagesFinder.FindUsagesOf(assets, packages);
             Assert.Single(usages);
             var usage = usages.Single();
-            Assert.Equal("A", usage.OuterMostId);
+            Assert.Equal("A", usage.OuterMostPackage.Id);
+            Assert.Equal("2.0.0", usage.OuterMostPackage.Version);
             Assert.True(usage.ReadPath().Contains("A") && usage.ReadPath().Contains("B"));
         }
     }
