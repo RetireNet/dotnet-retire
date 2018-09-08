@@ -30,7 +30,7 @@ namespace dotnet_retire
 
         private static IEnumerable<Usage> FindPathsTo(Usage usage, List<NugetReference> assets)
         {
-            var allWithThisChild = assets.Where(d => d.Dependencies.Any(c => c.Id == usage.OuterMostId)).ToList();
+            var allWithThisChild = assets.Where(d => d.Dependencies.Any(c => c.Id == usage.OuterMostPackage.Id && c.Version == usage.OuterMostPackage.Version)).ToList();
             if (allWithThisChild.Count == 0)
                 yield return usage;
             else

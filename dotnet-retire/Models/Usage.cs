@@ -20,7 +20,8 @@ namespace dotnet_retire
             _referenceDepth.Add(asset);
         }
 
-        public string OuterMostId => _referenceDepth[_referenceDepth.Count - 1].Id;
+        public NugetReference OuterMostPackage => _referenceDepth[_referenceDepth.Count - 1];
+
         public bool IsDirect => _referenceDepth.Count == 1;
 
         public Usage Copy()
