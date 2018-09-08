@@ -3,7 +3,7 @@ var configuration = Argument("configuration", "Release");
 var projName = "dotnet-retire";
 var proj = $"./{projName}/{projName}.csproj";
 
-var version = "2.2.0";
+var version = "2.2.1";
 var outputDir = "./output";
 
 Task("Build")

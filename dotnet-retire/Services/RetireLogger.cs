@@ -48,10 +48,14 @@ namespace dotnet_retire
 
             if (usages.Any())
             {
+                var plural = usages.Count > 1 ? "s" : "";
+                var errorLog = $"Found usage of vulnerable libs in {usages.Count} dependency path{plural}.";
                 foreach (var usage in usages)
                 {
-                    _logger.LogError($"Found direct reference to {usage.NugetReference} {(usage.IsDirect ? "" : $"via {usage.ReadPath()}")}".Red());
+                    errorLog +=$"\n* {usage.NugetReference}".Red() + $"{(usage.IsDirect ? "\n" : $"\n{usage.ReadPath()}")}";
                 }
+
+                _logger.LogError(errorLog);
             }
             else
             {
