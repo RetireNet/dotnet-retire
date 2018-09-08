@@ -32,7 +32,15 @@ namespace dotnet_retire
 
         public string ReadPath()
         {
-            return string.Join(" > ", _referenceDepth.Skip(1).Select(r => $"{r.Id}/{r.Version}"));
+            var str = "";
+            for (var i = _referenceDepth.Count-1; i >= 0; i--)
+            {
+                var whitespace = new string(' ', _referenceDepth.Count-i);
+                var prefix = i == _referenceDepth.Count - 1 ? "" : "╚";
+                str += $"\n {whitespace} {prefix} {_referenceDepth[i]}";
+            }
+
+            return str + "\n";
         }
     }
 }
