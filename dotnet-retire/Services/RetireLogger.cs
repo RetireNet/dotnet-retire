@@ -48,7 +48,16 @@ namespace dotnet_retire
                 return;
             }
 
-            var nugetReferences = _nugetreferenceservice.GetNugetReferences().ToList();
+            List<NugetReference> nugetReferences;
+            try
+            {
+                nugetReferences = _nugetreferenceservice.GetNugetReferences().ToList();
+            }
+            catch (NoAssetsFoundException)
+            {
+                _logger.LogError("No assets found. Are you running the tool from a folder missing a csproj?");
+                return;
+            }
 
             _logger.LogDebug($"Found in total {nugetReferences.Count} references of NuGets (direct & transient)");
 
