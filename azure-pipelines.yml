@@ -10,5 +10,5 @@ variables:
   imageName: 'dotnet-retire:$(build.buildId)'
 
 steps:
-- script: docker build -f Windows.Dockerfile -t $(imageName) .
+- script: docker build -f Linux.Dockerfile -t $(imageName) .
   displayName: 'docker build'
