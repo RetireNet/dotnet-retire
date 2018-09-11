@@ -18,4 +18,5 @@ ENV PATH="/root/.dotnet/tools:${PATH}"
 
 RUN dotnet tool list -g
 
+RUN dotnet retire loglevel=debug
 RUN dotnet retire
