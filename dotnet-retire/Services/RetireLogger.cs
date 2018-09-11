@@ -73,10 +73,13 @@ namespace dotnet_retire
                 {
                     errorLog += $"\n\n* {group.Key}".Red();
 
-                    foreach (var usage in group)
+                    if (_logger.IsEnabled(LogLevel.Debug))
                     {
-                        if(!usage.IsDirect)
-                            errorLog += $"\n{usage.ReadPath()}";
+                        foreach (var usage in group)
+                        {
+                            if(!usage.IsDirect)
+                                errorLog += $"\n{usage.ReadPath()}";
+                        }
                     }
                 }
 

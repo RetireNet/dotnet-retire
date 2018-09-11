@@ -17,4 +17,5 @@ RUN dotnet tool install -g dotnet-retire --add-source ../deploy --version=999.0.
 
 RUN dotnet tool list -g
 
+RUN dotnet retire loglevel=debug
 RUN dotnet retire
