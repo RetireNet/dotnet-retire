@@ -5,23 +5,28 @@ namespace dotnet_retire
 {
     public class UsagesFinder
     {
-        public List<Usage> FindUsagesOf(List<NugetReference> assets, List<Package> knownVulnerables)
+        public List<Usage> FindUsagesOf(List<NugetReference> assets, List<PackagesResponse> knownVulnerables)
         {
             var usages = new List<Usage>();
 
             foreach (var asset in assets)
             {
-                var directPackage = knownVulnerables.FirstOrDefault(k => k.Id == asset.Id && k.Affected == asset.Version);
-
-                if (directPackage != null)
+                foreach(var vulnPackage in knownVulnerables)
                 {
-                    var usage = new Usage
+                    var directPackage = vulnPackage.Packages.FirstOrDefault(k => k.Id == asset.Id && k.Affected == asset.Version);
+
+                    if (directPackage != null)
                     {
-                        Package = directPackage
-                    };
-                    usage.Add(asset);
-                    var differentUsages = FindPathsTo(usage, assets);
-                    usages.AddRange(differentUsages);
+                        var usage = new Usage
+                        {
+                            Package = directPackage,
+                            IssueUrl = vulnPackage.Link,
+                            Description = vulnPackage.Description
+                        };
+                        usage.Add(asset);
+                        var differentUsages = FindPathsTo(usage, assets);
+                        usages.AddRange(differentUsages);
+                    }
                 }
             }
 

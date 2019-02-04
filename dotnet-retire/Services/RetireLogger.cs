@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Microsoft.Extensions.Logging;
 
 namespace dotnet_retire
@@ -30,7 +31,10 @@ namespace dotnet_retire
             var packagesToRetire = _retireApiClient.GetPackagesToRetire().ToList();
             foreach (var p in packagesToRetire)
             {
-                _logger.LogTrace($"Looking for {p.Id}/{p.Affected}".Orange());
+                foreach(var package in p.Packages)
+                {
+                    _logger.LogTrace($"Looking for {package.Id}/{package.Affected}".Orange());
+                }
             }
 
             var status = _restorer.Restore();
@@ -67,31 +71,34 @@ namespace dotnet_retire
             {
                 var plural = usages.Count > 1 ? "s" : "";
                 var grouped = usages.GroupBy(g => g.NugetReference.ToString());
-                var errorLog = $"Found use of {grouped.Count()} vulnerable libs in {usages.Count} dependency path{plural}.";
+                var sb = new StringBuilder();
+                sb.AppendLine($"Found use of {grouped.Count()} vulnerable libs in {usages.Count} dependency path{plural}.");
 
                 foreach (var group in grouped)
                 {
-                    errorLog += $"\n\n* {group.Key}".Red();
+                    sb.AppendLine();
+                    sb.AppendLine($"* {group.FirstOrDefault().Description} in {group.Key.Red()}");
+                    sb.AppendLine(group.FirstOrDefault().IssueUrl.ToString());
 
                     if (_logger.IsEnabled(LogLevel.Debug))
                     {
                         foreach (var usage in group)
                         {
                             if(!usage.IsDirect)
-                                errorLog += $"\n{usage.ReadPath()}";
+                                sb.AppendLine(usage.ReadPath());
                         }
                     }
                 }
 
-                errorLog += "\n";
-                _logger.LogError(errorLog);
+                sb.AppendLine();
+                _logger.LogError(sb.ToString());
             }
             else
             {
-                _logger.LogInformation($"Found no usages of vulnerable libs!".Green());
+                _logger.LogInformation("Found no usages of vulnerable libs!".Green());
             }
 
-            _logger.LogInformation($"Scan complete.");
+            _logger.LogInformation("Scan complete.");
 
         }
     }
