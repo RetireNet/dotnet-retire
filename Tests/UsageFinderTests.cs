@@ -21,10 +21,16 @@ namespace Tests
                 }
             };
 
-            var packages = new List<Package>{ new Package
+            var packages = new List<PackagesResponse>{ new PackagesResponse
             {
-                Id = "SomePackageId",
-                Affected = "1.0.0"
+                Packages = new List<Package>
+                {
+                    new Package
+                    {
+                        Id = "SomePackageId",
+                        Affected = "1.0.0"
+                    }
+                }
             }};
             var usages = UsagesFinder.FindUsagesOf(assets, packages);
             Assert.Single(usages);
@@ -55,10 +61,16 @@ namespace Tests
                 }
             };
 
-            var packages = new List<Package>{ new Package
+            var packages = new List<PackagesResponse>{ new PackagesResponse
             {
-                Id = "SomePackageId",
-                Affected = "1.0.0"
+                Packages = new List<Package>
+                {
+                    new Package
+                    {
+                        Id = "SomePackageId",
+                        Affected = "1.0.0"
+                    }
+                }
             }};
 
             var usages = UsagesFinder.FindUsagesOf(assets, packages);
@@ -103,10 +115,16 @@ namespace Tests
                 }
             };
 
-            var packages = new List<Package>{ new Package
+            var packages = new List<PackagesResponse>{ new PackagesResponse
             {
-                Id = "Vulnerable",
-                Affected = "2.0.0"
+                Packages = new List<Package>
+                {
+                    new Package
+                    {
+                        Id = "Vulnerable",
+                        Affected = "2.0.0"
+                    }
+                }
             }};
 
             var usages = UsagesFinder.FindUsagesOf(assets, packages);
@@ -156,10 +174,17 @@ namespace Tests
                 }
             };
 
-            var packages = new List<Package>{ new Package
+
+            var packages = new List<PackagesResponse>{ new PackagesResponse
             {
-                Id = "Vulnerable",
-                Affected = "2.0.0"
+                Packages = new List<Package>
+                {
+                    new Package
+                    {
+                        Id = "Vulnerable",
+                        Affected = "2.0.0"
+                    }
+                }
             }};
 
             var usages = UsagesFinder.FindUsagesOf(assets, packages);

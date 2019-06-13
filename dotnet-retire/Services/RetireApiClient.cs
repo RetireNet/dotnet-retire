@@ -16,17 +16,17 @@ namespace dotnet_retire
             _rootUrl = options.Value.RootUrl;
         }
 
-        public IEnumerable<Package> GetPackagesToRetire()
+        public IEnumerable<PackagesResponse> GetPackagesToRetire()
         {
             _logger.LogDebug($"Fetching known vulnerable packages from {_rootUrl}".Blue());
             var retireJsonUrl = _rootUrl;
             var start = HttpService.Get<Start>(retireJsonUrl);
 
-            var packagesToRetire = new List<Package>();
+            var packagesToRetire = new List<PackagesResponse>();
             foreach (var link in start.Links)
             {
                 var packagesResponse = HttpService.Get<PackagesResponse>(link);
-                packagesToRetire.AddRange(packagesResponse.Packages);
+                packagesToRetire.Add(packagesResponse);
             }
             return packagesToRetire;
         }

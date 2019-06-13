@@ -9,6 +9,8 @@ namespace dotnet_retire
         private readonly List<NugetReference> _referenceDepth;
         public NugetReference NugetReference => _referenceDepth[0];
         public Package Package { get; set; }
+        public Uri IssueUrl { get; set; }
+        public string Description { get; set; }
 
         public Usage()
         {
@@ -26,7 +28,12 @@ namespace dotnet_retire
 
         public Usage Copy()
         {
-            var copy = new Usage {Package = Package};
+            var copy = new Usage
+            {
+                Package = Package,
+                IssueUrl = IssueUrl,
+                Description = Description
+            };
             copy._referenceDepth.AddRange(_referenceDepth);
             return copy;
         }
