@@ -1,5 +1,9 @@
 FROM microsoft/dotnet:2.1-sdk
 
+USER ContainerAdministrator
+RUN setx /M PATH "%PATH%;C:\Users\ContainerUser\.dotnet\tools"
+USER ContainerUser
+
 # copy project
 WORKDIR VulnerableApp
 COPY SampleProjects/VulnerableApp/VulnerableApp.csproj ./
