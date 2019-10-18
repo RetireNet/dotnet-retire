@@ -5,6 +5,7 @@
 | AppVeyor                    | Windows      | [![Build status](https://ci.appveyor.com/api/projects/status/6y4yrtkhofgcswqt/branch/master?svg=true)](https://ci.appveyor.com/project/JohnKorsnes/dotnet-retire/branch/master)|
 | Travis                      | Linux        | [![Build Status](https://travis-ci.org/RetireNet/dotnet-retire.svg?branch=master)](https://travis-ci.org/RetireNet/dotnet-retire)|
 | Azure DevOps | Linux | [![Build Status](https://dev.azure.com/RetireNET/dotnet-retire/_apis/build/status/RetireNet.dotnet-retire?branchName=master)](https://dev.azure.com/RetireNET/dotnet-retire/_build/latest?definitionId=1)|
+
  [![NuGet](https://img.shields.io/nuget/v/dotnet-retire.svg)](https://www.nuget.org/packages/dotnet-retire/)
 [![NuGet](https://img.shields.io/nuget/dt/dotnet-retire.svg)](https://www.nuget.org/packages/dotnet-retire/)
 
