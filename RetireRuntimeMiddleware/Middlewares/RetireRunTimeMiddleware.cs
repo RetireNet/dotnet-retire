@@ -19,7 +19,7 @@ namespace RetireRuntimeMiddleware.Middlewares
 
         public async Task InvokeAsync(HttpContext context)
         {
-            var report = _client.GetReport();
+            var report = await _client.GetReport();
 
             var json = JsonConvert.SerializeObject(report, new JsonSerializerSettings
             {
