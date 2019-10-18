@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,8 +25,15 @@ namespace RetireRuntimeMiddleware.HttpClients
             {
                 AppRuntimeDetails = appRunTimeDetails,
                 IsVulnerable = channel.VulnerableRelease != null,
-                VulnerableRelease = channel.VulnerableRelease,
-                SecurityRelease = channel.SecurityRelease,
+                VulnerableRelease = channel.VulnerableRelease != null ? new ReleaseInfo
+                {
+                    RuntimeVersion = channel.VulnerableRelease?.Runtime.Version
+                } : null,
+                SecurityRelease = channel.SecurityRelease != null ? new ReleaseInfo
+                {
+                    RuntimeVersion = channel.SecurityRelease?.Runtime.Version,
+                    CVEs = channel.SecurityRelease?.CVEs
+                } : null,
             };
         }
 

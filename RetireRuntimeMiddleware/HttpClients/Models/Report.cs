@@ -8,7 +8,14 @@ namespace RetireRuntimeMiddleware.Middlewares.Models
         public bool IsVulnerable { get; set; }
         public AppRunTimeDetails AppRuntimeDetails { get; set; }
 
-        public Release VulnerableRelease { get; set; }
-        public Release SecurityRelease { get; set; }
+        public ReleaseInfo VulnerableRelease { get; set; }
+        public ReleaseInfo SecurityRelease { get; set; }
+    }
+
+    internal class ReleaseInfo
+    {
+        public string RuntimeVersion { get; set; }
+
+        public IEnumerable<CVE> CVEs { get; set; }
     }
 }

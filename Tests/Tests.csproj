@@ -10,17 +10,6 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="NuGet.ProjectModel" Version="4.8.0" />
-      
-    <!-- 
-      this test project has conflicts due to mismatches in dotnet-retire & middleware project dependencies
-      setting them explicitly here to avoid warnings.
-      
-      The test project should probably be split into 2 seperate to solve the issue
-    -->
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.1" />
-
-
   </ItemGroup>
 
   <ItemGroup>

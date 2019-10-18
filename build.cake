@@ -7,7 +7,7 @@ var dotnetRetireVersion = "2.3.2";
 
 var dotnetMiddlewareName = "RetireRuntimeMiddleware";
 var dotnetMiddlewareProj= $"./{dotnetMiddlewareName}/{dotnetMiddlewareName}.csproj";
-var dotnetMiddlewareVersion = "0.2.1";
+var dotnetMiddlewareVersion = "0.4.0";
 
 var outputDir = "./output";
 

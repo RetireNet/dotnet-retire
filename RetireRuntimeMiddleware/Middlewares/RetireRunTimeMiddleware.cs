@@ -23,7 +23,8 @@ namespace RetireRuntimeMiddleware.Middlewares
 
             var json = JsonConvert.SerializeObject(report, new JsonSerializerSettings
             {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                NullValueHandling = NullValueHandling.Ignore
             });
 
             context.Response.OnStarting(state =>
