@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,14 +19,15 @@ namespace RetireRuntimeMiddleware.HttpClients
         public async Task<Report> GetReport()
         {
             var appRunTimeDetails = AppRunTimeDetails.New();
-            var runtimes = await GetVulnerableRuntimes();
-            var vulnerableRuntime = runtimes.Find(appRunTimeDetails.RuntimeVersion);
+            var channelReports = await GetVulnerableRuntimes();
+            var channel = channelReports.FindChannel(appRunTimeDetails.RuntimeVersion);
 
             return new Report
             {
                 AppRuntimeDetails = appRunTimeDetails,
-                vulnerable = vulnerableRuntime != null,
-                VulnerableRuntimeInfo = vulnerableRuntime,
+                IsVulnerable = channel.VulnerableRelease != null,
+                VulnerableRelease = channel.VulnerableRelease,
+                SecurityRelease = channel.SecurityRelease,
             };
         }
 
@@ -34,39 +36,51 @@ namespace RetireRuntimeMiddleware.HttpClients
             var vulnerabilityReport = new VulnerabilityReport();
             var index = await _httpClient.GetIndexAsync();
 
-            var tasks = new List<Task<IEnumerable<Release>>>();
+            var tasks = new List<Task<ChannelReport>>();
 
             foreach (var channel in index.Channels)
             {
-                tasks.Add(GetVulnerableRuntimesForChannel(channel));
+                tasks.Add(GetChannelReport(channel));
             }
 
-            var allReleasesAcrossChannels = await Task.WhenAll(tasks);
+            var allChannels = await Task.WhenAll(tasks);
 
-            foreach (var releasesForSpecificChannel in allReleasesAcrossChannels)
+            foreach (var channelReport in allChannels)
             {
-                vulnerabilityReport.Add(releasesForSpecificChannel);
+                vulnerabilityReport.AddChannelReport(channelReport);
             }
 
             return vulnerabilityReport;
         }
 
-        private async Task<IEnumerable<Release>> GetVulnerableRuntimesForChannel(Channel channel)
+        private async Task<ChannelReport> GetChannelReport(Channel channel)
         {
             var releasesContainer = await _httpClient.GetReleases(channel.ReleasesUrl);
 
             var vulnerableReleases = new List<Release>();
 
-            foreach (var release in releasesContainer.Releases)
+            var securityRelease = releasesContainer.Releases.FirstOrDefault(r => r.Security);
+            if (securityRelease != null)
             {
-                if (release.CVEs == null)
-                    continue;
-
-                if (release.CVEs.Any())
-                    vulnerableReleases.Add(release);
+                vulnerableReleases.AddRange(releasesContainer.Releases.Where(r => r.ReleaseVersion != securityRelease.ReleaseVersion));
             }
 
-            return vulnerableReleases;
+            return new ChannelReport
+            {
+                SecurityRelease = securityRelease,
+                AllVulnerablesExceptLatestSecurityRelease = vulnerableReleases
+            };
         }
+    }
+
+    internal class ChannelReport
+    {
+        public ChannelReport()
+        {
+
+        }
+        public Release SecurityRelease { get; set; }
+        public IEnumerable<Release> AllVulnerablesExceptLatestSecurityRelease { get; set; }
+        public Release VulnerableRelease { get; set; }
     }
 }

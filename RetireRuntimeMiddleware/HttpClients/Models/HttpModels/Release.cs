@@ -17,5 +17,7 @@ namespace RetireRuntimeMiddleware.HttpClients.Models
         public IEnumerable<CVE> CVEs { get; set; }
 
         public Runtime Runtime { get; set; }
+
+        public bool Security { get; set; }
     }
 }

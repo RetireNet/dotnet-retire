@@ -6,7 +6,11 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.App" />
-        <PackageReference Include="RetireRuntimeMiddleware" Version="0.2.1" />
+<!--        <PackageReference Include="RetireRuntimeMiddleware" Version="0.2.1" />-->
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\RetireRuntimeMiddleware\RetireRuntimeMiddleware.csproj" />
     </ItemGroup>
 
 
