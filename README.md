@@ -83,25 +83,35 @@ Metadata endpoint used: https://dotnetcli.blob.core.windows.net/dotnet/release-m
 
 
 ### Sample output
+
+An app running on the vulnerable 2.1.11 runtime:
 ```
 {
-    "vulnerable": true,
-    "appRuntimeDetails": {
-        "osPlatform": "Darwin 18.6.0 Darwin Kernel Version 18.6.0: Thu Apr 25 23:16:27 PDT 2019; root:xnu-4903.261.4~2/RELEASE_X86_64",
-        "targetFramework": ".NETCoreApp,Version=v2.1",
-        "runtimeVersion": "2.1.8"
-    },
-    "vulnerableRuntimeInfo": {
-        "release-version": "2.1.8",
-        "cve-list": [
-            {
-                "cve-id": " CVE-2019-0657",
-                "cve-url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-0657"
-            }
-        ],
-        "runtime": {
-            "version": "2.1.8"
-        }
-    }
+   "isVulnerable":true,
+   "appRuntimeDetails":{
+      "osPlatform":"Microsoft Windows 6.3.9600 ",
+      "targetFramework":".NETCoreApp,Version=v2.1",
+      "runtimeVersion":"2.1.11"
+   },
+   "vulnerableRelease":{
+      "runtimeVersion":"2.1.11"
+   },
+   "securityRelease":{
+      "runtimeVersion":"2.1.13",
+      "cvEs":[
+         {
+            "cve-id":" CVE-2018-8269",
+            "cve-url":"https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8269"
+         },
+         {
+            "cve-id":" CVE-2019-1301",
+            "cve-url":"https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-1301"
+         },
+         {
+            "cve-id":" CVE-2019-1302",
+            "cve-url":"https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-1302"
+         }
+      ]
+   }
 }
 ```
