@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\dotnet-retire\dotnet-retire.csproj" />
+    <ProjectReference Include="..\SampleProjects\VulnerableRunTimeWebApp\VulnerableRunTimeWebApp.csproj" />
   </ItemGroup>
 
   <ItemGroup>
