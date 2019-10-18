@@ -12,7 +12,7 @@ namespace Tests
         {
             var client = new ReleaseMetadataClient();
             var report = await client.GetReport();
-            var hasRuntimeVersion = string.IsNullOrEmpty(report.AppRuntimeDetails.RuntimeVersion);
+            var hasRuntimeVersion = !string.IsNullOrEmpty(report.AppRuntimeDetails.RuntimeVersion);
             Assert.True(hasRuntimeVersion);
         }
     }
