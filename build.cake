@@ -1,39 +1,50 @@
 var target = Argument("target", "Pack");
 var configuration = Argument("configuration", "Release");
-var projName = "dotnet-retire";
-var proj = $"./{projName}/{projName}.csproj";
 
-var version = "2.3.2";
+var dotnetRetireProjName = "dotnet-retire";
+var dotnetRetireProj= $"./{dotnetRetireProjName}/{dotnetRetireProjName}.csproj";
+var dotnetRetireVersion = "2.3.2";
+
+var dotnetMiddlewareName = "RetireRuntimeMiddleware";
+var dotnetMiddlewareProj= $"./{dotnetMiddlewareName}/{dotnetMiddlewareName}.csproj";
+var dotnetMiddlewareVersion = "0.1.0";
+
 var outputDir = "./output";
 
 Task("Build")
     .Does(() => {
-        DotNetCoreBuild(proj, new DotNetCoreBuildSettings { Configuration = "Release" });
+        DotNetCoreBuild(dotnetRetireProj, new DotNetCoreBuildSettings { Configuration = "Release" });
+        DotNetCoreBuild(dotnetMiddlewareProj, new DotNetCoreBuildSettings { Configuration = "Release" });
     });
 
 Task("Test")
     .IsDependentOn("Build")
     .Does(() => {
-        var testproj = $"./Tests/Tests.csproj";
-        DotNetCoreTest(testproj);
+        DotNetCoreTest($"./Tests/Tests.csproj");
 });
 
 Task("Pack")
     .IsDependentOn("Test")
     .Does(() => {
-        var coresettings = new DotNetCorePackSettings
-        {
-            Configuration = "Release",
-            OutputDirectory = outputDir,
-        };
-        coresettings.MSBuildSettings = new DotNetCoreMSBuildSettings()
-                                        .WithProperty("Version", new[] { version });
-
-
-        DotNetCorePack(proj, coresettings);
+        PackIt(dotnetRetireProj, dotnetRetireVersion);
+        PackIt(dotnetMiddlewareName, dotnetMiddlewareVersion);
 });
 
-Task("Publish")
+private void PackIt(string project, string version)
+{
+    var coresettings = new DotNetCorePackSettings
+    {
+        Configuration = "Release",
+        OutputDirectory = outputDir,
+    };
+    coresettings.MSBuildSettings = new DotNetCoreMSBuildSettings()
+                                    .WithProperty("Version", new[] { version });
+
+
+    DotNetCorePack(project, coresettings);
+}
+
+Task("PublishDotnetRetire")
     .IsDependentOn("Pack")
     .Does(() => {
         var settings = new DotNetCoreNuGetPushSettings
@@ -42,7 +53,18 @@ Task("Publish")
             ApiKey = EnvironmentVariable("NUGET_API_KEY")
         };
 
-        DotNetCoreNuGetPush($"{outputDir}/{projName}.{version}.nupkg", settings);
+        DotNetCoreNuGetPush($"{outputDir}/{dotnetRetireProjName}.{dotnetRetireVersion}.nupkg", settings);
+});
+
+Task("PublishMiddleware")
+    .IsDependentOn("Pack")
+    .Does(() => {
+        var settings = new DotNetCoreNuGetPushSettings
+        {
+            Source = "https://api.nuget.org/v3/index.json",
+            ApiKey = EnvironmentVariable("NUGET_API_KEY")
+        };
+        DotNetCoreNuGetPush($"{outputDir}/{dotnetMiddlewareName}.{dotnetMiddlewareVersion}.nupkg", settings);
 });
 
 RunTarget(target);
