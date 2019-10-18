@@ -80,3 +80,28 @@ app.Map("/report", a => a.UseRuntimeVulnerabilityReport());
 It will fetch the releases listed in the official metadata API provided by Microsoft, and check if your app is running on a runtime with known CVEs.
 
 Metadata endpoint used: https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/releases-index.json
+
+
+### Sample output
+```
+{
+    "vulnerable": true,
+    "appRuntimeDetails": {
+        "osPlatform": "Darwin 18.6.0 Darwin Kernel Version 18.6.0: Thu Apr 25 23:16:27 PDT 2019; root:xnu-4903.261.4~2/RELEASE_X86_64",
+        "targetFramework": ".NETCoreApp,Version=v2.1",
+        "runtimeVersion": "2.1.8"
+    },
+    "vulnerableRuntimeInfo": {
+        "release-version": "2.1.8",
+        "cve-list": [
+            {
+                "cve-id": " CVE-2019-0657",
+                "cve-url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-0657"
+            }
+        ],
+        "runtime": {
+            "version": "2.1.8"
+        }
+    }
+}
+```
