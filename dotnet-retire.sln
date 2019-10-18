@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetireRuntimeMiddleware", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VulnerableRunTimeWebApp", "SampleProjects\VulnerableRunTimeWebApp\VulnerableRunTimeWebApp.csproj", "{B71C0875-44CD-4511-B0CC-B91E11FB2094}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCore.ReleaseMetadata.HttpClient", "DotNetCore.ReleaseMetadata.HttpClient\DotNetCore.ReleaseMetadata.HttpClient.csproj", "{160DA0A9-8CF4-469B-AEF6-DDD29D948CCB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,10 +41,6 @@ Global
 		{B71C0875-44CD-4511-B0CC-B91E11FB2094}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B71C0875-44CD-4511-B0CC-B91E11FB2094}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B71C0875-44CD-4511-B0CC-B91E11FB2094}.Release|Any CPU.Build.0 = Release|Any CPU
-		{160DA0A9-8CF4-469B-AEF6-DDD29D948CCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{160DA0A9-8CF4-469B-AEF6-DDD29D948CCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{160DA0A9-8CF4-469B-AEF6-DDD29D948CCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{160DA0A9-8CF4-469B-AEF6-DDD29D948CCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

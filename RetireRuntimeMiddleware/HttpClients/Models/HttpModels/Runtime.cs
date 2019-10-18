@@ -1,4 +1,4 @@
-namespace DotNetCore.ReleaseMetadata.HttpClient.Models
+namespace RetireRuntimeMiddleware.HttpClients.Models
 {
     public class Runtime
     {

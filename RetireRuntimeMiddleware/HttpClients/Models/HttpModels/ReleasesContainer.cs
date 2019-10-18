@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-namespace DotNetCore.ReleaseMetadata.HttpClient.Models
+namespace RetireRuntimeMiddleware.HttpClients.Models
 {
-    public class ReleasesContainer
+    internal class ReleasesContainer
     {
         public ReleasesContainer()
         {

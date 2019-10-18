@@ -1,9 +1,9 @@
 using System;
 using Newtonsoft.Json;
 
-namespace DotNetCore.ReleaseMetadata.HttpClient.Models
+namespace RetireRuntimeMiddleware.HttpClients.Models
 {
-    public class Channel
+    internal class Channel
     {
         [JsonProperty("releases.json")]
         public Uri ReleasesUrl { get; set; }

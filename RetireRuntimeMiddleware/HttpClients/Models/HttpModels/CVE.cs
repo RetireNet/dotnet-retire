@@ -1,8 +1,8 @@
 using Newtonsoft.Json;
 
-namespace DotNetCore.ReleaseMetadata.HttpClient.Models
+namespace RetireRuntimeMiddleware.HttpClients.Models
 {
-    public class CVE
+    internal class CVE
     {
         [JsonProperty("cve-id")]
         public string Id { get; set; }

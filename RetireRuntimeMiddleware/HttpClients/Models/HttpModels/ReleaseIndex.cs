@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace DotNetCore.ReleaseMetadata.HttpClient.Models
+namespace RetireRuntimeMiddleware.HttpClients.Models
 {
-    public class ReleaseIndex
+    internal class ReleaseIndex
     {
         public ReleaseIndex()
         {

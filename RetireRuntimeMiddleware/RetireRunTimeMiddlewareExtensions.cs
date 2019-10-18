@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Builder;
+using RetireRuntimeMiddleware.Middlewares;
 
-namespace RetireRuntimeMiddleware
+namespace Microsoft.AspNetCore.Builder
 {
     public static class RetireRunTimeMiddlewareExtensions
     {
@@ -8,6 +8,5 @@ namespace RetireRuntimeMiddleware
         {
             return builder.UseMiddleware<RetireRunTimeMiddleware>();
         }
-
     }
 }
