@@ -11,10 +11,11 @@ var dotnetMiddlewareVersion = "0.1.0";
 
 var outputDir = "./output";
 
+var sln = "dotnet-retire.sln";
+
 Task("Build")
     .Does(() => {
-        DotNetCoreBuild(dotnetRetireProj, new DotNetCoreBuildSettings { Configuration = "Release" });
-        DotNetCoreBuild(dotnetMiddlewareProj, new DotNetCoreBuildSettings { Configuration = "Release" });
+        DotNetCoreBuild(sln, new DotNetCoreBuildSettings { Configuration = "Release" });
     });
 
 Task("Test")
@@ -36,6 +37,7 @@ private void PackIt(string project, string version)
     {
         Configuration = "Release",
         OutputDirectory = outputDir,
+        NoBuild = true
     };
     coresettings.MSBuildSettings = new DotNetCoreMSBuildSettings()
                                     .WithProperty("Version", new[] { version });
