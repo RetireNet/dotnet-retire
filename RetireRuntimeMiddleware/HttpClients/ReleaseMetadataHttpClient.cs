@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using RetireRuntimeMiddleware.HttpClients.Models.Channels;
 
 [assembly: InternalsVisibleTo("Tests")]
 namespace RetireRuntimeMiddleware.HttpClients
@@ -21,11 +22,11 @@ namespace RetireRuntimeMiddleware.HttpClients
             };
         }
 
-        public async Task<IEnumerable<Models.Releases.Channel>> GetAllChannelsAsync()
+        public async Task<IEnumerable<Channel>> GetAllChannelsAsync()
         {
             var index = await GetIndexAsync();
 
-            var tasks = new List<Task<Models.Releases.Channel>>();
+            var tasks = new List<Task<Channel>>();
 
             foreach (var singleChannel in index.Channels)
             {
@@ -36,9 +37,9 @@ namespace RetireRuntimeMiddleware.HttpClients
 
         }
 
-        public async Task<Models.Releases.Channel> GetChannel(Uri url)
+        public async Task<Channel> GetChannel(Uri url)
         {
-            return await Get<Models.Releases.Channel>(url);
+            return await Get<Channel>(url);
         }
 
         private async Task<Models.Index.ReleaseIndex> GetIndexAsync()
