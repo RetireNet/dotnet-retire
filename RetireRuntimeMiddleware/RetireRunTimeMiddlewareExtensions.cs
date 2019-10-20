@@ -1,5 +1,7 @@
 using RetireRuntimeMiddleware.Middlewares;
 
+// ReSharper disable once CheckNamespace
+// On purpose to avoid cluttering hosts with new package namespace
 namespace Microsoft.AspNetCore.Builder
 {
     public static class RetireRunTimeMiddlewareExtensions
