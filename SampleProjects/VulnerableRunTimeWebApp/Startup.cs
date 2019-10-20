@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using RetireRuntimeMiddleware;
 
 namespace VulnerableRunTimeWebApp
 {

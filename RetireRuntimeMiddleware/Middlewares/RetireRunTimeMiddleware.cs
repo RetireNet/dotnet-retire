@@ -2,19 +2,19 @@
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using RetireRuntimeMiddleware.HttpClients;
+using RetireRuntimeMiddleware.Clients;
 
 namespace RetireRuntimeMiddleware.Middlewares
 {
-    internal partial class RetireRunTimeMiddleware
+    internal class RetireRunTimeMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ReleaseMetadataClient _client;
+        private readonly ReportGenerator _client;
 
         public RetireRunTimeMiddleware(RequestDelegate next)
         {
             _next = next;
-            _client = new ReleaseMetadataClient();
+            _client = new ReportGenerator();
         }
 
         public async Task InvokeAsync(HttpContext context)

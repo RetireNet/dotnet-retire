@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace RetireRuntimeMiddleware.HttpClients.Models
+namespace RetireRuntimeMiddleware.Clients.Models
 {
     internal class CVE
     {

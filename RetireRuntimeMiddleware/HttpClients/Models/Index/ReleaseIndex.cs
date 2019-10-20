@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace RetireRuntimeMiddleware.HttpClients.Models
+namespace RetireRuntimeMiddleware.HttpClients.Models.Index
 {
     internal class ReleaseIndex
     {

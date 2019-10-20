@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
-namespace RetireRuntimeMiddleware.HttpClients.Models
+namespace RetireRuntimeMiddleware.Clients.Models
 {
     internal class Release
     {
@@ -10,13 +9,11 @@ namespace RetireRuntimeMiddleware.HttpClients.Models
             CVEs = new List<CVE>();
         }
 
-        [JsonProperty("release-version")]
         public string ReleaseVersion { get; set; }
 
-        [JsonProperty("cve-list")]
         public IEnumerable<CVE> CVEs { get; set; }
 
-        public Runtime Runtime { get; set; }
+        public string RuntimeVersion { get; set; }
 
         public bool Security { get; set; }
     }

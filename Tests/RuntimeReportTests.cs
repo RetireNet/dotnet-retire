@@ -1,4 +1,6 @@
 using System.Threading.Tasks;
+using RetireRuntimeMiddleware;
+using RetireRuntimeMiddleware.Clients;
 using RetireRuntimeMiddleware.HttpClients;
 using Xunit;
 
@@ -10,9 +12,9 @@ namespace Tests
         [Fact]
         public async Task TestReport()
         {
-            var client = new ReleaseMetadataClient();
+            var client = new ReportGenerator();
             var report = await client.GetReport();
-            var hasRuntimeVersion = !string.IsNullOrEmpty(report.AppRuntimeDetails.RuntimeVersion);
+            var hasRuntimeVersion = !string.IsNullOrEmpty(report.AppRuntimeDetails.AppRuntimeVersion);
             Assert.True(hasRuntimeVersion);
         }
     }

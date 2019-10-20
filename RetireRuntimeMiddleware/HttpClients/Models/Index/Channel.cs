@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace RetireRuntimeMiddleware.HttpClients.Models
+namespace RetireRuntimeMiddleware.HttpClients.Models.Index
 {
     internal class Channel
     {
