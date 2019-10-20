@@ -11,8 +11,7 @@ namespace RetireRuntimeMiddleware.Clients.Models
         {
 
         }
-
-        public static AppRunTimeDetails New()
+        public static AppRunTimeDetails Build(string runtime = null)
         {
             return new AppRunTimeDetails
             {
@@ -21,12 +20,10 @@ namespace RetireRuntimeMiddleware.Clients.Models
                 OsArchitecture = RuntimeInformation.OSArchitecture.ToString(),
                 OsBits = Environment.Is64BitOperatingSystem ? "64" : "32",
                 AppTargetFramework = Assembly.GetEntryAssembly()?.GetCustomAttribute<TargetFrameworkAttribute>()?.FrameworkName,
-                AppRuntimeVersion = GetNetCoreAppRuntimeVersion(),
+                AppRuntimeVersion = runtime ?? GetNetCoreAppRuntimeVersion(),
                 AppBits = Environment.Is64BitProcess ? "64" : "32",
             };
         }
-
-
         public string Os { get; set; }
 
         public string OsPlatform { get; set; }
@@ -36,7 +33,6 @@ namespace RetireRuntimeMiddleware.Clients.Models
         public string OsBits { get; set; }
 
         public string AppTargetFramework { get; set; }
-
         public string AppRuntimeVersion { get; set; }
 
         public string AppBits { get; set; }

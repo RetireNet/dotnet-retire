@@ -8,17 +8,25 @@ namespace RetireRuntimeMiddleware.Clients
     {
         private readonly ReleaseMetadataClient _client;
 
-        public ReportGenerator()
+        public ReportGenerator(ReleaseMetadataClient client)
         {
-            _client = new ReleaseMetadataClient();
+            _client = client;
         }
 
-        public async Task<Report> GetReport()
+        public async Task<Report> GetReport(AppRunTimeDetails appRunTimeDetails)
         {
-            var appRunTimeDetails = AppRunTimeDetails.New();
             var channel = await _client.GetChannel(appRunTimeDetails.AppRuntimeVersion);
 
-            var securityRelease = channel.Releases.FirstOrDefault(r => r.Security);
+            if (channel == null)
+            {
+                return new Report
+                {
+                    AppRuntimeDetails = appRunTimeDetails,
+                    Details = $"Running on unknown runtime {appRunTimeDetails.AppRuntimeVersion}. Not able to check for security patches."
+                };
+            }
+
+            var securityRelease = channel?.Releases.FirstOrDefault(r => r.Security);
 
             if (securityRelease == null || securityRelease.RuntimeVersion == appRunTimeDetails.AppRuntimeVersion)
             {
@@ -32,6 +40,7 @@ namespace RetireRuntimeMiddleware.Clients
             return new Report
             {
                 IsVulnerable = true,
+                Details = "Security patch update available",
                 AppRuntimeDetails = appRunTimeDetails,
                 SecurityRelease = securityRelease
             };

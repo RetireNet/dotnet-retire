@@ -20,7 +20,7 @@ namespace RetireRuntimeMiddleware.Clients
 
             foreach (var singleChannel in allChannels)
             {
-                var isChannelContainingRuntimeRelease = singleChannel.Releases.Any(r => r.ReleaseVersion == appRuntimeVersion && r.Runtime.Version == appRuntimeVersion);
+                var isChannelContainingRuntimeRelease = singleChannel.Releases.Any(r => r.Runtime != null && r.Runtime.Version == appRuntimeVersion);
                 if (isChannelContainingRuntimeRelease)
                 {
                     var channel = new Channel();

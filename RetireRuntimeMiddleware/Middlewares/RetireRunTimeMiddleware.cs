@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using RetireRuntimeMiddleware.Clients;
+using RetireRuntimeMiddleware.Clients.Models;
 
 namespace RetireRuntimeMiddleware.Middlewares
 {
@@ -14,12 +15,13 @@ namespace RetireRuntimeMiddleware.Middlewares
         public RetireRunTimeMiddleware(RequestDelegate next)
         {
             _next = next;
-            _client = new ReportGenerator();
+            var releaseMetadataClient = new ReleaseMetadataClient();
+            _client = new ReportGenerator(releaseMetadataClient);
         }
 
         public async Task InvokeAsync(HttpContext context)
         {
-            var report = await _client.GetReport();
+            var report = await _client.GetReport(AppRunTimeDetails.Build());
 
             var json = JsonConvert.SerializeObject(report, new JsonSerializerSettings
             {
