@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 
-namespace RetireRuntimeMiddleware.HttpClients.Models
+namespace RetireRuntimeMiddleware.HttpClients.Models.Channels
 {
-    internal class ReleasesContainer
+    internal class Channel
     {
-        public ReleasesContainer()
+        public Channel()
         {
             Releases = new List<Release>();
         }
         public IEnumerable<Release> Releases { get; set; }
     }
 }
+

@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using RetireRuntimeMiddleware.Clients.Models;
 
-namespace RetireRuntimeMiddleware.HttpClients.Models
+namespace RetireRuntimeMiddleware.HttpClients.Models.Channels
 {
     internal class Release
     {

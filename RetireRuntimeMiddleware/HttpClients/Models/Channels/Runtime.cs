@@ -1,4 +1,4 @@
-namespace RetireRuntimeMiddleware.HttpClients.Models
+namespace RetireRuntimeMiddleware.HttpClients.Models.Channels
 {
     public class Runtime
     {
