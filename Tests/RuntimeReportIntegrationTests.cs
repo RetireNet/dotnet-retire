@@ -1,8 +1,6 @@
 using System.Threading.Tasks;
-using RetireRuntimeMiddleware;
 using RetireRuntimeMiddleware.Clients;
 using RetireRuntimeMiddleware.Clients.Models;
-using RetireRuntimeMiddleware.HttpClients;
 using Xunit;
 
 namespace Tests
@@ -24,12 +22,13 @@ namespace Tests
         }
 
         [Fact]
-        public async Task JibberishAppRuntimeVersion()
+        public async Task UnknownRuntimes()
         {
             var releaseMetadataClient = new ReleaseMetadataClient();
             var client = new ReportGenerator(releaseMetadataClient);
             var report = await client.GetReport(AppRunTimeDetails.Build("abc"));
             Assert.Null(report.IsVulnerable);
+            Assert.Equal($"Running on unknown runtime abc. Not able to check for security patches.", report.Details);
         }
     }
 }

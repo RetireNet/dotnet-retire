@@ -4,10 +4,6 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using RetireRuntimeMiddleware.HttpClients.Models;
-using RetireRuntimeMiddleware.HttpClients.Models.Index;
-using RetireRuntimeMiddleware.HttpClients.Models.Releases;
-using Channel = RetireRuntimeMiddleware.HttpClients.Models.Releases.Channel;
 
 [assembly: InternalsVisibleTo("Tests")]
 namespace RetireRuntimeMiddleware.HttpClients
@@ -25,11 +21,11 @@ namespace RetireRuntimeMiddleware.HttpClients
             };
         }
 
-        public async Task<IEnumerable<Channel>> GetAllChannelsAsync()
+        public async Task<IEnumerable<Models.Releases.Channel>> GetAllChannelsAsync()
         {
             var index = await GetIndexAsync();
 
-            var tasks = new List<Task<Channel>>();
+            var tasks = new List<Task<Models.Releases.Channel>>();
 
             foreach (var singleChannel in index.Channels)
             {
@@ -40,14 +36,14 @@ namespace RetireRuntimeMiddleware.HttpClients
 
         }
 
-        public async Task<Channel> GetChannel(Uri url)
+        public async Task<Models.Releases.Channel> GetChannel(Uri url)
         {
-            return await Get<Channel>(url);
+            return await Get<Models.Releases.Channel>(url);
         }
 
-        private async Task<ReleaseIndex> GetIndexAsync()
+        private async Task<Models.Index.ReleaseIndex> GetIndexAsync()
         {
-            return await Get<ReleaseIndex>("/dotnet/release-metadata/releases-index.json");
+            return await Get<Models.Index.ReleaseIndex>("/dotnet/release-metadata/releases-index.json");
         }
 
         private async Task<T> Get<T>(string url)

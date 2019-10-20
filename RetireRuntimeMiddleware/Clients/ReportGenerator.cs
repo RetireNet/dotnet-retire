@@ -40,7 +40,6 @@ namespace RetireRuntimeMiddleware.Clients
             return new Report
             {
                 IsVulnerable = true,
-                Details = "Security patch update available",
                 AppRuntimeDetails = appRunTimeDetails,
                 SecurityRelease = securityRelease
             };
