@@ -28,7 +28,6 @@ namespace RetireRuntimeMiddleware.Clients
                     {
                         var release = new Release
                         {
-                            ReleaseVersion = r.ReleaseVersion,
                             RuntimeVersion = r.Runtime?.Version
                         };
 

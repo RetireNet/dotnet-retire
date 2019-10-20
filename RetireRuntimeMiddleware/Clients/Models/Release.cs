@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace RetireRuntimeMiddleware.Clients.Models
 {
@@ -8,13 +9,10 @@ namespace RetireRuntimeMiddleware.Clients.Models
         {
             CVEs = new List<CVE>();
         }
-
-        public string ReleaseVersion { get; set; }
-
+        public string RuntimeVersion { get; set; }
         public IEnumerable<CVE> CVEs { get; set; }
 
-        public string RuntimeVersion { get; set; }
-
+        [JsonIgnore]
         public bool Security { get; set; }
     }
 }
