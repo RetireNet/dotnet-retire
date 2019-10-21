@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-retire.Tests", "test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetireRuntimeMiddleware.Tests", "test\RetireRuntimeMiddleware.Tests\RetireRuntimeMiddleware.Tests.csproj", "{FC2B7245-9C8C-470E-8F0F-A581877F6BFE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetireRuntime.Core", "src\RetireRuntime.Core\RetireRuntime.Core.csproj", "{4F4B15D9-538E-4227-B19B-3DAD148694C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{FC2B7245-9C8C-470E-8F0F-A581877F6BFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC2B7245-9C8C-470E-8F0F-A581877F6BFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC2B7245-9C8C-470E-8F0F-A581877F6BFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F4B15D9-538E-4227-B19B-3DAD148694C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F4B15D9-538E-4227-B19B-3DAD148694C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F4B15D9-538E-4227-B19B-3DAD148694C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F4B15D9-538E-4227-B19B-3DAD148694C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,5 +68,6 @@ Global
 		{3501E16B-20FF-4196-8C3D-623456C84768} = {117AD616-E33A-4183-8CD5-C9BA137C0838}
 		{3902B2F8-75C5-46AF-8837-8AEB23E0A79E} = {FB569CAF-B2B8-4145-8CDF-93150FCE9C8B}
 		{FC2B7245-9C8C-470E-8F0F-A581877F6BFE} = {FB569CAF-B2B8-4145-8CDF-93150FCE9C8B}
+		{4F4B15D9-538E-4227-B19B-3DAD148694C1} = {117AD616-E33A-4183-8CD5-C9BA137C0838}
 	EndGlobalSection
 EndGlobal
