@@ -2,11 +2,11 @@ var target = Argument("target", "Pack");
 var configuration = Argument("configuration", "Release");
 
 var dotnetRetireProjName = "dotnet-retire";
-var dotnetRetireProj= $"./{dotnetRetireProjName}/{dotnetRetireProjName}.csproj";
+var dotnetRetireProj= $"./src/{dotnetRetireProjName}/{dotnetRetireProjName}.csproj";
 var dotnetRetireVersion = "2.3.2";
 
 var dotnetMiddlewareName = "RetireRuntimeMiddleware";
-var dotnetMiddlewareProj= $"./{dotnetMiddlewareName}/{dotnetMiddlewareName}.csproj";
+var dotnetMiddlewareProj= $"./src/{dotnetMiddlewareName}/{dotnetMiddlewareName}.csproj";
 var dotnetMiddlewareVersion = "0.5.0";
 
 var outputDir = "./output";
@@ -21,14 +21,14 @@ Task("Build")
 Task("Test")
     .IsDependentOn("Build")
     .Does(() => {
-        DotNetCoreTest($"./Tests/Tests.csproj");
+        DotNetCoreTest($"./test/Tests/Tests.csproj");
 });
 
 Task("Pack")
     .IsDependentOn("Test")
     .Does(() => {
         PackIt(dotnetRetireProj, dotnetRetireVersion);
-        PackIt(dotnetMiddlewareName, dotnetMiddlewareVersion);
+        PackIt(dotnetMiddlewareProj, dotnetMiddlewareVersion);
 });
 
 private void PackIt(string project, string version)
