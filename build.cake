@@ -1,11 +1,13 @@
 var target = Argument("target", "Pack");
 var configuration = Argument("configuration", "Release");
 
-var dotnetRetireProjName = "dotnet-retire";
+var dotnetRetireProjName = "DotNet.Retire.Packages.Tool";
+var dotnetRetirePackageId = "dotnet-retire";
 var dotnetRetireProj= $"./src/{dotnetRetireProjName}/{dotnetRetireProjName}.csproj";
 var dotnetRetireVersion = "2.3.2";
 
-var dotnetMiddlewareName = "RetireRuntimeMiddleware";
+var dotnetMiddlewareName = "DotNet.Retire.Runtimes.Middleware";
+var dotnetMiddlewarePackageId = "RetireRuntimeMiddleware";
 var dotnetMiddlewareProj= $"./src/{dotnetMiddlewareName}/{dotnetMiddlewareName}.csproj";
 var dotnetMiddlewareVersion = "0.6.0";
 
@@ -59,7 +61,7 @@ Task("PublishDotnetRetire")
             ApiKey = EnvironmentVariable("NUGET_API_KEY")
         };
 
-        DotNetCoreNuGetPush($"{outputDir}/{dotnetRetireProjName}.{dotnetRetireVersion}.nupkg", settings);
+        DotNetCoreNuGetPush($"{outputDir}/{dotnetRetirePackageId}.{dotnetRetireVersion}.nupkg", settings);
 });
 
 Task("PublishMiddleware")
@@ -70,7 +72,7 @@ Task("PublishMiddleware")
             Source = "https://api.nuget.org/v3/index.json",
             ApiKey = EnvironmentVariable("NUGET_API_KEY")
         };
-        DotNetCoreNuGetPush($"{outputDir}/{dotnetMiddlewareName}.{dotnetMiddlewareVersion}.nupkg", settings);
+        DotNetCoreNuGetPush($"{outputDir}/{dotnetRetirePackageId}.{dotnetMiddlewareVersion}.nupkg", settings);
 });
 
 RunTarget(target);

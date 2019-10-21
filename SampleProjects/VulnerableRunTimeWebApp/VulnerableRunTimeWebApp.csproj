@@ -10,7 +10,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\RetireRuntimeMiddleware\RetireRuntimeMiddleware.csproj" />
+      <ProjectReference Include="..\..\src\DotNet.Retire.Runtimes.Middleware\DotNet.Retire.Runtimes.Middleware.csproj" />
     </ItemGroup>
 
 

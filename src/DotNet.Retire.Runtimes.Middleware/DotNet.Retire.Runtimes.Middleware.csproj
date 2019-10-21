@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <PackageId>RetireRuntimeMiddleware</PackageId>
+        <Authors>John Korsnes</Authors>
+        <Description>
+            An ASP.NET Core middleware to report vulnerable runtimes
+        </Description>
+        <Copyright>John Korsnes</Copyright>
+        <PackageTags>dotnet;retire;vulnerable;scanning;security</PackageTags>
+        <PackageProjectUrl>https://github.com/RetireNet/dotnet-retire</PackageProjectUrl>
+        <license>https://raw.githubusercontent.com/RetireNet/dotnet-retire/master/LICENSE</license>
+        <RepositoryUrl>https://github.com/RetireNet/dotnet-retire</RepositoryUrl>
+        <PackageIconUrl>https://raw.githubusercontent.com/RetireNet/images/master/nuget/dotnet-retire/icon.512x512.png</PackageIconUrl>
+        <RepositoryType>git</RepositoryType>
+        <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeP2PAssets</TargetsForTfmSpecificBuildOutput>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.0.0" />
+      <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\DotNet.Retire.Runtimes.Core\DotNet.Retire.Runtimes.Core.csproj" />
+    </ItemGroup>
+
+    <Target Name="IncludeP2PAssets">
+    <ItemGroup>
+        <BuildOutputInPackage Include="$(OutputPath)\RetireRuntime.Core.dll" />
+    </ItemGroup>
+    </Target>
+</Project>
