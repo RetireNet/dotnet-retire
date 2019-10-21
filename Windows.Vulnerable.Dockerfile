@@ -10,7 +10,7 @@ COPY SampleProjects/VulnerableApp/VulnerableApp.csproj ./
 RUN dotnet restore
 
 WORKDIR ../dotnet-retire
-COPY ./dotnet-retire ./
+COPY ./src/RetireNet.Packages.Tool ./
 
 RUN dotnet build
 RUN dotnet pack -o ../deploy /p:Version=999.0.0
