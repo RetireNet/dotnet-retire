@@ -12,10 +12,21 @@
         <RepositoryUrl>https://github.com/RetireNet/dotnet-retire</RepositoryUrl>
         <PackageIconUrl>https://raw.githubusercontent.com/RetireNet/images/master/nuget/dotnet-retire/icon.512x512.png</PackageIconUrl>
         <RepositoryType>git</RepositoryType>
+        <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeP2PAssets</TargetsForTfmSpecificBuildOutput>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.0.0" />
       <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\RetireRuntime.Core\RetireRuntime.Core.csproj" PrivateAssets="All" />
+    </ItemGroup>
+
+    <Target Name="IncludeP2PAssets">
+    <ItemGroup>
+        <BuildOutputInPackage Include="$(OutputPath)\RetireRuntime.Core.dll" />
+    </ItemGroup>
+    </Target>
 </Project>
