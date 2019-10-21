@@ -1,15 +1,20 @@
 var target = Argument("target", "Pack");
 var configuration = Argument("configuration", "Release");
 
-var dotnetRetireProjName = "DotNet.Retire.Packages.Tool";
+var dotnetRetireProjName = "RetireNet.Packages.Tool";
 var dotnetRetirePackageId = "dotnet-retire";
 var dotnetRetireProj= $"./src/{dotnetRetireProjName}/{dotnetRetireProjName}.csproj";
 var dotnetRetireVersion = "2.3.2";
 
-var dotnetMiddlewareName = "DotNet.Retire.Runtimes.Middleware";
-var dotnetMiddlewarePackageId = "RetireRuntimeMiddleware";
+var dotnetMiddlewareName = "RetireNet.Runtimes.Middleware";
+var dotnetMiddlewarePackageId = "RetireNet.Runtimes.Middleware";
 var dotnetMiddlewareProj= $"./src/{dotnetMiddlewareName}/{dotnetMiddlewareName}.csproj";
-var dotnetMiddlewareVersion = "0.6.0";
+
+var dotnetBackgroundServiceName = "RetireNet.Runtimes.BackgroundServices";
+var dotnetBackgroundServicePackageId = "RetireNet.Runtimes.BackgroundServices";
+var dotnetBackgroundServiceProj = $"./src/{dotnetBackgroundServiceName}/{dotnetBackgroundServiceName}.csproj";
+
+var runtimeCheckersVersion = "0.6.0";
 
 var outputDir = "./output";
 
@@ -34,7 +39,8 @@ Task("Pack")
     .IsDependentOn("Test")
     .Does(() => {
         PackIt(dotnetRetireProj, dotnetRetireVersion);
-        PackIt(dotnetMiddlewareProj, dotnetMiddlewareVersion);
+        PackIt(dotnetMiddlewareProj, runtimeCheckersVersion);
+        PackIt(dotnetBackgroundServiceProj, runtimeCheckersVersion);
 });
 
 private void PackIt(string project, string version)
@@ -52,7 +58,7 @@ private void PackIt(string project, string version)
     DotNetCorePack(project, coresettings);
 }
 
-Task("PublishDotnetRetire")
+Task("PublishTool")
     .IsDependentOn("Pack")
     .Does(() => {
         var settings = new DotNetCoreNuGetPushSettings
@@ -64,7 +70,7 @@ Task("PublishDotnetRetire")
         DotNetCoreNuGetPush($"{outputDir}/{dotnetRetirePackageId}.{dotnetRetireVersion}.nupkg", settings);
 });
 
-Task("PublishMiddleware")
+Task("PublishRuntimeCheckers")
     .IsDependentOn("Pack")
     .Does(() => {
         var settings = new DotNetCoreNuGetPushSettings
@@ -72,7 +78,8 @@ Task("PublishMiddleware")
             Source = "https://api.nuget.org/v3/index.json",
             ApiKey = EnvironmentVariable("NUGET_API_KEY")
         };
-        DotNetCoreNuGetPush($"{outputDir}/{dotnetRetirePackageId}.{dotnetMiddlewareVersion}.nupkg", settings);
+        DotNetCoreNuGetPush($"{outputDir}/{dotnetMiddlewarePackageId}.{runtimeCheckersVersion}.nupkg", settings);
+        DotNetCoreNuGetPush($"{outputDir}/{dotnetBackgroundServicePackageId}.{runtimeCheckersVersion}.nupkg", settings);
 });
 
 RunTarget(target);
