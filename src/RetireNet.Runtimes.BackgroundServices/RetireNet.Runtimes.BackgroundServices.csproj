@@ -24,12 +24,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\RetireNet.Runtimes.Core\RetireNet.Runtimes.Core.csproj" />
+      <ProjectReference Include="..\RetireNet.Runtimes.Core\RetireNet.Runtimes.Core.csproj" PrivateAssets="All" />
     </ItemGroup>
 
     <Target Name="IncludeP2PAssets">
-    <ItemGroup>
-        <BuildOutputInPackage Include="$(OutputPath)\RetireNet.Runtimes.Core.dll" />
-    </ItemGroup>
+        <ItemGroup>
+            <BuildOutputInPackage Include="$(OutputPath)\RetireNet.Runtimes.Core.dll" />
+        </ItemGroup>
     </Target>
 </Project>

@@ -14,7 +14,7 @@ var dotnetBackgroundServiceName = "RetireNet.Runtimes.BackgroundServices";
 var dotnetBackgroundServicePackageId = "RetireNet.Runtimes.BackgroundServices";
 var dotnetBackgroundServiceProj = $"./src/{dotnetBackgroundServiceName}/{dotnetBackgroundServiceName}.csproj";
 
-var runtimeCheckersVersion = "0.7.0";
+var runtimeCheckersVersion = "0.7.1";
 
 var outputDir = "./output";
 

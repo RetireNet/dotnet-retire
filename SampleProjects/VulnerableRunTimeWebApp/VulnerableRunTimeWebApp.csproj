@@ -6,12 +6,13 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.App" />
-        <!-- <PackageReference Include="RetireRuntimeMiddleware" Version="0.5.1"/> -->
+        <PackageReference Include="RetireNet.Runtimes.BackgroundServices" Version="0.7.1" />
+        <PackageReference Include="RetireNet.Runtimes.Middleware" Version="0.7.1" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\RetireNet.Runtimes.BackgroundServices\RetireNet.Runtimes.BackgroundServices.csproj" />
-      <ProjectReference Include="..\..\src\RetireNet.Runtimes.Middleware\RetireNet.Runtimes.Middleware.csproj" />
+<!--      <ProjectReference Include="..\..\src\RetireNet.Runtimes.BackgroundServices\RetireNet.Runtimes.BackgroundServices.csproj" />-->
+<!--      <ProjectReference Include="..\..\src\RetireNet.Runtimes.Middleware\RetireNet.Runtimes.Middleware.csproj" />-->
     </ItemGroup>
 
 
