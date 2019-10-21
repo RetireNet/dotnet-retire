@@ -13,8 +13,11 @@
 * `dotnet-retire`: a dependency checker [![NuGet](https://img.shields.io/nuget/v/dotnet-retire.svg)](https://www.nuget.org/packages/dotnet-retire/)
 [![NuGet](https://img.shields.io/nuget/dt/dotnet-retire.svg)](https://www.nuget.org/packages/dotnet-retire/)
 
-* `RetireRuntimeMiddleware`: a middleware providing runtime vulnerability reports [![NuGet](https://img.shields.io/nuget/v/RetireRuntimeMiddleware.svg)](https://www.nuget.org/packages/RetireRuntimeMiddleware/)
-[![NuGet](https://img.shields.io/nuget/dt/RetireRuntimeMiddleware.svg)](https://www.nuget.org/packages/dotnet-retire/)
+* `RetireNet.Runtimes.Middleware`: An endpoint middleware providing runtime vulnerability reports in JSON format [![NuGet](https://img.shields.io/nuget/v/RetireNet.Runtimes.Middleware.svg)](https://www.nuget.org/packages/RetireNet.Runtimes.Middleware/)
+[![NuGet](https://img.shields.io/nuget/dt/RetireNet.Runtimes.Middleware.svg)](https://www.nuget.org/packages/RetireNet.Runtimes.Middleware/)
+
+* `RetireNet.Runtimes.BackgroundServices`: An BackgroundService logging runtime vulnerabilities to the configured `ILogger` as _WARN_ [![NuGet](https://img.shields.io/nuget/v/RetireNet.Runtimes.Middleware.svg)](https://www.nuget.org/packages/RetireNet.Runtimes.Middleware/)
+[![NuGet](https://img.shields.io/nuget/dt/RetireNet.Runtimes.Middleware.svg)](https://www.nuget.org/packages/RetireNet.Runtimes.Middleware/)
 
 
 
@@ -60,12 +63,12 @@ Runs as part of the build (MSBuild target). Analyzes packages.config, does not h
 Standalone .NET console app that analyzes a packages.config. Analyzes packages.config, does not handle transient dependencies.
 
 
-## RetireRuntimeMiddleware
-We cannot detect the runtime of the app at build time, so to report use of vulnerable runtimes the app itself can report runtime by providing an API one can monitor. This middleware is that endpoint.
+## RetireNet.Runtimes.Middleware
+We cannot detect the runtime of the app at build time, so to report use of vulnerable runtimes the app itself, the host itself can provide us reports
 
 ### Install
 ```
-$ dotnet add package RetireRuntimeMiddleware
+$ dotnet add package RetireNet.Runtimes.Middleware
 ```
 
 ### Usage
@@ -115,4 +118,32 @@ An app running on the vulnerable 2.1.11 runtime on macOS:
         ]
     }
 }
+```
+
+## RetireNet.Runtimes.BackgroundServices
+This is the same report as for the middleware, only logging it using the configured `ILogger` as a _WARN_ log statment.
+
+### Install
+```
+$ dotnet add package RetireNet.Runtimes.BackgroundServices
+```
+
+### Usage
+
+Register it into the container, and provide it a interval in milliseconds how often you would like the check to execute.
+
+```
+services.AddRetireRuntimeHostedService(c => c.CheckInterval = 60000)
+```
+
+### What does it do?
+The same as for the middleware endpoint.
+
+
+### Sample output
+
+An app running on the vulnerable 2.1.11 runtime on macOS, using the `ConsoleLogger`:
+```
+warn: RetireNet.Runtimes.BackgroundServices.RetireRuntimeBackgroundService[0]
+      Running on vulnerable runtime 2.1.11. Security release 2.1.13
 ```
