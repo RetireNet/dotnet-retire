@@ -10,14 +10,14 @@
 
 # Components
 
-* `dotnet-retire`: a dependency checker [![NuGet](https://img.shields.io/nuget/v/dotnet-retire.svg)](https://www.nuget.org/packages/dotnet-retire/)
-[![NuGet](https://img.shields.io/nuget/dt/dotnet-retire.svg)](https://www.nuget.org/packages/dotnet-retire/)
+* [![NuGet](https://img.shields.io/nuget/v/dotnet-retire.svg)](https://www.nuget.org/packages/dotnet-retire/)
+[![NuGet](https://img.shields.io/nuget/dt/dotnet-retire.svg)](https://www.nuget.org/packages/dotnet-retire/) `dotnet-retire`
 
-* `RetireNet.Runtimes.Middleware`: An endpoint middleware providing runtime vulnerability reports in JSON format [![NuGet](https://img.shields.io/nuget/v/RetireNet.Runtimes.Middleware.svg)](https://www.nuget.org/packages/RetireNet.Runtimes.Middleware/)
-[![NuGet](https://img.shields.io/nuget/dt/RetireNet.Runtimes.Middleware.svg)](https://www.nuget.org/packages/RetireNet.Runtimes.Middleware/)
+* [![NuGet](https://img.shields.io/nuget/v/RetireNet.Runtimes.Middleware.svg)](https://www.nuget.org/packages/RetireNet.Runtimes.Middleware/)
+[![NuGet](https://img.shields.io/nuget/dt/RetireNet.Runtimes.Middleware.svg)](https://www.nuget.org/packages/RetireNet.Runtimes.Middleware/) `RetireNet.Runtimes.Middleware`
 
-* `RetireNet.Runtimes.BackgroundServices`: An BackgroundService logging runtime vulnerabilities to the configured `ILogger` as _WARN_ [![NuGet](https://img.shields.io/nuget/v/RetireNet.Runtimes.Middleware.svg)](https://www.nuget.org/packages/RetireNet.Runtimes.Middleware/)
-[![NuGet](https://img.shields.io/nuget/dt/RetireNet.Runtimes.Middleware.svg)](https://www.nuget.org/packages/RetireNet.Runtimes.Middleware/)
+* [![NuGet](https://img.shields.io/nuget/v/RetireNet.Runtimes.BackgroundServices.svg)](https://www.nuget.org/packages/RetireNet.Runtimes.BackgroundServices/)
+[![NuGet](https://img.shields.io/nuget/dt/RetireNet.Runtimes.BackgroundServices.svg)](https://www.nuget.org/packages/RetireNet.Runtimes.BackgroundServices/) `RetireNet.Runtimes.BackgroundServices`
 
 
 
