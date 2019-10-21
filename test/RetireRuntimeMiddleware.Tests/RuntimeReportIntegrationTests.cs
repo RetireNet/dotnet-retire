@@ -4,7 +4,7 @@ using RetireRuntimeMiddleware.Clients.Models;
 using RetireRuntimeMiddleware.HttpClients;
 using Xunit;
 
-namespace Tests
+namespace RetireRuntimeMiddleware.Tests
 {
     public class RuntimeReportIntegrationTests
     {

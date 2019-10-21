@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RetireRuntimeMiddleware.HttpClients.Models.Channels;
 
-[assembly: InternalsVisibleTo("Tests")]
+[assembly: InternalsVisibleTo("RetireRuntimeMiddleware.Tests")]
 namespace RetireRuntimeMiddleware.HttpClients
 {
     internal class ReleaseMetadataHttpClient

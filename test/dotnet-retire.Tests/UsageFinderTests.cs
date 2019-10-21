@@ -3,7 +3,7 @@ using System.Linq;
 using dotnet_retire;
 using Xunit;
 
-namespace Tests
+namespace DotNetRetire.Tests
 {
     public class UsageFinderTests
     {

@@ -21,7 +21,11 @@ Task("Build")
 Task("Test")
     .IsDependentOn("Build")
     .Does(() => {
-        DotNetCoreTest($"./test/Tests/Tests.csproj");
+        var projectFiles = GetFiles("./test/**/*.csproj");
+        foreach(var file in projectFiles)
+        {
+            DotNetCoreTest(file.FullPath);
+        }
 });
 
 Task("Pack")

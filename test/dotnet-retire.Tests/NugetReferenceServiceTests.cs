@@ -3,7 +3,7 @@ using dotnet_retire;
 using NuGet.ProjectModel;
 using Xunit;
 
-namespace Tests
+namespace DotNetRetire.Tests
 {
     public class AssetServiceTests
     {

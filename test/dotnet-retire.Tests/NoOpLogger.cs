@@ -2,7 +2,7 @@ using System;
 using dotnet_retire;
 using Microsoft.Extensions.Logging;
 
-namespace Tests
+namespace DotNetRetire.Tests
 {
     public class NoOpLogger : ILogger<FileService>
     {

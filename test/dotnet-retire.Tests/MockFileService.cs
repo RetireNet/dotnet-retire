@@ -1,7 +1,7 @@
 using System.IO;
 using dotnet_retire;
 
-namespace Tests
+namespace DotNetRetire.Tests
 {
     public class MockFileService : FileService
     {
