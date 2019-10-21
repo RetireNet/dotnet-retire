@@ -29,7 +29,7 @@
 
     <Target Name="IncludeP2PAssets">
         <ItemGroup>
-            <BuildOutputInPackage Include="$(OutputPath)\RetireNet.Runtimes.Core.dll" />
+            <BuildOutputInPackage Include="$(OutputPath)RetireNet.Runtimes.Core.dll" />
         </ItemGroup>
     </Target>
 </Project>
