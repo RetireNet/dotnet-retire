@@ -4,7 +4,7 @@ using DotNet.Retire.Runtimes.Middleware;
 // On purpose to avoid cluttering hosts with new package namespace
 namespace Microsoft.AspNetCore.Builder
 {
-    public static class RetireRunTimeMiddlewareExtensions
+    public static class AppBuilderExtensions
     {
         public static IApplicationBuilder UseRuntimeVulnerabilityReport(this IApplicationBuilder builder)
         {
