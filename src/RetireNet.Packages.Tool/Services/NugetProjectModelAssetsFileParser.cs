@@ -15,23 +15,24 @@ namespace RetireNet.Packages.Tool.Services
 
         public IEnumerable<NugetReference> GetNugetReferences()
         {
-            var lockfile = _fileService.ReadLockFile();
-
-            foreach (var x in lockfile.Targets)
+            foreach (var lockfile in _fileService.ReadLockFiles())
             {
-                foreach (var lib in x.Libraries)
+                foreach (var x in lockfile.Targets)
                 {
-                    yield return new NugetReference
+                    foreach (var lib in x.Libraries)
                     {
-                        Id = lib.Name,
-                        Version = lib.Version.OriginalVersion,
-                        Dependencies = lib.Dependencies.Select(d =>
-                            new NugetReference
-                            {
-                                Id = d.Id,
-                                Version = d.VersionRange.MinVersion.OriginalVersion
-                            }).ToList()
-                    };
+                        yield return new NugetReference
+                        {
+                            Id = lib.Name,
+                            Version = lib.Version.OriginalVersion,
+                            Dependencies = lib.Dependencies.Select(d =>
+                                new NugetReference
+                                {
+                                    Id = d.Id,
+                                    Version = d.VersionRange.MinVersion.OriginalVersion
+                                }).ToList()
+                        };
+                    }
                 }
             }
         }
