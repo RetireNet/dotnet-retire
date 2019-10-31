@@ -32,7 +32,8 @@ namespace RetireNet.Packages.Tool.Services
                 if (solutionFile != null)
                 {
                     var assetsFiles = GetAssetFilesFromSolution(solutionFile);
-                    _logger.LogDebug($"Found solution {Path.GetFileName(solutionFile)} with {assetsFiles.Count()} projects in it".Green());
+                    var plural = assetsFiles.Count() > 0 ? "s" : string.Empty;
+                    _logger.LogDebug($"Found solution {Path.GetFileName(solutionFile)} with {assetsFiles.Count()} project{plural} in it".Green());
                     foreach (var assetsFile in assetsFiles)
                     {
                         _logger.LogDebug($"Found {_assetsFileName} file at '{assetsFile}'".Green());
