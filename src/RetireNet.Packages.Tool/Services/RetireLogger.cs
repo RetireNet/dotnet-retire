@@ -56,16 +56,14 @@ namespace RetireNet.Packages.Tool.Services
                 _logger.LogDebug("`dotnet restore exitcode:`" + status.ExitCode);
 
                 _logger.LogError("Failed to `dotnet restore`. Is the current dir missing a csproj?");
-                _exitCodeHandler.HandleExitCode(status.ExitCode);
-                return;
+                _exitCodeHandler.HandleExitCode(status.ExitCode, true);
             }
 
             var lockFiles = _fileService.ReadLockFiles();
             if (!lockFiles.Any())
             {
                 _logger.LogError("No assets found. Are you running the tool from a folder missing a csproj or sln?");
-                _exitCodeHandler.HandleExitCode(ExitCode.FILE_NOT_FOUND);
-                return;
+                _exitCodeHandler.HandleExitCode(ExitCode.FILE_NOT_FOUND, true);
             }
 
             var foundVulnerabilities = false;
@@ -73,7 +71,7 @@ namespace RetireNet.Packages.Tool.Services
             {
                 _logger.LogInformation($"Analyzing '{lockFile.PackageSpec.Name}'".Green());
 
-                List<NugetReference> nugetReferences;
+                List<NugetReference> nugetReferences = null;
                 try
                 {
                     nugetReferences = _nugetreferenceservice.GetNugetReferences(lockFile).ToList();
@@ -81,8 +79,7 @@ namespace RetireNet.Packages.Tool.Services
                 catch (NoAssetsFoundException ex)
                 {
                     _logger.LogError("No assets found. Are you running the tool from a folder missing a csproj?");
-                    _exitCodeHandler.HandleExitCode(ex.HResult);
-                    return;
+                    _exitCodeHandler.HandleExitCode(ex.HResult, true);
                 }
 
                 _logger.LogDebug($"Found in total {nugetReferences.Count} references of NuGets (direct & transient)");
