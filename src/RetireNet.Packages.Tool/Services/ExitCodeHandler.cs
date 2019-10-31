@@ -16,12 +16,12 @@ namespace RetireNet.Packages.Tool.Services
         {
             if (!_options.Value.AlwaysExitWithZero)
             {
-                if (exitImmediately)
-                {
-                    Environment.Exit(exitCode);
-                }
-
                 Environment.ExitCode = exitCode;
+            }
+
+            if (exitImmediately)
+            {
+                Environment.Exit(Environment.ExitCode);
             }
         }
     }
