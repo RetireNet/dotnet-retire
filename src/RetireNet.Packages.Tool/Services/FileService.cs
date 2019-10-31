@@ -61,7 +61,6 @@ namespace RetireNet.Packages.Tool.Services
             throw new NoAssetsFoundException();
         }
 
-
         public virtual string NameOfAssetsJsonFile()
         {
             return _assetsFileName;
@@ -82,31 +81,38 @@ namespace RetireNet.Packages.Tool.Services
             return Directory.GetCurrentDirectory();
         }
 
-        public virtual IEnumerable<string> GetAssetFilesFromSolution(string slnPath)
+        public virtual IEnumerable<string> GetAssetFilesFromSolution(string solutionFile)
         {
-            var content = File.ReadAllText(slnPath);
+            var content = File.ReadAllText(solutionFile);
             var projReg = new Regex("Project\\(\"\\{[\\w-]*\\}\"\\) = \"([\\w _]*.*)\", \"(.*\\.(cs|vcx|vb)proj)\"", RegexOptions.Compiled);
             var matches = projReg.Matches(content).Cast<Match>();
 
-            var assetFiles = new List<string>();
-            var candidates = matches.Select(x => x.Groups[2].Value).ToList();
-            for (var i = 0; i < candidates.Count; ++i)
+            if (matches.Any())
             {
-                if (!Path.IsPathRooted(candidates[i]))
+                var solutionPath = Path.GetDirectoryName(solutionFile);
+                var candidates = matches.Select(x => x.Groups[2].Value).ToList();
+                var assetFiles = new List<string>(candidates.Count);
+                for (var i = 0; i < candidates.Count; ++i)
                 {
-                    candidates[i] = Path.Combine(Path.GetDirectoryName(slnPath), candidates[i]);
+                    candidates[i] = candidates[i].Replace('\\', Path.DirectorySeparatorChar);
+                    if (!Path.IsPathRooted(candidates[i]))
+                    {
+                        candidates[i] = Path.Combine(solutionPath, candidates[i]);
+                    }
+
+                    candidates[i] = Path.GetFullPath(candidates[i]);
+
+                    var assetFile = Directory.EnumerateFiles(Path.Combine(Path.GetDirectoryName(candidates[i]), _objFolderName), NameOfAssetsJsonFile(), SearchOption.TopDirectoryOnly).FirstOrDefault();
+                    if (assetFile != null)
+                    {
+                        assetFiles.Add(assetFile);
+                    }
                 }
 
-                candidates[i] = Path.GetFullPath(candidates[i]);
-
-                var assetFile = Directory.EnumerateFiles(Path.Combine(Path.GetDirectoryName(candidates[i]), _objFolderName), NameOfAssetsJsonFile(), SearchOption.TopDirectoryOnly).FirstOrDefault();
-                if (assetFile != null)
-                {
-                    assetFiles.Add(assetFile);
-                }
+                return assetFiles;
             }
 
-            return assetFiles;
+            return Array.Empty<string>();
         }
     }
 }

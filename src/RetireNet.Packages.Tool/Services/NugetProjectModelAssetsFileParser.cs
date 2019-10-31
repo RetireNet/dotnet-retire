@@ -17,9 +17,9 @@ namespace RetireNet.Packages.Tool.Services
         {
             foreach (var lockfile in _fileService.ReadLockFiles())
             {
-                foreach (var x in lockfile.Targets)
+                foreach (var target in lockfile.Targets)
                 {
-                    foreach (var lib in x.Libraries)
+                    foreach (var lib in target.Libraries)
                     {
                         yield return new NugetReference
                         {
