@@ -16,8 +16,10 @@ namespace RetireNet.Packages.Tool.Services
         private readonly UsagesFinder _usageFinder;
         private readonly DotNetRestorer _restorer;
         private readonly IFileService _fileService;
+        private readonly ExitCodeHandler _exitCodeHandler;
 
-        public RetireLogger(ILogger<RetireLogger> logger, RetireApiClient retireApiClient, IAssetsFileParser nugetreferenceservice, UsagesFinder usageFinder, DotNetRestorer restorer, IFileService fileService)
+        public RetireLogger(ILogger<RetireLogger> logger, RetireApiClient retireApiClient, IAssetsFileParser nugetreferenceservice,
+            UsagesFinder usageFinder, DotNetRestorer restorer, IFileService fileService, ExitCodeHandler exitCodeHandler)
         {
             _logger = logger;
             _retireApiClient = retireApiClient;
@@ -25,6 +27,7 @@ namespace RetireNet.Packages.Tool.Services
             _usageFinder = usageFinder;
             _restorer = restorer;
             _fileService = fileService;
+            _exitCodeHandler = exitCodeHandler;
         }
 
         public void LogPackagesToRetire()
@@ -53,6 +56,7 @@ namespace RetireNet.Packages.Tool.Services
                 _logger.LogDebug("`dotnet restore exitcode:`" + status.ExitCode);
 
                 _logger.LogError("Failed to `dotnet restore`. Is the current dir missing a csproj?");
+                _exitCodeHandler.HandleExitCode(status.ExitCode);
                 return;
             }
 
@@ -60,9 +64,11 @@ namespace RetireNet.Packages.Tool.Services
             if (!lockFiles.Any())
             {
                 _logger.LogError("No assets found. Are you running the tool from a folder missing a csproj or sln?");
+                _exitCodeHandler.HandleExitCode(ExitCode.FILE_NOT_FOUND);
                 return;
             }
 
+            var foundVulnerabilities = false;
             foreach (var lockFile in lockFiles)
             {
                 _logger.LogInformation($"Analyzing '{lockFile.PackageSpec.Name}'".Green());
@@ -72,9 +78,10 @@ namespace RetireNet.Packages.Tool.Services
                 {
                     nugetReferences = _nugetreferenceservice.GetNugetReferences(lockFile).ToList();
                 }
-                catch (NoAssetsFoundException)
+                catch (NoAssetsFoundException ex)
                 {
                     _logger.LogError("No assets found. Are you running the tool from a folder missing a csproj?");
+                    _exitCodeHandler.HandleExitCode(ex.HResult);
                     return;
                 }
 
@@ -84,6 +91,7 @@ namespace RetireNet.Packages.Tool.Services
 
                 if (usages.Any())
                 {
+                    foundVulnerabilities = true;
                     var plural = usages.Count > 1 ? "s" : string.Empty;
                     var grouped = usages.GroupBy(g => g.NugetReference.ToString());
                     var sb = new StringBuilder();
@@ -114,6 +122,11 @@ namespace RetireNet.Packages.Tool.Services
             }
 
             _logger.LogInformation("Scan complete.");
+
+            if (foundVulnerabilities)
+            {
+                _exitCodeHandler.HandleExitCode(ExitCode.FOUND_VULNERABILITIES);
+            }
         }
     }
 }
