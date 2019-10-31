@@ -31,7 +31,9 @@ namespace RetireNet.Packages.Tool.Services
                 var solutionFile = Directory.EnumerateFiles(GetCurrentDirectory(), "*.sln", SearchOption.TopDirectoryOnly).FirstOrDefault();
                 if (solutionFile != null)
                 {
-                    foreach (var assetsFile in GetAssetFilesFromSolution(solutionFile))
+                    var assetsFiles = GetAssetFilesFromSolution(solutionFile);
+                    _logger.LogDebug($"Found solution {Path.GetFileName(solutionFile)} with {assetsFiles.Count()} projects in it".Green());
+                    foreach (var assetsFile in assetsFiles)
                     {
                         _logger.LogDebug($"Found {_assetsFileName} file at '{assetsFile}'".Green());
                         lockfiles.Add(LockFileUtilities.GetLockFile(assetsFile, new NuGetLogger(_logger)));

@@ -1,5 +1,4 @@
 using System.Linq;
-using NuGet.ProjectModel;
 using RetireNet.Packages.Tool.Services;
 using Xunit;
 
@@ -7,17 +6,13 @@ namespace DotNetRetire.Tests
 {
     public class AssetServiceTests
     {
-        public NugetProjectModelAssetsFileParser NugetReferenceService(string prefix)
-        {
-            var mock = new MockFileService(prefix);
-
-            return new NugetProjectModelAssetsFileParser(mock);
-        }
+        private readonly IAssetsFileParser _assetsFileParser = new NugetProjectModelAssetsFileParser();
 
         [Fact]
         public void GetDirectReferencesWithSingleDependency()
         {
-            var references = NugetReferenceService("SingleTarget").GetNugetReferences();
+            var lockFile = new MockFileService("SingleTarget").ReadLockFiles().FirstOrDefault();
+            var references = _assetsFileParser.GetNugetReferences(lockFile);
 
             Assert.Single(references);
             Assert.Equal("Libuv", references.First().Id);
@@ -30,7 +25,8 @@ namespace DotNetRetire.Tests
         [Fact]
         public void GetDirectReferenceWithMultipleDependencies()
         {
-            var references = NugetReferenceService("SingleTarget-MultipleDependencies").GetNugetReferences();
+            var lockFile = new MockFileService("SingleTarget-MultipleDependencies").ReadLockFiles().FirstOrDefault();
+            var references = _assetsFileParser.GetNugetReferences(lockFile);
 
             Assert.Single(references);
             Assert.Equal("Newtonsoft.Json", references.First().Id);
@@ -46,7 +42,8 @@ namespace DotNetRetire.Tests
         [Fact]
         public void GetVulnerableDapperButWithManuallyUpdateSystemNetSecurity()
         {
-            var references = NugetReferenceService("SingleTarget.ManuallyFixedUpgrade").GetNugetReferences().ToArray();
+            var lockFile = new MockFileService("SingleTarget.ManuallyFixedUpgrade").ReadLockFiles().FirstOrDefault();
+            var references = _assetsFileParser.GetNugetReferences(lockFile).ToArray();
 
             Assert.Equal(3, references.Count());
 
