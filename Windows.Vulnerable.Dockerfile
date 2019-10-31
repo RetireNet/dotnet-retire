@@ -21,13 +21,13 @@ RUN dotnet tool install -g dotnet-retire --add-source ../deploy --version=999.0.
 
 RUN dotnet tool list -g
 
-RUN dotnet retire loglevel=debug
-RUN dotnet retire
+RUN dotnet retire --ignore-failures true --loglevel debug
+RUN dotnet retire --ignore-failures true
 
 WORKDIR /VulnerableSolution
 COPY SampleProjects/VulnerableSolution.sln ./VulnerableSolution.sln
 COPY SampleProjects/VulnerableApp/VulnerableApp.csproj ./VulnerableApp/VulnerableApp.csproj
 COPY SampleProjects/VulnerableConsoleApp/VulnerableConsoleApp.csproj ./VulnerableConsoleApp/VulnerableConsoleApp.csproj
 
-RUN dotnet retire loglevel=debug
+RUN dotnet retire --ignore-failures true --loglevel debug
 
