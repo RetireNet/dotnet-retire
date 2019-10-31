@@ -1,4 +1,5 @@
 using System.IO;
+using Microsoft.Extensions.Options;
 using RetireNet.Packages.Tool.Services;
 
 namespace DotNetRetire.Tests
@@ -7,7 +8,7 @@ namespace DotNetRetire.Tests
     {
         private readonly string _prefix;
 
-        public MockFileService(string prefix) : base(new NoOpLogger())
+        public MockFileService(string prefix) : base(new NoOpLogger(), Options.Create(new RetireServiceOptions()))
         {
             _prefix = prefix;
         }

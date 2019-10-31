@@ -38,14 +38,14 @@ $ dotnet retire
 
 Additional options:
 
-  - `loglevel=Trace|Debug|Information|Warning|Error|Critical` (default:`Information`)
-
-  - `rooturl=<url>` to feed> (default:[https://raw.githubusercontent.com/RetireNet/Packages/master/index.json](https://raw.githubusercontent.com/RetireNet/Packages/master/index.json))
+- `[--loglevel] {Trace|Debug|Information|Warning|Error|Critical}` (default: `Information`)
+- `[--rooturl] <URL_TO_FEED>` (default: <https://raw.githubusercontent.com/RetireNet/Packages/master/index.json>)
+- `[-p|--path] <PATH>` to *.csproj* or *.sln* file (default: current directory)
 
 Sample:
 
 ```
-$ dotnet retire loglevel=debug
+$ dotnet retire --loglevel debug
 ```
 
 #### Sample output:

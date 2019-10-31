@@ -1,25 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
+using NuGet.ProjectModel;
 using RetireNet.Packages.Tool.Models;
 
 namespace RetireNet.Packages.Tool.Services
 {
     public class NugetProjectModelAssetsFileParser : IAssetsFileParser
     {
-        private readonly IFileService _fileService;
-
-        public NugetProjectModelAssetsFileParser(IFileService fileService)
+        public IEnumerable<NugetReference> GetNugetReferences(LockFile lockFile)
         {
-            _fileService = fileService;
-        }
-
-        public IEnumerable<NugetReference> GetNugetReferences()
-        {
-            var lockfile = _fileService.ReadLockFile();
-
-            foreach (var x in lockfile.Targets)
+            foreach (var target in lockFile.Targets)
             {
-                foreach (var lib in x.Libraries)
+                foreach (var lib in target.Libraries)
                 {
                     yield return new NugetReference
                     {
