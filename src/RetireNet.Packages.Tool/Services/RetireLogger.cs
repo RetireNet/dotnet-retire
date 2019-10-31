@@ -95,12 +95,9 @@ namespace RetireNet.Packages.Tool.Services
                         sb.AppendLine($"* {group.FirstOrDefault().Description} in {group.Key.Red()}");
                         sb.AppendLine(group.FirstOrDefault().IssueUrl.ToString());
 
-                        if (_logger.IsEnabled(LogLevel.Debug))
+                        foreach (var usage in group.Where(x => !x.IsDirect))
                         {
-                            foreach (var usage in group.Where(x => !x.IsDirect))
-                            {
-                                sb.AppendLine(usage.ReadPath());
-                            }
+                            sb.AppendLine(usage.ReadPath());
                         }
                     }
 
