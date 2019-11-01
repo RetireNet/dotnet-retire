@@ -290,3 +290,5 @@ __pycache__/
 .DS_Store
 deploy/
 output/
+
+!**/RetireNet.Packages.Tool.Tests/TestFiles/**

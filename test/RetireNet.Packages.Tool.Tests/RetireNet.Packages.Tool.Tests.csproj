@@ -6,23 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
-    <PackageReference Include="xunit" Version="2.4.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="coverlet.msbuild" Version="2.7.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" PrivateAssets="All" />
     <PackageReference Include="NuGet.ProjectModel" Version="4.8.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="SingleTarget.ManuallyFixedUpgrade.project.assets.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="SingleTarget-MultipleDependencies.project.assets.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="SingleTarget.project.assets.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+      <Content Include="TestFiles\**">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
   </ItemGroup>
 
   <ItemGroup>

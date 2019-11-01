@@ -25,15 +25,15 @@ namespace RetireNet.Packages.Tool.Services
 
         public IEnumerable<LockFile> ReadLockFiles()
         {
-            var lockfiles = new List<LockFile>();
+            var lockfiles = new List<LockFile>(1);
             try
             {
-                var solutionFile = Directory.EnumerateFiles(GetCurrentDirectory(), "*.sln", SearchOption.TopDirectoryOnly).FirstOrDefault();
-                if (solutionFile != null)
+                var file = GetFile();
+                if (Path.GetExtension(file).Equals(".sln", StringComparison.OrdinalIgnoreCase))
                 {
-                    var assetsFiles = GetAssetFilesFromSolution(solutionFile);
+                    var assetsFiles = GetAssetFilesFromSolution(file);
                     var plural = assetsFiles.Count() > 1 ? "s" : string.Empty;
-                    _logger.LogDebug($"Found solution {Path.GetFileName(solutionFile)} with {assetsFiles.Count()} project{plural} in it".Green());
+                    _logger.LogDebug($"Found solution {Path.GetFileName(file)} with {assetsFiles.Count()} project{plural} in it".Green());
                     foreach (var assetsFile in assetsFiles)
                     {
                         _logger.LogDebug($"Found {_assetsFileName} file at '{assetsFile}'".Green());
@@ -42,7 +42,7 @@ namespace RetireNet.Packages.Tool.Services
                 }
                 else
                 {
-                    var assetsFile = Directory.EnumerateFiles(PathOfAssetsFile(), NameOfAssetsJsonFile(), SearchOption.TopDirectoryOnly).FirstOrDefault();
+                    var assetsFile = Directory.EnumerateFiles(PathOfAssetsFile(), _assetsFileName, SearchOption.TopDirectoryOnly).FirstOrDefault();
                     if (assetsFile != null)
                     {
                         _logger.LogDebug($"Found {_assetsFileName} file at '{assetsFile}'".Green());
@@ -64,17 +64,12 @@ namespace RetireNet.Packages.Tool.Services
             throw new NoAssetsFoundException();
         }
 
-        public virtual string NameOfAssetsJsonFile()
+        public string PathOfAssetsFile()
         {
-            return _assetsFileName;
+            return Path.Combine(GetDirectory(), _objFolderName);
         }
 
-        public virtual string PathOfAssetsFile()
-        {
-            return Path.Combine(GetCurrentDirectory(), _objFolderName);
-        }
-
-        public string GetCurrentDirectory()
+        public string GetDirectory()
         {
             if (_options.Value.Path != null)
             {
@@ -88,13 +83,41 @@ namespace RetireNet.Packages.Tool.Services
                     return _options.Value.Path;
                 }
 
-                throw new DirectoryNotFoundException($"{_options.Value.Path} is neither a file or directory");
+                throw new DirectoryNotFoundException($"The path '{_options.Value.Path}' is neither a file or directory");
             }
 
             return Directory.GetCurrentDirectory();
         }
 
-        public virtual IEnumerable<string> GetAssetFilesFromSolution(string solutionFile)
+        public string GetFile()
+        {
+            var path = _options.Value.Path ?? Directory.GetCurrentDirectory();
+
+            // Path is a file
+            if (File.Exists(path))
+            {
+                return path;
+            }
+
+            // Path is a directory
+            if (Directory.Exists(path))
+            {   // Search for solution
+                var candidates = Directory.EnumerateFiles(path, "*.sln", SearchOption.TopDirectoryOnly);
+                if (!candidates.Any())
+                {   // Fallback: Search for asset file
+                    candidates = Directory.EnumerateFiles(Path.Combine(path, _objFolderName), _assetsFileName, SearchOption.TopDirectoryOnly);
+                }
+
+                if (candidates.Count() == 1)
+                {
+                    return candidates.First();
+                }
+            }
+
+            throw new FileNotFoundException($"No or multiple .sln or assets found in path '{path}'");
+        }
+
+        public static IEnumerable<string> GetAssetFilesFromSolution(string solutionFile)
         {
             var content = File.ReadAllText(solutionFile);
             var projReg = new Regex("Project\\(\"\\{[\\w-]*\\}\"\\) = \"([\\w _]*.*)\", \"(.*\\.(cs|vcx|vb)proj)\"", RegexOptions.Compiled);
@@ -115,7 +138,7 @@ namespace RetireNet.Packages.Tool.Services
 
                     candidates[i] = Path.GetFullPath(candidates[i]);
 
-                    var assetFile = Directory.EnumerateFiles(Path.Combine(Path.GetDirectoryName(candidates[i]), _objFolderName), NameOfAssetsJsonFile(), SearchOption.TopDirectoryOnly).FirstOrDefault();
+                    var assetFile = Directory.EnumerateFiles(Path.Combine(Path.GetDirectoryName(candidates[i]), _objFolderName), _assetsFileName, SearchOption.TopDirectoryOnly).FirstOrDefault();
                     if (assetFile != null)
                     {
                         assetFiles.Add(assetFile);

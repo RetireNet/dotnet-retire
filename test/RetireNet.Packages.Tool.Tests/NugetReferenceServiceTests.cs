@@ -1,4 +1,6 @@
 using System.Linq;
+using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 using RetireNet.Packages.Tool.Services;
 using Xunit;
 
@@ -11,8 +13,8 @@ namespace DotNetRetire.Tests
         [Fact]
         public void GetDirectReferencesWithSingleDependency()
         {
-            var lockFile = new MockFileService("SingleTarget").ReadLockFiles().FirstOrDefault();
-            var references = _assetsFileParser.GetNugetReferences(lockFile);
+            var fileService = new FileService(NullLogger<FileService>.Instance, Options.Create(new RetireServiceOptions { Path = "TestFiles/SingleTarget" }));
+            var references = _assetsFileParser.GetNugetReferences(fileService.ReadLockFiles().First());
 
             Assert.Single(references);
             Assert.Equal("Libuv", references.First().Id);
@@ -25,8 +27,8 @@ namespace DotNetRetire.Tests
         [Fact]
         public void GetDirectReferenceWithMultipleDependencies()
         {
-            var lockFile = new MockFileService("SingleTarget-MultipleDependencies").ReadLockFiles().FirstOrDefault();
-            var references = _assetsFileParser.GetNugetReferences(lockFile);
+            var fileService = new FileService(NullLogger<FileService>.Instance, Options.Create(new RetireServiceOptions { Path = "TestFiles/SingleTarget-MultipleDependencies" }));
+            var references = _assetsFileParser.GetNugetReferences(fileService.ReadLockFiles().First());
 
             Assert.Single(references);
             Assert.Equal("Newtonsoft.Json", references.First().Id);
@@ -42,8 +44,8 @@ namespace DotNetRetire.Tests
         [Fact]
         public void GetVulnerableDapperButWithManuallyUpdateSystemNetSecurity()
         {
-            var lockFile = new MockFileService("SingleTarget.ManuallyFixedUpgrade").ReadLockFiles().FirstOrDefault();
-            var references = _assetsFileParser.GetNugetReferences(lockFile).ToArray();
+            var fileService = new FileService(NullLogger<FileService>.Instance, Options.Create(new RetireServiceOptions { Path = "TestFiles/SingleTarget-ManuallyFixedUpgrade" }));
+            var references = _assetsFileParser.GetNugetReferences(fileService.ReadLockFiles().First()).ToArray();
 
             Assert.Equal(3, references.Count());
 

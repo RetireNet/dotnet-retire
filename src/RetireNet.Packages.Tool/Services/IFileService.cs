@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using NuGet.ProjectModel;
 
@@ -8,6 +7,8 @@ namespace RetireNet.Packages.Tool.Services
     {
         IEnumerable<LockFile> ReadLockFiles();
 
-        string GetCurrentDirectory();
+        string GetDirectory();
+
+        string GetFile();
     }
 }
