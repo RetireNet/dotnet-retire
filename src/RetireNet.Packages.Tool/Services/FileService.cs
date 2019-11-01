@@ -78,7 +78,17 @@ namespace RetireNet.Packages.Tool.Services
         {
             if (_options.Value.Path != null)
             {
-                return _options.Value.Path;
+                if (File.Exists(_options.Value.Path))
+                {
+                    return Path.GetDirectoryName(_options.Value.Path);
+                }
+
+                if (Directory.Exists(_options.Value.Path))
+                {
+                    return _options.Value.Path;
+                }
+
+                throw new DirectoryNotFoundException($"{_options.Value.Path} is neither a file or directory");
             }
 
             return Directory.GetCurrentDirectory();
