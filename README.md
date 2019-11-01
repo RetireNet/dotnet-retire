@@ -40,6 +40,7 @@ Additional options:
 
 - `[--loglevel] {Trace|Debug|Information|Warning|Error|Critical}` (default: `Information`)
 - `[--rooturl] <URL_TO_FEED>` (default: <https://raw.githubusercontent.com/RetireNet/Packages/master/index.json>)
+- `[--ignore-failures] {true|false}` to always return a zero exit code (default: `false`)
 - `[-p|--path] <PATH>` to *.csproj* or *.sln* file (default: current directory)
 
 Sample:

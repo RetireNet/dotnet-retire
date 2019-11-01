@@ -16,8 +16,10 @@ namespace RetireNet.Packages.Tool.Services
         private readonly UsagesFinder _usageFinder;
         private readonly DotNetRestorer _restorer;
         private readonly IFileService _fileService;
+        private readonly IExitCodeHandler _exitCodeHandler;
 
-        public RetireLogger(ILogger<RetireLogger> logger, RetireApiClient retireApiClient, IAssetsFileParser nugetreferenceservice, UsagesFinder usageFinder, DotNetRestorer restorer, IFileService fileService)
+        public RetireLogger(ILogger<RetireLogger> logger, RetireApiClient retireApiClient, IAssetsFileParser nugetreferenceservice,
+            UsagesFinder usageFinder, DotNetRestorer restorer, IFileService fileService, IExitCodeHandler exitCodeHandler)
         {
             _logger = logger;
             _retireApiClient = retireApiClient;
@@ -25,6 +27,7 @@ namespace RetireNet.Packages.Tool.Services
             _usageFinder = usageFinder;
             _restorer = restorer;
             _fileService = fileService;
+            _exitCodeHandler = exitCodeHandler;
         }
 
         public void LogPackagesToRetire()
@@ -53,29 +56,30 @@ namespace RetireNet.Packages.Tool.Services
                 _logger.LogDebug("`dotnet restore exitcode:`" + status.ExitCode);
 
                 _logger.LogError("Failed to `dotnet restore`. Is the current dir missing a csproj?");
-                return;
+                _exitCodeHandler.HandleExitCode(status.ExitCode, true);
             }
 
             var lockFiles = _fileService.ReadLockFiles();
             if (!lockFiles.Any())
             {
                 _logger.LogError("No assets found. Are you running the tool from a folder missing a csproj or sln?");
-                return;
+                _exitCodeHandler.HandleExitCode(ExitCode.FILE_NOT_FOUND, true);
             }
 
+            var foundVulnerabilities = false;
             foreach (var lockFile in lockFiles)
             {
                 _logger.LogInformation($"Analyzing '{lockFile.PackageSpec.Name}'".Green());
 
-                List<NugetReference> nugetReferences;
+                List<NugetReference> nugetReferences = null;
                 try
                 {
                     nugetReferences = _nugetreferenceservice.GetNugetReferences(lockFile).ToList();
                 }
-                catch (NoAssetsFoundException)
+                catch (NoAssetsFoundException ex)
                 {
                     _logger.LogError("No assets found. Are you running the tool from a folder missing a csproj?");
-                    return;
+                    _exitCodeHandler.HandleExitCode(ex.HResult, true);
                 }
 
                 _logger.LogDebug($"Found in total {nugetReferences.Count} references of NuGets (direct & transient)");
@@ -84,6 +88,7 @@ namespace RetireNet.Packages.Tool.Services
 
                 if (usages.Any())
                 {
+                    foundVulnerabilities = true;
                     var plural = usages.Count > 1 ? "s" : string.Empty;
                     var grouped = usages.GroupBy(g => g.NugetReference.ToString());
                     var sb = new StringBuilder();
@@ -111,6 +116,11 @@ namespace RetireNet.Packages.Tool.Services
             }
 
             _logger.LogInformation("Scan complete.");
+
+            if (foundVulnerabilities)
+            {
+                _exitCodeHandler.HandleExitCode(ExitCode.FOUND_VULNERABILITIES);
+            }
         }
     }
 }
