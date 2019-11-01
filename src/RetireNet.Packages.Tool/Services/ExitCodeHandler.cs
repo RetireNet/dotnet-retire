@@ -3,7 +3,7 @@ using System;
 
 namespace RetireNet.Packages.Tool.Services
 {
-    public class ExitCodeHandler
+    public class ExitCodeHandler : IExitCodeHandler
     {
         private readonly IOptions<RetireServiceOptions> _options;
 

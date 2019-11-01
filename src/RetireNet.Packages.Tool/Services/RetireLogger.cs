@@ -16,10 +16,10 @@ namespace RetireNet.Packages.Tool.Services
         private readonly UsagesFinder _usageFinder;
         private readonly DotNetRestorer _restorer;
         private readonly IFileService _fileService;
-        private readonly ExitCodeHandler _exitCodeHandler;
+        private readonly IExitCodeHandler _exitCodeHandler;
 
         public RetireLogger(ILogger<RetireLogger> logger, RetireApiClient retireApiClient, IAssetsFileParser nugetreferenceservice,
-            UsagesFinder usageFinder, DotNetRestorer restorer, IFileService fileService, ExitCodeHandler exitCodeHandler)
+            UsagesFinder usageFinder, DotNetRestorer restorer, IFileService fileService, IExitCodeHandler exitCodeHandler)
         {
             _logger = logger;
             _retireApiClient = retireApiClient;

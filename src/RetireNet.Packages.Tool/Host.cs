@@ -47,7 +47,7 @@ namespace RetireNet.Packages.Tool
                     .AddTransient<IAssetsFileParser, NugetProjectModelAssetsFileParser>()
                     .AddTransient<UsagesFinder>()
                     .AddTransient<RetireLogger>()
-                    .AddTransient<ExitCodeHandler>()
+                    .AddTransient<IExitCodeHandler, ExitCodeHandler>()
                     .BuildServiceProvider();
 
             return this;
