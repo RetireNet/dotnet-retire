@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -20,11 +21,12 @@ namespace RetireNet.Packages.Tool
             {
                 { "-p", "path" },
                 { "--path", "path" },
+                { "--ignore-failures", "ignore-failures" }
             });
             var config = builder.Build();
 
-
             var path = config.GetValue<string>("path");
+            var alwaysExitWithZero = config.GetValue<bool?>("ignore-failures") ?? args.Any(x => x.Equals("--ignore-failures", StringComparison.OrdinalIgnoreCase));
             var rootUrlFromConfig = config.GetValue<Uri>("RootUrl");
             var logLevel = config.GetValue<LogLevel>("LogLevel");
 
@@ -35,6 +37,7 @@ namespace RetireNet.Packages.Tool
                     {
                         o.RootUrl = rootUrlFromConfig;
                         o.Path = path;
+                        o.AlwaysExitWithZero = alwaysExitWithZero;
                     })
                     .AddTransient<RetireApiClient>()
                     .AddTransient<IFileService, FileService>()
@@ -44,6 +47,7 @@ namespace RetireNet.Packages.Tool
                     .AddTransient<IAssetsFileParser, NugetProjectModelAssetsFileParser>()
                     .AddTransient<UsagesFinder>()
                     .AddTransient<RetireLogger>()
+                    .AddTransient<IExitCodeHandler, ExitCodeHandler>()
                     .BuildServiceProvider();
 
             return this;

@@ -8,5 +8,7 @@ namespace RetireNet.Packages.Tool.Services
         public Uri RootUrl { get; set; }
 
         public string Path { get; set; }
+
+        public bool AlwaysExitWithZero { get; set; }
     }
 }
