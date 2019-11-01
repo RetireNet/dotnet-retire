@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 echo "### AssertCMD - Executing command '$2'"
 eval $2
 

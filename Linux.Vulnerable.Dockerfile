@@ -6,6 +6,7 @@ ENV PATH="/root/.dotnet/tools:${PATH}"
 
 WORKDIR /dotnet-retire
 COPY ./assert-cmd.sh ./
+RUN chmod +x entrypoint.sh
 COPY ./src/RetireNet.Packages.Tool ./
 RUN dotnet build
 RUN dotnet pack -o ../deploy /p:Version=999.0.0
