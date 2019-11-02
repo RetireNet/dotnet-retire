@@ -54,6 +54,7 @@ namespace RetireNet.Packages.Tool.Services
             {
                 _logger.LogDebug($"Could not find {_assetsFileName} file at '{PathOfAssetsFile()}'");
                 _logger.LogDebug(e.ToString());
+                throw;
             }
 
             if (lockfiles.Count > 0)
