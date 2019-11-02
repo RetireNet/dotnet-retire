@@ -23,7 +23,6 @@ namespace DotNetRetire.Tests
 
         [Theory]
         [InlineData("TestFiles/SingleTarget")]
-        [InlineData("TestFiles\\SingleTarget")]
         public void GetDirectoryAndFileWithValidPaths_Success(string path)
         {
             var fileService = new FileService(NullLogger<FileService>.Instance, Options.Create(new RetireServiceOptions { Path = path }));
