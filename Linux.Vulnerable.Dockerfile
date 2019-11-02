@@ -4,6 +4,7 @@ ENV PATH="/root/.dotnet/tools:${PATH}"
 
 
 
+
 WORKDIR /dotnet-retire
 COPY ./assert-cmd.sh ./
 RUN chmod +x assert-cmd.sh
@@ -36,5 +37,6 @@ RUN /dotnet-retire/assert-cmd.sh 0 "dotnet retire --ignore-failures"
 WORKDIR /
 RUN /dotnet-retire/assert-cmd.sh 3 "dotnet retire --path /VulnerableSolution"
 RUN /dotnet-retire/assert-cmd.sh 3 "dotnet retire --path /VulnerableSolution/VulnerableSolution.sln"
-RUN /dotnet-retire/assert-cmd.sh 3 "dotnet retire --path /VulnerableSolution/VulnerableApp/VulnerableApp"
-RUN /dotnet-retire/assert-cmd.sh 3 "dotnet retire --path /VulnerableSolution/VulnerableApp/VulnerableApp/VulnerableApp.csproj"
+RUN /dotnet-retire/assert-cmd.sh 3 "dotnet retire --path /VulnerableSolution/VulnerableApp"
+RUN /dotnet-retire/assert-cmd.sh 3 "dotnet retire --path /VulnerableSolution/VulnerableApp/VulnerableApp.csproj"
+RUN /dotnet-retire/assert-cmd.sh 4 "dotnet retire --path /Not/Existing/Path"
