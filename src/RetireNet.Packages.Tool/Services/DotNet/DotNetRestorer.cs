@@ -13,7 +13,7 @@ namespace RetireNet.Packages.Tool.Services.DotNet
 
         public RunStatus Restore()
         {
-            return _dotNetRunner.Run(_fileSystem.GetCurrentDirectory(), new[] {"restore"});
+            return _dotNetRunner.Run(_fileSystem.GetDirectory(), new[] {"restore"});
         }
     }
 }

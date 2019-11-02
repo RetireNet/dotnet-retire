@@ -48,8 +48,8 @@ namespace RetireNet.Packages.Tool.Extensions
 
     public class ColoredText
     {
+        private readonly string _message;
         private int _color;
-        private string _message;
         private bool _bright;
 
         public ColoredText(string message)

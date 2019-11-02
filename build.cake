@@ -31,7 +31,9 @@ Task("Test")
         var projectFiles = GetFiles("./test/**/*.csproj");
         foreach(var file in projectFiles)
         {
-            DotNetCoreTest(file.FullPath);
+            DotNetCoreTest(file.FullPath, new DotNetCoreTestSettings {
+                ArgumentCustomization = args=>args.Append("/p:CollectCoverage=true /p:CoverletOutputFormat=opencover")
+            });
         }
 });
 
