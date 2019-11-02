@@ -8,9 +8,6 @@ namespace DotNetRetire.Tests
 {
     public class FileServiceTests
     {
-        private static string TransformPath(string path) =>
-            path.Replace('\\', Path.DirectorySeparatorChar).Replace('/', Path.DirectorySeparatorChar);
-
         [Theory]
         [InlineData("")]
         [InlineData(" ")]
@@ -31,8 +28,8 @@ namespace DotNetRetire.Tests
         {
             var fileService = new FileService(NullLogger<FileService>.Instance, Options.Create(new RetireServiceOptions { Path = path }));
 
-            Assert.EndsWith(TransformPath("TestFiles/SingleTarget"), fileService.GetDirectory());
-            Assert.EndsWith(TransformPath("TestFiles/SingleTarget/obj/project.assets.json"), fileService.GetFile());
+            Assert.EndsWith(Path.GetFullPath("TestFiles/SingleTarget"), Path.GetFullPath(fileService.GetDirectory()));
+            Assert.EndsWith(Path.GetFullPath("TestFiles/SingleTarget/obj/project.assets.json"), Path.GetFullPath(fileService.GetFile()));
         }
     }
 }

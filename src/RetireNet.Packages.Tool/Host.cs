@@ -25,7 +25,7 @@ namespace RetireNet.Packages.Tool
             });
             var config = builder.Build();
 
-            var path = config.GetValue<string>("path");
+            var path = config.GetValue<string>("path")?.Replace('/', System.IO.Path.DirectorySeparatorChar).Replace('\\', System.IO.Path.DirectorySeparatorChar);
             var alwaysExitWithZero = config.GetValue<bool?>("ignore-failures") ?? args.Any(x => x.Equals("--ignore-failures", StringComparison.OrdinalIgnoreCase));
             var rootUrlFromConfig = config.GetValue<Uri>("RootUrl");
             var logLevel = config.GetValue<LogLevel>("LogLevel");
