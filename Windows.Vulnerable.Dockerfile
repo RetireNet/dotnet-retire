@@ -33,3 +33,9 @@ COPY SampleProjects/VulnerableConsoleApp/VulnerableConsoleApp.csproj ./Vulnerabl
 RUN /dotnet-retire/assert-cmd.bat 3 "dotnet-retire" "--loglevel=debug"
 RUN /dotnet-retire/assert-cmd.bat 3 "dotnet-retire"
 RUN /dotnet-retire/assert-cmd.bat 0 "dotnet-retire" "--ignore-failures"
+
+WORKDIR /
+RUN /dotnet-retire/assert-cmd.bat 3 "dotnet-retire" "--path /VulnerableSolution"
+RUN /dotnet-retire/assert-cmd.bat 3 "dotnet-retire" "--path /VulnerableSolution/VulnerableSolution.sln"
+RUN /dotnet-retire/assert-cmd.bat 3 "dotnet-retire" "--path /VulnerableSolution/VulnerableApp/VulnerableApp"
+RUN /dotnet-retire/assert-cmd.bat 3 "dotnet-retire" "--path /VulnerableSolution/VulnerableApp/VulnerableApp/VulnerableApp.csproj"
