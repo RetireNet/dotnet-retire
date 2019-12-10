@@ -292,3 +292,4 @@ deploy/
 output/
 
 !**/RetireNet.Packages.Tool.Tests/TestFiles/**
+**opencover.xml
