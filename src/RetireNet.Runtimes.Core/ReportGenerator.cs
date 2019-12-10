@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using RetireNet.Runtimes.Core.Clients;
@@ -33,7 +34,19 @@ namespace RetireNet.Runtimes.Core
 
             var securityRelease = channel?.Releases.FirstOrDefault(r => r.Security);
 
-            if (securityRelease == null || securityRelease.RuntimeVersion == appRunTimeDetails.AppRuntimeVersion)
+            if (securityRelease == null)
+            {
+                return new Report
+                {
+                    AppRuntimeDetails = appRunTimeDetails,
+                    IsVulnerable = false
+                };
+            }
+
+            var secReleaseVersion = Version.Parse(securityRelease.RuntimeVersion);
+            var appReleaseVersion = Version.Parse(appRunTimeDetails.AppRuntimeVersion);
+
+            if (appReleaseVersion >= secReleaseVersion)
             {
                 return new Report
                 {
