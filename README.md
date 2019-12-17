@@ -76,7 +76,7 @@ $ dotnet add package RetireNet.Runtimes.Middleware
 
 Add it to your ASP.NET Core pipeline on your preferred path:
 
-```
+```csharp
 app.Map("/report", a => a.UseRuntimeVulnerabilityReport());
 ```
 
@@ -89,7 +89,7 @@ Metadata endpoint used: https://dotnetcli.blob.core.windows.net/dotnet/release-m
 ### Sample output
 
 An app running on the vulnerable 2.1.11 runtime on macOS:
-```
+```json
 {
     "isVulnerable": true,
     "appRuntimeDetails": {
@@ -133,7 +133,7 @@ $ dotnet add package RetireNet.Runtimes.BackgroundServices
 
 Register it into the container, and provide it a interval in milliseconds how often you would like the check to execute.
 
-```
+```csharp
 services.AddRetireRuntimeHostedService(c => c.CheckInterval = 60000)
 ```
 
