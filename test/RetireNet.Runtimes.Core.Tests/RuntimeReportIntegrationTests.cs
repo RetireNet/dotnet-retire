@@ -17,7 +17,6 @@ namespace RetireRuntimeMiddleware.Tests
         [InlineData("3.0.0", true)]
         [InlineData("3.0.1", true)]
         [InlineData("3.0.2", false)]
-        [InlineData("3.1.0-preview1", true)]
         [InlineData("3.1.0", true)]
         [InlineData("3.1.1", false)]
         public async Task VulnerabilityReports(string version, bool isVulnerable)

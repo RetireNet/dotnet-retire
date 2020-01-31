@@ -4,7 +4,7 @@ var configuration = Argument("configuration", "Release");
 var dotnetRetireProjName = "RetireNet.Packages.Tool";
 var dotnetRetirePackageId = "dotnet-retire";
 var dotnetRetireProj= $"./src/{dotnetRetireProjName}/{dotnetRetireProjName}.csproj";
-var dotnetRetireVersion = "3.2.0";
+var dotnetRetireVersion = "4.0.0";
 
 var dotnetMiddlewareName = "RetireNet.Runtimes.Middleware";
 var dotnetMiddlewarePackageId = "RetireNet.Runtimes.Middleware";
@@ -22,7 +22,8 @@ var sln = "dotnet-retire.sln";
 
 Task("Build")
     .Does(() => {
-        DotNetCoreBuild(sln, new DotNetCoreBuildSettings { Configuration = "Release" });
+        DotNetCoreBuild(sln, new DotNetCoreBuildSettings {
+            Configuration = "Release" });
     });
 
 Task("Test")
@@ -45,7 +46,7 @@ Task("Pack")
         PackIt(dotnetBackgroundServiceProj, runtimeCheckersVersion);
 });
 
-private void PackIt(string project, string version)
+private void PackIt(string project, string version, string tfm = null)
 {
     var coresettings = new DotNetCorePackSettings
     {
