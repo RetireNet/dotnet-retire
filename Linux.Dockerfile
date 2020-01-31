@@ -20,8 +20,8 @@ ENV DOTNET_SKIP_FIRST_TIME_EXPERIENCE 1
 
 WORKDIR /build
 COPY ./ .
-RUN dotnet tool install -g Cake.Tool --version 0.30.0
+RUN dotnet tool install -g Cake.Tool --version 0.36.0
 ENV PATH="/root/.dotnet/tools:${PATH}"
 RUN dotnet tool list -g
-ARG cakeargs=""
+ARG cakeargs="verbosity=diagnostic"
 RUN dotnet cake
