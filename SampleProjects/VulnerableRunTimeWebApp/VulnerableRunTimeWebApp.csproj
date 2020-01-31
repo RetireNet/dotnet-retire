@@ -6,6 +6,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.App" />
+        <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="2.1.0" />
         <PackageReference Include="RetireNet.Runtimes.BackgroundServices" Version="0.7.1" />
         <PackageReference Include="RetireNet.Runtimes.Middleware" Version="0.7.1" />
     </ItemGroup>
