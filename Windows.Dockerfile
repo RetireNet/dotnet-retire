@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:2.1
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1
 
 USER ContainerAdministrator
 RUN setx /M PATH "%PATH%;C:\Users\ContainerUser\.dotnet\tools"

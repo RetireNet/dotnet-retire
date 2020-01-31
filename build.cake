@@ -4,7 +4,7 @@ var configuration = Argument("configuration", "Release");
 var dotnetRetireProjName = "RetireNet.Packages.Tool";
 var dotnetRetirePackageId = "dotnet-retire";
 var dotnetRetireProj= $"./src/{dotnetRetireProjName}/{dotnetRetireProjName}.csproj";
-var dotnetRetireVersion = "3.1.0";
+var dotnetRetireVersion = "3.2.0";
 
 var dotnetMiddlewareName = "RetireNet.Runtimes.Middleware";
 var dotnetMiddlewarePackageId = "RetireNet.Runtimes.Middleware";
@@ -14,7 +14,7 @@ var dotnetBackgroundServiceName = "RetireNet.Runtimes.BackgroundServices";
 var dotnetBackgroundServicePackageId = "RetireNet.Runtimes.BackgroundServices";
 var dotnetBackgroundServiceProj = $"./src/{dotnetBackgroundServiceName}/{dotnetBackgroundServiceName}.csproj";
 
-var runtimeCheckersVersion = "0.8.0";
+var runtimeCheckersVersion = "2.0.0";
 
 var outputDir = "./output";
 

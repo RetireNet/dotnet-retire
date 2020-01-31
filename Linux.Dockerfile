@@ -9,7 +9,7 @@ RUN apt-get update \
     && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
     && sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-xenial-prod xenial main" > /etc/apt/sources.list.d/dotnetdev.list' \
     && apt-get update \
-    && apt-get install -y --no-install-recommends dotnet-sdk-2.1 unzip mono-devel \
+    && apt-get install -y --no-install-recommends dotnet-sdk-3.1 unzip mono-devel \
 	&& rm -rf /var/lib/apt/lists/* \
     && apt-get clean \
     && mkdir -p /opt/nuget \
