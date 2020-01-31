@@ -4,7 +4,7 @@ var configuration = Argument("configuration", "Release");
 var dotnetRetireProjName = "RetireNet.Packages.Tool";
 var dotnetRetirePackageId = "dotnet-retire";
 var dotnetRetireProj= $"./src/{dotnetRetireProjName}/{dotnetRetireProjName}.csproj";
-var dotnetRetireVersion = "4.0.0";
+var dotnetRetireVersion = "4.0.1";
 
 var dotnetMiddlewareName = "RetireNet.Runtimes.Middleware";
 var dotnetMiddlewarePackageId = "RetireNet.Runtimes.Middleware";
