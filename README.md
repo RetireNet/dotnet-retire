@@ -62,7 +62,8 @@ Keeping the list of packages up to date will be done via updating that repo when
 Runs as part of the build (MSBuild target). Analyzes packages.config, does not handle transient dependencies.
 #### [DevAudit](https://github.com/OSSIndex/DevAudit)
 Standalone .NET console app that analyzes a packages.config. Analyzes packages.config, does not handle transient dependencies.
-
+#### [NuGetDefense](https://github.com/digitalcoyote/NuGetDefense)
+Works on both MSBuild and SDK style projects. Executes as a MSBuild task. 
 
 ## RetireNet.Runtimes.Middleware
 We cannot detect the runtime of the app at build time, so to report use of vulnerable runtimes the app itself, the host itself can provide us reports
