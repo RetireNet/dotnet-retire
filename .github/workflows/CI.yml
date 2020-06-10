@@ -1,0 +1,22 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  ubuntu-16_04:
+    name: ubuntu-16_04
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Build Linux
+        run: docker build -f Linux.Dockerfile .
+      - name: Vulnerability test (Linux)
+        run: docker build -f Linux.Vulnerable.Dockerfile .
+
+  windows-latest:
+    name: windows-latest
+    runs-on: windows-latest
+    steps:
+      - name: Build Windows
+        run: docker build -f Windows.Dockerfile .
+      - name: Vulnerability test (Linux)
+        run: docker build -f Windows.Vulnerable.Dockerfile .

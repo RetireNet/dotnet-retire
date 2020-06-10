@@ -1,12 +1,6 @@
 ## Build status
 
-| Build server                | Platform     | Status                                                                                                                    |
-|-----------------------------|--------------|---------------------------------------------------------------------------------------------------------------------------|
-| AppVeyor                    | Windows      | [![Build status](https://ci.appveyor.com/api/projects/status/6y4yrtkhofgcswqt/branch/master?svg=true)](https://ci.appveyor.com/project/JohnKorsnes/dotnet-retire/branch/master)|
-| Travis                      | Linux        | [![Build Status](https://travis-ci.org/RetireNet/dotnet-retire.svg?branch=master)](https://travis-ci.org/RetireNet/dotnet-retire)|
-| Azure DevOps | Linux | [![Build Status](https://dev.azure.com/RetireNET/dotnet-retire/_apis/build/status/RetireNet.dotnet-retire?branchName=master)](https://dev.azure.com/RetireNET/dotnet-retire/_build/latest?definitionId=1)|
-
-
+[![Build](https://github.com/retirenet/dotnet-retire/CI/badge.svg)](https://github.com/retirenet/dotnet-retire/actions)
 
 # Components
 
@@ -63,7 +57,7 @@ Runs as part of the build (MSBuild target). Analyzes packages.config, does not h
 #### [DevAudit](https://github.com/OSSIndex/DevAudit)
 Standalone .NET console app that analyzes a packages.config. Analyzes packages.config, does not handle transient dependencies.
 #### [NuGetDefense](https://github.com/digitalcoyote/NuGetDefense)
-Works on both MSBuild and SDK style projects. Executes as a MSBuild task. 
+Works on both MSBuild and SDK style projects. Executes as a MSBuild task.
 
 ## RetireNet.Runtimes.Middleware
 We cannot detect the runtime of the app at build time, so to report use of vulnerable runtimes the app itself, the host itself can provide us reports

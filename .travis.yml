@@ -1,9 +1,0 @@
-sudo: required
-language: generic
-
-services:
-  - docker
-
-script:
-  - docker build -f Linux.Dockerfile .
-  - docker build -f Linux.Vulnerable.Dockerfile .

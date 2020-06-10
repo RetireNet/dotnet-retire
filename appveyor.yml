@@ -1,6 +1,0 @@
-image:
-- Windows Server 2019
-
-build_script:
-  - docker build -f Windows.Dockerfile .
-  - docker build -f Windows.Vulnerable.Dockerfile .
