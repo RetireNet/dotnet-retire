@@ -13,12 +13,14 @@ namespace RetireRuntimeMiddleware.Tests
         [InlineData("2.1.11", true)]
         [InlineData("2.1.13", true)]
         [InlineData("2.1.14", true)]
-        [InlineData("2.1.15", false)]
+        [InlineData("2.1.15", true)]
+        [InlineData("2.1.19", false)]
         [InlineData("3.0.0", true)]
         [InlineData("3.0.1", true)]
         [InlineData("3.0.2", false)]
         [InlineData("3.1.0", true)]
-        [InlineData("3.1.1", false)]
+        [InlineData("3.1.1", true)]
+        [InlineData("3.1.5", false)]
         public async Task VulnerabilityReports(string version, bool isVulnerable)
         {
             var client = new ReportGenerator();
