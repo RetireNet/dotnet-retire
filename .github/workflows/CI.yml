@@ -20,5 +20,5 @@ jobs:
       - uses: actions/checkout@v1
       - name: Build Windows
         run: docker build -f Windows.Dockerfile .
-      - name: Vulnerability test (Linux)
+      - name: Vulnerability test (Windows)
         run: docker build -f Windows.Vulnerable.Dockerfile .
