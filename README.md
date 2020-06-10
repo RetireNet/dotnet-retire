@@ -1,6 +1,6 @@
 ## Build status
 
-[![Build](https://github.com/retirenet/dotnet-retire/CI/badge.svg)](https://github.com/retirenet/dotnet-retire/actions)
+[![Build](https://github.com/retirenet/dotnet-retire/workflows/CI/badge.svg)](https://github.com/retirenet/dotnet-retire/actions)
 
 # Components
 
