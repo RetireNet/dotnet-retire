@@ -1,4 +1,5 @@
 using System;
+using RetireNet.Packages.Tool.Models.Report;
 
 namespace RetireNet.Packages.Tool.Services
 {
@@ -9,5 +10,8 @@ namespace RetireNet.Packages.Tool.Services
         public string Path { get; set; }
 
         public bool AlwaysExitWithZero { get; set; }
+
+        public string ReportPath { get; set; }
+        public Format ReportFormat { get; set; }
     }
 }

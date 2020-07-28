@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using Microsoft.Extensions.Logging;
 using RetireNet.Packages.Tool.Extensions;
 using RetireNet.Packages.Tool.Models;
+using RetireNet.Packages.Tool.Models.Report;
 using RetireNet.Packages.Tool.Services.DotNet;
 
 namespace RetireNet.Packages.Tool.Services
@@ -13,29 +15,33 @@ namespace RetireNet.Packages.Tool.Services
     {
         private readonly ILogger<RetireLogger> _logger;
         private readonly RetireApiClient _retireApiClient;
-        private readonly IAssetsFileParser _nugetreferenceservice;
+        private readonly IAssetsFileParser _nugetReferenceService;
         private readonly UsagesFinder _usageFinder;
         private readonly DotNetRestorer _restorer;
         private readonly IFileService _fileService;
         private readonly IExitCodeHandler _exitCodeHandler;
+        private Report _report;
 
-        public RetireLogger(ILogger<RetireLogger> logger, RetireApiClient retireApiClient, IAssetsFileParser nugetreferenceservice,
+        public RetireLogger(ILogger<RetireLogger> logger, RetireApiClient retireApiClient, IAssetsFileParser nugetReferenceService,
             UsagesFinder usageFinder, DotNetRestorer restorer, IFileService fileService, IExitCodeHandler exitCodeHandler)
         {
             _logger = logger;
             _retireApiClient = retireApiClient;
-            _nugetreferenceservice = nugetreferenceservice;
+            _nugetReferenceService = nugetReferenceService;
             _usageFinder = usageFinder;
             _restorer = restorer;
             _fileService = fileService;
             _exitCodeHandler = exitCodeHandler;
         }
 
-        public void LogPackagesToRetire()
+        public Report LogPackagesToRetire()
         {
+            _report = new Report();
+
             try
             {
                 LogPackagesToRetireInternal();
+                return _report;
             }
             catch (DirectoryNotFoundException ex)
             {
@@ -57,6 +63,8 @@ namespace RetireNet.Packages.Tool.Services
                 _logger.LogError(ex.Message);
                 _exitCodeHandler.HandleExitCode(ExitCode.UNEXPECTED_TERMINATION, true);
             }
+
+            return null;
         }
 
         internal void LogPackagesToRetireInternal()
@@ -94,13 +102,21 @@ namespace RetireNet.Packages.Tool.Services
             {
                 _logger.LogInformation($"Analyzing '{lockFile.PackageSpec.Name}'".Green());
 
-                var nugetReferences = _nugetreferenceservice.GetNugetReferences(lockFile).ToList();
+                var nugetReferences = _nugetReferenceService.GetNugetReferences(lockFile).ToList();
                 _logger.LogDebug($"Found in total {nugetReferences.Count} references of NuGets (direct & transient)");
 
                 var usages = _usageFinder.FindUsagesOf(nugetReferences, packagesToRetire);
                 if (usages.Any())
                 {
                     foundVulnerabilities = true;
+
+                    var project = new Project
+                    {
+                        Name = lockFile.PackageSpec.Name,
+                        Path = lockFile.PackageSpec.FilePath,
+                    };
+                    _report.Add(project);
+
                     var plural = usages.Count > 1 ? "s" : string.Empty;
                     var grouped = usages.GroupBy(g => g.NugetReference.ToString());
                     var sb = new StringBuilder();
@@ -108,9 +124,21 @@ namespace RetireNet.Packages.Tool.Services
 
                     foreach (var group in grouped)
                     {
+                        var firstGroup = group.FirstOrDefault();
+                        var keyPieces = group.Key.Split("/");
+                        var issue = new PackageIssue
+                        {
+                            Name = keyPieces[0],
+                            Version = keyPieces[1],
+                            Description = firstGroup?.Description,
+                            IssueUrl = firstGroup?.IssueUrl.ToString(),
+                            ProblemPackage = firstGroup?.GetPackageChain().LastOrDefault(),
+                            PackageChains = group.Select(g => g.GetPackageChain()).ToList(),
+                        };
+                        project.Issues.Add(issue);
                         sb.AppendLine();
-                        sb.AppendLine($"* {group.FirstOrDefault().Description} in {group.Key.Red()}");
-                        sb.AppendLine(group.FirstOrDefault().IssueUrl.ToString());
+                        sb.AppendLine($"* {firstGroup?.Description} in {group.Key.Red()}");
+                        sb.AppendLine(firstGroup?.IssueUrl.ToString());
 
                         foreach (var usage in group.Where(x => !x.IsDirect))
                         {

@@ -17,5 +17,14 @@ namespace RetireNet.Packages.Tool.Models
         {
             return $"{Id}/{Version}";
         }
+
+        public Report.Package ToPackage()
+        {
+            return new Report.Package
+            {
+                Name = Id,
+                Version = Version,
+            };
+        }
     }
 }
