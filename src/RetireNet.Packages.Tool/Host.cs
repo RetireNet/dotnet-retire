@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using RetireNet.Packages.Tool.Models.Report;
 using RetireNet.Packages.Tool.Services;
 using RetireNet.Packages.Tool.Services.DotNet;
+using RetireNet.Packages.Tool.Services.Report;
 
 namespace RetireNet.Packages.Tool
 {
@@ -19,6 +20,7 @@ namespace RetireNet.Packages.Tool
         {
             var builder = new ConfigurationBuilder();
             builder.AddJsonFile("appsettings.json");
+            builder.AddEnvironmentVariables("RETIRE_");
             builder.AddCommandLine(args, new Dictionary<string, string>
             {
                 { "-p", "path" },
@@ -26,20 +28,17 @@ namespace RetireNet.Packages.Tool
                 { "--ignore-failures", "ignore-failures" },
                 { "--report-path", "report-path" },
                 { "--report-format", "report-format" },
+                { "--no-restore", "no-restore" },
             });
             var config = builder.Build();
 
-            var path = config.GetValue<string>("path")?.Replace('/', Path.DirectorySeparatorChar).Replace('\\', Path.DirectorySeparatorChar);
             var alwaysExitWithZero = config.GetValue<bool?>("ignore-failures") ?? args.Any(x => x.Equals("--ignore-failures", StringComparison.OrdinalIgnoreCase));
+            var noRestore = config.GetValue<bool?>("no-restore") ?? args.Any(x => x.Equals("--no-restore", StringComparison.OrdinalIgnoreCase));
+            var path = config.GetValue<string>("path")?.Replace('/', Path.DirectorySeparatorChar).Replace('\\', Path.DirectorySeparatorChar) ?? Directory.GetCurrentDirectory();
             var rootUrlFromConfig = config.GetValue<Uri>("RootUrl");
             var logLevel = config.GetValue<LogLevel>("LogLevel");
             var reportPath = config.GetValue<string>("report-path")?.Replace('/', Path.DirectorySeparatorChar).Replace('\\', Path.DirectorySeparatorChar);
-            var reportFormatStr = config.GetValue<string>("report-format") ?? Format.Json.ToString();
-
-            if (Enum.TryParse<Format>(reportFormatStr, true, out var reportFormat) == false)
-            {
-                reportFormat = Format.Json;
-            }
+            var reportFormat = config.GetValue<string>("report-format") ?? "JSON";
 
             _services = new ServiceCollection()
                     .AddLogging(c => c.AddConsole().AddDebug().SetMinimumLevel(logLevel))
@@ -51,6 +50,7 @@ namespace RetireNet.Packages.Tool
                         o.AlwaysExitWithZero = alwaysExitWithZero;
                         o.ReportPath = reportPath;
                         o.ReportFormat = reportFormat;
+                        o.NoRestore = noRestore;
                     })
                     .AddTransient<RetireApiClient>()
                     .AddTransient<IFileService, FileService>()
@@ -60,6 +60,8 @@ namespace RetireNet.Packages.Tool
                     .AddTransient<IAssetsFileParser, NugetProjectModelAssetsFileParser>()
                     .AddTransient<UsagesFinder>()
                     .AddTransient<RetireLogger>()
+                    .AddTransient<IReportGenerator, JsonReportGenerator>()
+                    .AddTransient<IReportGenerator, MarkdownReportGenerator>()
                     .AddTransient<ReportWriter>()
                     .AddTransient<IExitCodeHandler, ExitCodeHandler>()
                     .BuildServiceProvider();

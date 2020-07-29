@@ -54,7 +54,7 @@ namespace RetireNet.Packages.Tool.Models
 
         public IList<Report.Package> GetPackageChain()
         {
-            return _referenceDepth.Select(r => r.ToPackage()).ToList();
+            return _referenceDepth.Select(r => r.ToPackage()).Reverse().ToList();
         }
     }
 }
