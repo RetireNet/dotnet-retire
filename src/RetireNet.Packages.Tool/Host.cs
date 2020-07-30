@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -40,7 +41,7 @@ namespace RetireNet.Packages.Tool
             var reportPath = config.GetValue<string>("report-path")?.Replace('/', Path.DirectorySeparatorChar).Replace('\\', Path.DirectorySeparatorChar);
             var reportFormat = config.GetValue<string>("report-format") ?? "JSON";
 
-            _services = new ServiceCollection()
+            var collection = new ServiceCollection()
                     .AddLogging(c => c.AddConsole().AddDebug().SetMinimumLevel(logLevel))
                     .AddOptions()
                     .Configure<RetireServiceOptions>(o =>
@@ -60,11 +61,27 @@ namespace RetireNet.Packages.Tool
                     .AddTransient<IAssetsFileParser, NugetProjectModelAssetsFileParser>()
                     .AddTransient<UsagesFinder>()
                     .AddTransient<RetireLogger>()
-                    .AddTransient<IReportGenerator, JsonReportGenerator>()
-                    .AddTransient<IReportGenerator, MarkdownReportGenerator>()
                     .AddTransient<ReportWriter>()
-                    .AddTransient<IExitCodeHandler, ExitCodeHandler>()
-                    .BuildServiceProvider();
+                    .AddTransient<IExitCodeHandler, ExitCodeHandler>();
+
+            collection.Scan(
+                x =>
+                {
+                    var entryAssembly = Assembly.GetEntryAssembly();
+                    if (entryAssembly == null)
+                    {
+                        return;
+                    }
+                    var referencedAssemblies = entryAssembly.GetReferencedAssemblies().Select(Assembly.Load);
+                    var assemblies = new List<Assembly> { entryAssembly }.Concat(referencedAssemblies);
+
+                    x.FromAssemblies(assemblies)
+                        .AddClasses(classes => classes.AssignableTo(typeof(IReportGenerator)))
+                        .AsImplementedInterfaces()
+                        .WithTransientLifetime();
+                });
+
+            _services = collection.BuildServiceProvider();
 
             return this;
         }

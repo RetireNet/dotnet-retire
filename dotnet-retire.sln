@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VulnerableConsoleApp", "Sam
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetireNet.Runtimes.BackgroundServices", "src\RetireNet.Runtimes.BackgroundServices\RetireNet.Runtimes.BackgroundServices.csproj", "{1B7D756D-6800-4158-BCD1-D610BD42A346}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OtherVulnerableApp", "SampleProjects\OtherVulnerableApp\OtherVulnerableApp.csproj", "{2CB04D66-9B66-41E5-938C-6CAABE29FFA8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{1B7D756D-6800-4158-BCD1-D610BD42A346}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B7D756D-6800-4158-BCD1-D610BD42A346}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B7D756D-6800-4158-BCD1-D610BD42A346}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CB04D66-9B66-41E5-938C-6CAABE29FFA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CB04D66-9B66-41E5-938C-6CAABE29FFA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CB04D66-9B66-41E5-938C-6CAABE29FFA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CB04D66-9B66-41E5-938C-6CAABE29FFA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,5 +89,6 @@ Global
 		{4F4B15D9-538E-4227-B19B-3DAD148694C1} = {117AD616-E33A-4183-8CD5-C9BA137C0838}
 		{6FBD20F1-D281-4DCE-882B-F8EB839C5B94} = {0FA6F455-D528-4C98-9635-271B4EB51ACC}
 		{1B7D756D-6800-4158-BCD1-D610BD42A346} = {117AD616-E33A-4183-8CD5-C9BA137C0838}
+		{2CB04D66-9B66-41E5-938C-6CAABE29FFA8} = {0FA6F455-D528-4C98-9635-271B4EB51ACC}
 	EndGlobalSection
 EndGlobal

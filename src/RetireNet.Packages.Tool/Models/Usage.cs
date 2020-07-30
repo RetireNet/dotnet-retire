@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using RetireNet.Packages.Tool.Models.Report;
 
 namespace RetireNet.Packages.Tool.Models
 {
@@ -52,9 +53,9 @@ namespace RetireNet.Packages.Tool.Models
             return str;
         }
 
-        public IList<Report.Package> GetPackageChain()
+        public PackageChain GetPackageChain()
         {
-            return _referenceDepth.Select(r => r.ToPackage()).Reverse().ToList();
+            return new PackageChain(_referenceDepth.Select(r => r.ToPackage()).Reverse().ToList());
         }
     }
 }

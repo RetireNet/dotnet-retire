@@ -8,14 +8,14 @@ namespace RetireNet.Packages.Tool.Models.Report
     {
         public string Name { get; set; }
         public string Version { get; set; }
-        public bool Equals(Package other)
+        public virtual bool Equals(Package other)
         {
             return String.Compare(Name, other?.Name, StringComparison.Ordinal)
                 + String.Compare(Version, other?.Version, StringComparison.Ordinal)
                 == 0;
         }
 
-        public new string ToString()
+        public new virtual string ToString()
         {
             return $"{Name} (v{Version})";
         }

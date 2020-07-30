@@ -14,8 +14,8 @@ namespace RetireNet.Packages.Tool.Services.Report
         public string ProjectHeaderTemplate { get; set; } = "## {0} ({1})";
         public string IssueHeaderTemplate { get; set; } = "### {0} (v{1})";
         public string IssueDescriptionTemplate { get; set; } = " * [{0}]({1})";
-        public string PackageTemplate { get; set; } = "* {0}";
-        public string TargetPackageTemplate { get; set; } = "* **{0}**\n";
+        public string PackageTemplate { get; set; } = "* {0} (v{1})";
+        public string TargetPackageTemplate { get; set; } = "* **{0} (v{1})**\n";
         public string PackageWithPaddingTemplate { get; set; } = "{1}{0}";
         public string Format => "Markdown";
 
@@ -38,7 +38,8 @@ namespace RetireNet.Packages.Tool.Services.Report
                     foreach (var issue in packageGroup)
                     {
                         markdown.AppendLine(string.Format(IssueDescriptionTemplate, issue.Description, issue.IssueUrl));
-                        ProcessPackageChains(issue.PackageChains, issue.ProblemPackage, markdown);
+                        var packageChains = issue.PackageChains.ToList<IList<Package>>();
+                        ProcessPackageChains(packageChains, issue.ProblemPackage, markdown);
                     }
                 }
             }

@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VulnerableApp", "Vulnerable
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VulnerableConsoleApp", "VulnerableConsoleApp\VulnerableConsoleApp.csproj", "{9AA72A7B-EEF8-4BBA-A8E5-C6BE03F4BD03}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VulnerableRunTimeWebApp", "VulnerableRunTimeWebApp\VulnerableRunTimeWebApp.csproj", "{889B9B1A-72CE-4FEB-BFC8-5BE64610CD19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OtherVulnerableApp", "OtherVulnerableApp\OtherVulnerableApp.csproj", "{0F7E98F1-ABDD-4B0F-B27F-939605E9DEB6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +48,29 @@ Global
 		{9AA72A7B-EEF8-4BBA-A8E5-C6BE03F4BD03}.Release|x64.Build.0 = Release|Any CPU
 		{9AA72A7B-EEF8-4BBA-A8E5-C6BE03F4BD03}.Release|x86.ActiveCfg = Release|Any CPU
 		{9AA72A7B-EEF8-4BBA-A8E5-C6BE03F4BD03}.Release|x86.Build.0 = Release|Any CPU
+		{889B9B1A-72CE-4FEB-BFC8-5BE64610CD19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{889B9B1A-72CE-4FEB-BFC8-5BE64610CD19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{889B9B1A-72CE-4FEB-BFC8-5BE64610CD19}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{889B9B1A-72CE-4FEB-BFC8-5BE64610CD19}.Debug|x64.Build.0 = Debug|Any CPU
+		{889B9B1A-72CE-4FEB-BFC8-5BE64610CD19}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{889B9B1A-72CE-4FEB-BFC8-5BE64610CD19}.Debug|x86.Build.0 = Debug|Any CPU
+		{889B9B1A-72CE-4FEB-BFC8-5BE64610CD19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{889B9B1A-72CE-4FEB-BFC8-5BE64610CD19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{889B9B1A-72CE-4FEB-BFC8-5BE64610CD19}.Release|x64.ActiveCfg = Release|Any CPU
+		{889B9B1A-72CE-4FEB-BFC8-5BE64610CD19}.Release|x64.Build.0 = Release|Any CPU
+		{889B9B1A-72CE-4FEB-BFC8-5BE64610CD19}.Release|x86.ActiveCfg = Release|Any CPU
+		{889B9B1A-72CE-4FEB-BFC8-5BE64610CD19}.Release|x86.Build.0 = Release|Any CPU
+		{0F7E98F1-ABDD-4B0F-B27F-939605E9DEB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F7E98F1-ABDD-4B0F-B27F-939605E9DEB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F7E98F1-ABDD-4B0F-B27F-939605E9DEB6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0F7E98F1-ABDD-4B0F-B27F-939605E9DEB6}.Debug|x64.Build.0 = Debug|Any CPU
+		{0F7E98F1-ABDD-4B0F-B27F-939605E9DEB6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0F7E98F1-ABDD-4B0F-B27F-939605E9DEB6}.Debug|x86.Build.0 = Debug|Any CPU
+		{0F7E98F1-ABDD-4B0F-B27F-939605E9DEB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F7E98F1-ABDD-4B0F-B27F-939605E9DEB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F7E98F1-ABDD-4B0F-B27F-939605E9DEB6}.Release|x64.ActiveCfg = Release|Any CPU
+		{0F7E98F1-ABDD-4B0F-B27F-939605E9DEB6}.Release|x64.Build.0 = Release|Any CPU
+		{0F7E98F1-ABDD-4B0F-B27F-939605E9DEB6}.Release|x86.ActiveCfg = Release|Any CPU
+		{0F7E98F1-ABDD-4B0F-B27F-939605E9DEB6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
