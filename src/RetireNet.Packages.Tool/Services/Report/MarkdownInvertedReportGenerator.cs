@@ -16,8 +16,8 @@ namespace RetireNet.Packages.Tool.Services.Report
         public string ProjectHeaderTemplate { get; set; } = "    #### {0} Affected Project(s)";
         public string ProjectTemplate { get; set; } = "     * {0} ({1})";
         public string ProjectDependenciesTemplate { get; set; } = "       From dependencies:";
-        public string PackageTemplate { get; set; } = "* {0} (v{1})";
-        public string TargetPackageTemplate { get; set; } = "* **{0}**\n";
+        public string PackageTemplate { get; set; } = "* {0} (v{1})\n";
+        public string TargetPackageTemplate { get; set; } = "* **{0} (v{1})**\n";
         public string PackageWithPaddingTemplate { get; set; } = "{1}{0}";
         public string Format => "Markdown-Inverted";
 

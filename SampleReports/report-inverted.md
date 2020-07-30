@@ -7,15 +7,15 @@
     #### 3 Affected Project(s)
      * VulnerableApp (VulnerableApp/VulnerableApp.csproj)
        From dependencies:
-       * **Microsoft.AspNetCore.SpaServices**
+       * **Microsoft.AspNetCore.SpaServices (v2.1.0)**
 
      * VulnerableRunTimeWebApp (VulnerableRunTimeWebApp/VulnerableRunTimeWebApp.csproj)
        From dependencies:
-       * **Microsoft.AspNetCore.SpaServices**
+       * **Microsoft.AspNetCore.SpaServices (v2.1.0)**
 
      * OtherVulnerableApp (OtherVulnerableApp/OtherVulnerableApp.csproj)
        From dependencies:
-       * **Microsoft.AspNetCore.SpaServices**
+       * **Microsoft.AspNetCore.SpaServices (v2.1.0)**
 
 
 ## System.IO.Compression.ZipFile (v4.3.0) (1 issue(s))
@@ -26,12 +26,15 @@
      * VulnerableApp (VulnerableApp/VulnerableApp.csproj)
        From dependencies:
        * Microsoft.AspNetCore.SpaServices (v2.1.0)
+
      * VulnerableRunTimeWebApp (VulnerableRunTimeWebApp/VulnerableRunTimeWebApp.csproj)
        From dependencies:
        * Microsoft.AspNetCore.SpaServices (v2.1.0)
+
      * OtherVulnerableApp (OtherVulnerableApp/OtherVulnerableApp.csproj)
        From dependencies:
        * Microsoft.AspNetCore.SpaServices (v2.1.0)
+
 
 ## System.Net.Http (v4.3.0) (1 issue(s))
 
@@ -41,10 +44,13 @@
      * VulnerableApp (VulnerableApp/VulnerableApp.csproj)
        From dependencies:
        * Microsoft.AspNetCore.SpaServices (v2.1.0)
+
      * VulnerableRunTimeWebApp (VulnerableRunTimeWebApp/VulnerableRunTimeWebApp.csproj)
        From dependencies:
        * Microsoft.AspNetCore.SpaServices (v2.1.0)
+
      * OtherVulnerableApp (OtherVulnerableApp/OtherVulnerableApp.csproj)
        From dependencies:
        * Microsoft.AspNetCore.SpaServices (v2.1.0)
+
 
