@@ -20,6 +20,16 @@ RUN /dotnet-retire/assert-cmd.bat 3 "dotnet-retire" "--loglevel=debug"
 RUN /dotnet-retire/assert-cmd.bat 3 "dotnet-retire"
 RUN /dotnet-retire/assert-cmd.bat 0 "dotnet-retire" "--ignore-failures"
 
+COPY SampleProjects/OtherVulnerableApp/OtherVulnerableApp.csproj ./
+RUN /dotnet-retire/assert-cmd.sh 3 "dotnet retire --loglevel=debug"
+RUN /dotnet-retire/assert-cmd.sh 3 "dotnet retire"
+RUN /dotnet-retire/assert-cmd.sh 0 "dotnet retire --ignore-failures"
+
+COPY SampleProjects/VulnerableConsoleApp/VulnerableConsoleApp.csproj ./
+RUN /dotnet-retire/assert-cmd.sh 3 "dotnet retire --loglevel=debug"
+RUN /dotnet-retire/assert-cmd.sh 3 "dotnet retire"
+RUN /dotnet-retire/assert-cmd.sh 0 "dotnet retire --ignore-failures"
+
 WORKDIR /VulnerableRunTimeWebApp
 COPY SampleProjects/VulnerableRunTimeWebApp/VulnerableRunTimeWebApp.csproj ./
 RUN /dotnet-retire/assert-cmd.bat 3 "dotnet-retire" "--loglevel=debug"
@@ -28,6 +38,8 @@ RUN /dotnet-retire/assert-cmd.bat 0 "dotnet-retire" "--ignore-failures"
 
 WORKDIR /VulnerableSolution
 COPY SampleProjects/VulnerableSolution.sln ./VulnerableSolution.sln
+COPY SampleProjects/OtherVulnerableApp/OtherVulnerableApp.csproj.csproj ./OtherVulnerableApp/OtherVulnerableApp.csproj
+COPY SampleProjects/VulnerableRunTimeWebApp/VulnerableRunTimeWebApp.csproj.csproj ./VulnerableRunTimeWebApp/VulnerableRunTimeWebApp.csproj
 COPY SampleProjects/VulnerableApp/VulnerableApp.csproj ./VulnerableApp/VulnerableApp.csproj
 COPY SampleProjects/VulnerableConsoleApp/VulnerableConsoleApp.csproj ./VulnerableConsoleApp/VulnerableConsoleApp.csproj
 RUN /dotnet-retire/assert-cmd.bat 3 "dotnet-retire" "--loglevel=debug"
