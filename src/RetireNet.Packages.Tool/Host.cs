@@ -6,6 +6,8 @@ using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
+using RetireNet.Packages.Tool.Extensions;
 using RetireNet.Packages.Tool.Models.Report;
 using RetireNet.Packages.Tool.Services;
 using RetireNet.Packages.Tool.Services.DotNet;
@@ -30,20 +32,24 @@ namespace RetireNet.Packages.Tool
                 { "--report-path", "report-path" },
                 { "--report-format", "report-format" },
                 { "--no-restore", "no-restore" },
+                { "--no-color", "no-color" },
             });
             var config = builder.Build();
 
             var alwaysExitWithZero = config.GetValue<bool?>("ignore-failures") ?? args.Any(x => x.Equals("--ignore-failures", StringComparison.OrdinalIgnoreCase));
             var noRestore = config.GetValue<bool?>("no-restore") ?? args.Any(x => x.Equals("--no-restore", StringComparison.OrdinalIgnoreCase));
+            var noColor = config.GetValue<bool?>("no-color") ?? args.Any(x => x.Equals("--no-color", StringComparison.OrdinalIgnoreCase));
             var path = config.GetValue<string>("path")?.Replace('/', Path.DirectorySeparatorChar).Replace('\\', Path.DirectorySeparatorChar) ?? Directory.GetCurrentDirectory();
             var rootUrlFromConfig = config.GetValue<Uri>("RootUrl");
             var logLevel = config.GetValue<LogLevel>("LogLevel");
             var reportPath = config.GetValue<string>("report-path")?.Replace('/', Path.DirectorySeparatorChar).Replace('\\', Path.DirectorySeparatorChar);
             var reportFormat = config.GetValue<string>("report-format") ?? "JSON";
 
+            StringExtensions.NoColor = noColor;
+
             var collection = new ServiceCollection()
-                    .AddLogging(c => c.AddConsole().AddDebug().SetMinimumLevel(logLevel))
                     .AddOptions()
+                    .Configure<ConsoleLoggerOptions>(o => { o.DisableColors = noColor; })
                     .Configure<RetireServiceOptions>(o =>
                     {
                         o.RootUrl = rootUrlFromConfig;
@@ -52,7 +58,9 @@ namespace RetireNet.Packages.Tool
                         o.ReportPath = reportPath;
                         o.ReportFormat = reportFormat;
                         o.NoRestore = noRestore;
+                        o.NoColor = noColor;
                     })
+                    .AddLogging(c => c.AddConsole().AddDebug().SetMinimumLevel(logLevel))
                     .AddTransient<RetireApiClient>()
                     .AddTransient<IFileService, FileService>()
                     .AddTransient<DotNetExeWrapper>()
