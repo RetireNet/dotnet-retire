@@ -29,6 +29,25 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetireNet.Runtimes.Backgrou
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OtherVulnerableApp", "SampleProjects\OtherVulnerableApp\OtherVulnerableApp.csproj", "{2CB04D66-9B66-41E5-938C-6CAABE29FFA8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildFiles", "BuildFiles", "{6F72C845-22C7-4225-BFCD-1AE43E66FB18}"
+ProjectSection(SolutionItems) = preProject
+    LICENSE = LICENSE
+    Linux.Dockerfile = Linux.Dockerfile
+    Linux.Vulnerable.Dockerfile = Linux.Vulnerable.Dockerfile
+    README.md = README.md
+    Windows.Dockerfile = Windows.Dockerfile
+    Windows.Vulnerable.Dockerfile = Windows.Vulnerable.Dockerfile
+    assert-cmd.bat = assert-cmd.bat
+    assert-cmd.sh = assert-cmd.sh
+    build.cake = build.cake
+    build.ps1 = build.ps1
+    build.sh = build.sh
+    dotnet-retire.sln.DotSettings = dotnet-retire.sln.DotSettings
+    gitprune.sh = gitprune.sh
+    install.cmd = install.cmd
+    releaselog.md = releaselog.md
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
