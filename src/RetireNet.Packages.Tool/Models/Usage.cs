@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using RetireNet.Packages.Tool.Models.Report;
+using RetireNet.Packages.Tool.Models.Reporting;
 
 namespace RetireNet.Packages.Tool.Models
 {

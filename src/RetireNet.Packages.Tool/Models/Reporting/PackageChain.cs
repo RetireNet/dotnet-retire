@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RetireNet.Packages.Tool.Models.Report
+namespace RetireNet.Packages.Tool.Models.Reporting
 {
-    public class PackageChain : List<Package>
+    public class PackageChain : List<Package>, ICloneable
     {
         public PackageChain() : base()
         {
@@ -16,6 +17,11 @@ namespace RetireNet.Packages.Tool.Models.Report
         public override string ToString()
         {
             return string.Join(", ", this.Select(p => p.ToString()));
+        }
+
+        public object Clone()
+        {
+            return new PackageChain(this.Select(x => (Package) x.Clone()));
         }
     }
 }

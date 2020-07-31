@@ -2,11 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using RetireNet.Packages.Tool.Models.Report;
+using RetireNet.Packages.Tool.Models.Reporting;
 
-namespace RetireNet.Packages.Tool.Services.Report
+namespace RetireNet.Packages.Tool.Services.Reporting.Generators
 {
     public class MarkdownInvertedReportGenerator : IReportGenerator
     {
@@ -21,7 +19,7 @@ namespace RetireNet.Packages.Tool.Services.Report
         public string PackageWithPaddingTemplate { get; set; } = "{1}{0}";
         public string Format => "Markdown-Inverted";
 
-        public string GenerateReport(Models.Report.Report report)
+        public string GenerateReport(Report report)
         {
             var markdown = new StringBuilder();
             markdown.AppendLine(Header);
@@ -121,9 +119,9 @@ namespace RetireNet.Packages.Tool.Services.Report
             return string.Format(PackageWithPaddingTemplate, packageStr, withoutTemplate);
         }
 
-        private Dictionary<Package, List<PackageIssue>> RepackageReport(Models.Report.Report report)
+        private Dictionary<Package, List<ReportIssue>> RepackageReport(Report report)
         {
-            var repackage = new Dictionary<string, Dictionary<string, PackageIssue>>();
+            var repackage = new Dictionary<string, Dictionary<string, ReportIssue>>();
 
             foreach (var project in report)
             {
@@ -132,15 +130,17 @@ namespace RetireNet.Packages.Tool.Services.Report
                     var packageKey = issue.ProblemPackage.ToString();
                     var issueKey = issue.IssueUrl;
 
+                    var reportIssue = new ReportIssue(issue);
+
                     if (repackage.ContainsKey(packageKey) == false)
                     {
-                        repackage.Add(packageKey, new Dictionary<string, PackageIssue>());
+                        repackage.Add(packageKey, new Dictionary<string, ReportIssue>());
                     }
 
                     if (repackage[packageKey].ContainsKey(issueKey) == false)
                     {
-                        issue.Projects.Add(project);
-                        repackage[packageKey][issueKey] = issue;
+                        reportIssue.Projects.Add(project);
+                        repackage[packageKey][issueKey] = reportIssue;
                         continue;
                     }
 
@@ -177,17 +177,14 @@ namespace RetireNet.Packages.Tool.Services.Report
                 }
             }
 
-            var ret = new Dictionary<Package, List<PackageIssue>>();
+            var ret = new Dictionary<Package, List<ReportIssue>>();
 
             foreach (var packagePair in repackage)
             {
-                var list = new List<PackageIssue>();
+                var list = new List<ReportIssue>();
                 ret.Add(packagePair.Value.First().Value.ProblemPackage, list);
 
-                foreach (var packageIssuePair in packagePair.Value)
-                {
-                    list.Add(packageIssuePair.Value);
-                }
+                list.AddRange(packagePair.Value.Select(x => x.Value));
             }
 
             return ret;

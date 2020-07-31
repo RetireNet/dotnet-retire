@@ -18,9 +18,9 @@ namespace RetireNet.Packages.Tool.Models
             return $"{Id}/{Version}";
         }
 
-        public Report.Package ToPackage()
+        public Reporting.Package ToPackage()
         {
-            return new Report.Package
+            return new Reporting.Package
             {
                 Name = Id,
                 Version = Version,

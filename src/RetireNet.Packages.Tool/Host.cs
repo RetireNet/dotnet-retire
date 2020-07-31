@@ -8,10 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using RetireNet.Packages.Tool.Extensions;
-using RetireNet.Packages.Tool.Models.Report;
 using RetireNet.Packages.Tool.Services;
 using RetireNet.Packages.Tool.Services.DotNet;
-using RetireNet.Packages.Tool.Services.Report;
+using RetireNet.Packages.Tool.Services.Reporting;
 
 namespace RetireNet.Packages.Tool
 {

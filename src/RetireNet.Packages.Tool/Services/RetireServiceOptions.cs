@@ -1,5 +1,4 @@
 using System;
-using RetireNet.Packages.Tool.Models.Report;
 
 namespace RetireNet.Packages.Tool.Services
 {

@@ -2,11 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using RetireNet.Packages.Tool.Models.Report;
+using RetireNet.Packages.Tool.Models.Reporting;
 
-namespace RetireNet.Packages.Tool.Services.Report
+namespace RetireNet.Packages.Tool.Services.Reporting.Generators
 {
     public class MarkdownReportGenerator : IReportGenerator
     {
@@ -19,7 +17,7 @@ namespace RetireNet.Packages.Tool.Services.Report
         public string PackageWithPaddingTemplate { get; set; } = "{1}{0}";
         public string Format => "Markdown";
 
-        public string GenerateReport(Models.Report.Report report)
+        public string GenerateReport(Report report)
         {
             var markdown = new StringBuilder();
             markdown.AppendLine(Header);

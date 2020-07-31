@@ -14,6 +14,7 @@
         <license>https://raw.githubusercontent.com/RetireNet/dotnet-retire/master/LICENSE</license>
         <RepositoryUrl>https://github.com/RetireNet/dotnet-retire</RepositoryUrl>
         <PackageIconUrl>https://raw.githubusercontent.com/RetireNet/images/master/nuget/dotnet-retire/icon.512x512.png</PackageIconUrl>
+        <Icon>images\icon.512x512.png</Icon>
         <RepositoryType>git</RepositoryType>
         <TargetFrameworks>netcoreapp2.1;netcoreapp3.1;netcoreapp2.2</TargetFrameworks>
     </PropertyGroup>
@@ -34,6 +35,13 @@
         <Content Include="appsettings.json">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <None Include="images\icon.512x512.png" Visible="false">
+            <PackagePath />
+            <Pack>true</Pack>
+        </None>
     </ItemGroup>
 
 </Project>

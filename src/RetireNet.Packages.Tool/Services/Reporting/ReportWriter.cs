@@ -1,13 +1,12 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using RetireNet.Packages.Tool.Models.Report;
+using RetireNet.Packages.Tool.Models.Reporting;
 
-namespace RetireNet.Packages.Tool.Services.Report
+namespace RetireNet.Packages.Tool.Services.Reporting
 {
     public class ReportWriter
     {
@@ -51,7 +50,7 @@ namespace RetireNet.Packages.Tool.Services.Report
             return _generators.FirstOrDefault(g => g.Format.Equals(format, comp))?.Format;
         }
 
-        public void WriteReport(Models.Report.Report report)
+        public void WriteReport(Report report)
         {
             if (string.IsNullOrWhiteSpace(_path))
             {

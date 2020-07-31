@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RetireNet.Packages.Tool.Extensions;
 using RetireNet.Packages.Tool.Models;
-using RetireNet.Packages.Tool.Models.Report;
+using RetireNet.Packages.Tool.Models.Reporting;
 using RetireNet.Packages.Tool.Services.DotNet;
 
 namespace RetireNet.Packages.Tool.Services
@@ -21,7 +22,6 @@ namespace RetireNet.Packages.Tool.Services
         private readonly DotNetRestorer _restorer;
         private readonly IFileService _fileService;
         private readonly IExitCodeHandler _exitCodeHandler;
-        private Models.Report.Report _report;
 
         public RetireLogger(IOptions<RetireServiceOptions> options, ILogger<RetireLogger> logger,
             RetireApiClient retireApiClient, IAssetsFileParser nugetReferenceService,
@@ -45,14 +45,11 @@ namespace RetireNet.Packages.Tool.Services
             _exitCodeHandler = exitCodeHandler;
         }
 
-        public Models.Report.Report LogPackagesToRetire()
+        public Report LogPackagesToRetire()
         {
-            _report = new Models.Report.Report();
-
             try
             {
-                LogPackagesToRetireInternal();
-                return _report;
+                return LogPackagesToRetireInternal();
             }
             catch (DirectoryNotFoundException ex)
             {
@@ -78,10 +75,12 @@ namespace RetireNet.Packages.Tool.Services
             return null;
         }
 
-        internal void LogPackagesToRetireInternal()
+        private Report LogPackagesToRetireInternal()
         {
             // removing this line breaks logging somehow.
             _logger.LogInformation("Scan starting".Green());
+            var report = new Report();
+
 
             var packagesToRetire = _retireApiClient.GetPackagesToRetire().ToList();
             foreach (var p in packagesToRetire)
@@ -129,34 +128,44 @@ namespace RetireNet.Packages.Tool.Services
                         Name = lockFile.PackageSpec.Name,
                         Path = lockFile.PackageSpec.FilePath,
                     };
-                    _report.Add(project);
+                    report.Add(project);
 
-                    var plural = usages.Count > 1 ? "s" : string.Empty;
-                    var grouped = usages.GroupBy(g => g.NugetReference.ToString());
+                    var grouped = usages.GroupBy(g => g.NugetReference.ToString()).ToList();
+                    var usagePlural = usages.Count > 1 ? "s" : string.Empty;
+                    var groupPlural = grouped.Count > 1 ? "s" : string.Empty;
                     var sb = new StringBuilder();
-                    sb.AppendLine($"Found use of {grouped.Count()} vulnerable libs in {usages.Count} dependency path{plural}.");
+                    sb.AppendLine($"Found use of {grouped.Count} vulnerable lib{groupPlural} in {usages.Count} dependency path{usagePlural}.");
 
                     foreach (var group in grouped)
                     {
                         var firstGroup = group.FirstOrDefault();
                         var keyPieces = group.Key.Split('/');
-                        var issue = new PackageIssue
+                        var issue = new ProjectIssue
                         {
-                            Name = keyPieces[0],
-                            Version = keyPieces[1],
+                            // Name = keyPieces[0],
+                            // Version = keyPieces[1],
                             Description = firstGroup?.Description,
                             IssueUrl = firstGroup?.IssueUrl.ToString(),
                             ProblemPackage = firstGroup?.GetPackageChain().LastOrDefault(),
-                            PackageChains = group.Select(g => g.GetPackageChain()).ToList(),
+                            PackageChains = group.Select(g => g.GetPackageChain()).Distinct().ToList(),
                         };
                         project.Issues.Add(issue);
                         sb.AppendLine();
                         sb.AppendLine($"* {firstGroup?.Description} in {group.Key.Red()}");
                         sb.AppendLine(firstGroup?.IssueUrl.ToString());
 
-                        foreach (var usage in group.Where(x => !x.IsDirect))
+                        // looks like occasionally the test is seeing obscene numbers of dep paths...
+                        // Found use of 4 vulnerable libs in 10990 dependency paths
+                        // let's guard against that.
+                        var usageStrings =
+                            group
+                                .Where(x => !x.IsDirect)
+                                .Select(x => x.ReadPath())
+                                .Distinct();
+
+                        foreach (var usage in usageStrings)
                         {
-                            sb.AppendLine(usage.ReadPath());
+                            sb.AppendLine(usage);
                         }
                     }
 
@@ -175,6 +184,8 @@ namespace RetireNet.Packages.Tool.Services
             {
                 _exitCodeHandler.HandleExitCode(ExitCode.FOUND_VULNERABILITIES);
             }
+
+            return report;
         }
     }
 }
