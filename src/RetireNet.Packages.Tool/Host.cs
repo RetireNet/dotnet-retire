@@ -38,44 +38,44 @@ namespace RetireNet.Packages.Tool
             var reportFormat = config.GetValue<string>("report-format") ?? "JSON";
 
             _services = new ServiceCollection()
-                .AddLogging(c => c.AddConsole().AddDebug().SetMinimumLevel(logLevel))
-                .AddOptions()
-                .Configure<RetireServiceOptions>(o =>
-                {
-                    o.RootUrl = rootUrlFromConfig;
-                    o.Path = path;
-                    o.AlwaysExitWithZero = alwaysExitWithZero;
-                    o.ReportPath = reportPath;
-                    o.ReportFormat = reportFormat;
-                })
-                .AddTransient<RetireApiClient>()
-                .AddTransient<IFileService, FileService>()
-                .AddTransient<DotNetExeWrapper>()
-                .AddTransient<DotNetRunner>()
-                .AddTransient<DotNetRestorer>()
-                .AddTransient<IAssetsFileParser, NugetProjectModelAssetsFileParser>()
-                .AddTransient<UsagesFinder>()
-                .AddTransient<RetireLogger>()
-                .AddTransient<ReportWriter>()
-                .AddTransient<IExitCodeHandler, ExitCodeHandler>()
-                .Scan(
-                    x =>
+                    .AddLogging(c => c.AddConsole().AddDebug().SetMinimumLevel(logLevel))
+                    .AddOptions()
+                    .Configure<RetireServiceOptions>(o =>
                     {
-                        var entryAssembly = Assembly.GetEntryAssembly();
-                        if (entryAssembly == null)
-                        {
-                            return;
-                        }
-
-                        var referencedAssemblies = entryAssembly.GetReferencedAssemblies().Select(Assembly.Load);
-                        var assemblies = new List<Assembly> {entryAssembly}.Concat(referencedAssemblies);
-
-                        x.FromAssemblies(assemblies)
-                            .AddClasses(classes => classes.AssignableTo(typeof(IReportGenerator)))
-                            .AsImplementedInterfaces()
-                            .WithTransientLifetime();
+                        o.RootUrl = rootUrlFromConfig;
+                        o.Path = path;
+                        o.AlwaysExitWithZero = alwaysExitWithZero;
+                        o.ReportPath = reportPath;
+                        o.ReportFormat = reportFormat;
                     })
-                .BuildServiceProvider();
+                    .AddTransient<RetireApiClient>()
+                    .AddTransient<IFileService, FileService>()
+                    .AddTransient<DotNetExeWrapper>()
+                    .AddTransient<DotNetRunner>()
+                    .AddTransient<DotNetRestorer>()
+                    .AddTransient<IAssetsFileParser, NugetProjectModelAssetsFileParser>()
+                    .AddTransient<UsagesFinder>()
+                    .AddTransient<RetireLogger>()
+                    .AddTransient<ReportWriter>()
+                    .AddTransient<IExitCodeHandler, ExitCodeHandler>()
+                    .Scan(
+                        x =>
+                        {
+                            var entryAssembly = Assembly.GetEntryAssembly();
+                            if (entryAssembly == null)
+                            {
+                                return;
+                            }
+
+                            var referencedAssemblies = entryAssembly.GetReferencedAssemblies().Select(Assembly.Load);
+                            var assemblies = new List<Assembly> {entryAssembly}.Concat(referencedAssemblies);
+
+                            x.FromAssemblies(assemblies)
+                                .AddClasses(classes => classes.AssignableTo(typeof(IReportGenerator)))
+                                .AsImplementedInterfaces()
+                                .WithTransientLifetime();
+                        })
+                    .BuildServiceProvider();
 
             return this;
         }
