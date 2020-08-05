@@ -30,58 +30,57 @@ namespace RetireNet.Packages.Tool
             });
             var config = builder.Build();
 
-            var alwaysExitWithZero = config.GetValue<bool?>("ignore-failures") ?? args.Any(x => x.Equals("--ignore-failures", StringComparison.OrdinalIgnoreCase));
             var path = config.GetValue<string>("path")?.Replace('/', Path.DirectorySeparatorChar).Replace('\\', Path.DirectorySeparatorChar) ?? Directory.GetCurrentDirectory();
+            var alwaysExitWithZero = config.GetValue<bool?>("ignore-failures") ?? args.Any(x => x.Equals("--ignore-failures", StringComparison.OrdinalIgnoreCase));
             var rootUrlFromConfig = config.GetValue<Uri>("RootUrl");
             var logLevel = config.GetValue<LogLevel>("LogLevel");
             var reportPath = config.GetValue<string>("report-path")?.Replace('/', Path.DirectorySeparatorChar).Replace('\\', Path.DirectorySeparatorChar);
             var reportFormat = config.GetValue<string>("report-format") ?? "JSON";
 
-            var collection = new ServiceCollection()
-                    .AddLogging(c => c.AddConsole().AddDebug().SetMinimumLevel(logLevel))
-                    .AddOptions()
-                    .Configure<RetireServiceOptions>(o =>
-                    {
-                        o.RootUrl = rootUrlFromConfig;
-                        o.Path = path;
-                        o.AlwaysExitWithZero = alwaysExitWithZero;
-                        o.ReportPath = reportPath;
-                        o.ReportFormat = reportFormat;
-                    })
-                    .AddTransient<RetireApiClient>()
-                    .AddTransient<IFileService, FileService>()
-                    .AddTransient<DotNetExeWrapper>()
-                    .AddTransient<DotNetRunner>()
-                    .AddTransient<DotNetRestorer>()
-                    .AddTransient<IAssetsFileParser, NugetProjectModelAssetsFileParser>()
-                    .AddTransient<UsagesFinder>()
-                    .AddTransient<RetireLogger>()
-                    .AddTransient<ReportWriter>()
-                    .AddTransient<IExitCodeHandler, ExitCodeHandler>();
-
-            collection.Scan(
-                x =>
+            _services = new ServiceCollection()
+                .AddLogging(c => c.AddConsole().AddDebug().SetMinimumLevel(logLevel))
+                .AddOptions()
+                .Configure<RetireServiceOptions>(o =>
                 {
-                    var entryAssembly = Assembly.GetEntryAssembly();
-                    if (entryAssembly == null)
+                    o.RootUrl = rootUrlFromConfig;
+                    o.Path = path;
+                    o.AlwaysExitWithZero = alwaysExitWithZero;
+                    o.ReportPath = reportPath;
+                    o.ReportFormat = reportFormat;
+                })
+                .AddTransient<RetireApiClient>()
+                .AddTransient<IFileService, FileService>()
+                .AddTransient<DotNetExeWrapper>()
+                .AddTransient<DotNetRunner>()
+                .AddTransient<DotNetRestorer>()
+                .AddTransient<IAssetsFileParser, NugetProjectModelAssetsFileParser>()
+                .AddTransient<UsagesFinder>()
+                .AddTransient<RetireLogger>()
+                .AddTransient<ReportWriter>()
+                .AddTransient<IExitCodeHandler, ExitCodeHandler>()
+                .Scan(
+                    x =>
                     {
-                        return;
-                    }
-                    var referencedAssemblies = entryAssembly.GetReferencedAssemblies().Select(Assembly.Load);
-                    var assemblies = new List<Assembly> { entryAssembly }.Concat(referencedAssemblies);
+                        var entryAssembly = Assembly.GetEntryAssembly();
+                        if (entryAssembly == null)
+                        {
+                            return;
+                        }
 
-                    x.FromAssemblies(assemblies)
-                        .AddClasses(classes => classes.AssignableTo(typeof(IReportGenerator)))
-                        .AsImplementedInterfaces()
-                        .WithTransientLifetime();
-                });
+                        var referencedAssemblies = entryAssembly.GetReferencedAssemblies().Select(Assembly.Load);
+                        var assemblies = new List<Assembly> {entryAssembly}.Concat(referencedAssemblies);
 
-            _services = collection.BuildServiceProvider();
+                        x.FromAssemblies(assemblies)
+                            .AddClasses(classes => classes.AssignableTo(typeof(IReportGenerator)))
+                            .AsImplementedInterfaces()
+                            .WithTransientLifetime();
+                    })
+                .BuildServiceProvider();
 
             return this;
         }
 
-        public Void Run()
+        public void Run()
         {
             var retireLogger = _services.GetService<RetireLogger>();
             var report = retireLogger.LogPackagesToRetire();
