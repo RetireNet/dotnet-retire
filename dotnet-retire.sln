@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleProjects", "SampleProjects", "{0FA6F455-D528-4C98-9635-271B4EB51ACC}"
+ProjectSection(SolutionItems) = preProject
+	SampleProjects\VulnerableSolution.sln = SampleProjects\VulnerableSolution.sln
+	SampleProjects\Vulnerable.Dockerfile = SampleProjects\Vulnerable.Dockerfile
+EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VulnerableApp", "SampleProjects\VulnerableApp\VulnerableApp.csproj", "{C1560FEF-20F2-4A80-8882-377C12F7D7D7}"
 EndProject
@@ -27,25 +31,34 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VulnerableConsoleApp", "Sam
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetireNet.Runtimes.BackgroundServices", "src\RetireNet.Runtimes.BackgroundServices\RetireNet.Runtimes.BackgroundServices.csproj", "{1B7D756D-6800-4158-BCD1-D610BD42A346}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OtherVulnerableApp", "SampleProjects\OtherVulnerableApp\OtherVulnerableApp.csproj", "{2CB04D66-9B66-41E5-938C-6CAABE29FFA8}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildFiles", "BuildFiles", "{6F72C845-22C7-4225-BFCD-1AE43E66FB18}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{6F72C845-22C7-4225-BFCD-1AE43E66FB18}"
 ProjectSection(SolutionItems) = preProject
-    LICENSE = LICENSE
-    Linux.Dockerfile = Linux.Dockerfile
-    Linux.Vulnerable.Dockerfile = Linux.Vulnerable.Dockerfile
-    README.md = README.md
-    Windows.Dockerfile = Windows.Dockerfile
-    Windows.Vulnerable.Dockerfile = Windows.Vulnerable.Dockerfile
-    assert-cmd.bat = assert-cmd.bat
-    assert-cmd.sh = assert-cmd.sh
-    build.cake = build.cake
-    build.ps1 = build.ps1
-    build.sh = build.sh
-    dotnet-retire.sln.DotSettings = dotnet-retire.sln.DotSettings
-    gitprune.sh = gitprune.sh
-    install.cmd = install.cmd
-    releaselog.md = releaselog.md
+				Linux.Dockerfile = Linux.Dockerfile
+				Linux.Vulnerable.Dockerfile = Linux.Vulnerable.Dockerfile
+				Windows.Dockerfile = Windows.Dockerfile
+				Windows.Vulnerable.Dockerfile = Windows.Vulnerable.Dockerfile
+				assert-cmd.bat = assert-cmd.bat
+				assert-cmd.sh = assert-cmd.sh
+				build.cake = build.cake
+				build.ps1 = build.ps1
+				build.sh = build.sh
+				gitprune.sh = gitprune.sh
+				install.cmd = install.cmd
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2594E46B-DF6B-4B20-9318-5E0EA22D8979}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{4191D0C7-CA80-49C3-B86D-80D5445816D7}"
+ProjectSection(SolutionItems) = preProject
+	README.md = README.md
+	releaselog.md = releaselog.md
+	LICENSE = LICENSE
+	dotnet-retire.sln.DotSettings = dotnet-retire.sln.DotSettings
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{14215D55-716C-480B-ADF3-D666BA642A2C}"
+ProjectSection(SolutionItems) = preProject
+	.github/workflows/CI.yml = .github/workflows/CI.yml
 EndProjectSection
 EndProject
 Global
@@ -90,10 +103,6 @@ Global
 		{1B7D756D-6800-4158-BCD1-D610BD42A346}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B7D756D-6800-4158-BCD1-D610BD42A346}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B7D756D-6800-4158-BCD1-D610BD42A346}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2CB04D66-9B66-41E5-938C-6CAABE29FFA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2CB04D66-9B66-41E5-938C-6CAABE29FFA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2CB04D66-9B66-41E5-938C-6CAABE29FFA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2CB04D66-9B66-41E5-938C-6CAABE29FFA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -108,6 +117,9 @@ Global
 		{4F4B15D9-538E-4227-B19B-3DAD148694C1} = {117AD616-E33A-4183-8CD5-C9BA137C0838}
 		{6FBD20F1-D281-4DCE-882B-F8EB839C5B94} = {0FA6F455-D528-4C98-9635-271B4EB51ACC}
 		{1B7D756D-6800-4158-BCD1-D610BD42A346} = {117AD616-E33A-4183-8CD5-C9BA137C0838}
-		{2CB04D66-9B66-41E5-938C-6CAABE29FFA8} = {0FA6F455-D528-4C98-9635-271B4EB51ACC}
+		{0FA6F455-D528-4C98-9635-271B4EB51ACC} = {2594E46B-DF6B-4B20-9318-5E0EA22D8979}
+		{6F72C845-22C7-4225-BFCD-1AE43E66FB18} = {2594E46B-DF6B-4B20-9318-5E0EA22D8979}
+		{4191D0C7-CA80-49C3-B86D-80D5445816D7} = {2594E46B-DF6B-4B20-9318-5E0EA22D8979}
+		{14215D55-716C-480B-ADF3-D666BA642A2C} = {6F72C845-22C7-4225-BFCD-1AE43E66FB18}
 	EndGlobalSection
 EndGlobal

@@ -91,22 +91,19 @@ namespace RetireNet.Packages.Tool.Services
                 }
             }
 
-            if (_options.NoRestore == false)
+            var status = _restorer.Restore();
+            if (status.IsSuccess)
             {
-                var status = _restorer.Restore();
-                if (status.IsSuccess)
-                {
-                    _logger.LogDebug("`dotnet restore:`" + status.Output);
-                }
-                else
-                {
-                    _logger.LogDebug("`dotnet restore output:`" + status.Output);
-                    _logger.LogDebug("`dotnet restore errors:`" + status.Errors);
-                    _logger.LogDebug("`dotnet restore exitcode:`" + status.ExitCode);
+                _logger.LogDebug("`dotnet restore:`" + status.Output);
+            }
+            else
+            {
+                _logger.LogDebug("`dotnet restore output:`" + status.Output);
+                _logger.LogDebug("`dotnet restore errors:`" + status.Errors);
+                _logger.LogDebug("`dotnet restore exitcode:`" + status.ExitCode);
 
-                    _logger.LogError("Failed to `dotnet restore`. Is the current dir missing a csproj?");
-                    _exitCodeHandler.HandleExitCode(status.ExitCode, true);
-                }
+                _logger.LogError("Failed to `dotnet restore`. Is the current dir missing a csproj?");
+                _exitCodeHandler.HandleExitCode(status.ExitCode, true);
             }
 
             var lockFiles = _fileService.ReadLockFiles();
@@ -142,8 +139,6 @@ namespace RetireNet.Packages.Tool.Services
                         var keyPieces = group.Key.Split('/');
                         var issue = new ProjectIssue
                         {
-                            // Name = keyPieces[0],
-                            // Version = keyPieces[1],
                             Description = firstGroup?.Description,
                             IssueUrl = firstGroup?.IssueUrl.ToString(),
                             ProblemPackage = firstGroup?.GetPackageChain().LastOrDefault(),

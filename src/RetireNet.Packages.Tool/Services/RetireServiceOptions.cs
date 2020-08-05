@@ -10,8 +10,6 @@ namespace RetireNet.Packages.Tool.Services
 
         public bool AlwaysExitWithZero { get; set; }
         public string ReportPath { get; set; }
-        public String ReportFormat { get; set; }
-        public bool NoRestore { get; set; }
-        public bool NoColor { get; set; }
+        public string ReportFormat { get; set; }
     }
 }
