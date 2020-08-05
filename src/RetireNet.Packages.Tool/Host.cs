@@ -27,7 +27,6 @@ namespace RetireNet.Packages.Tool
                 { "--ignore-failures", "ignore-failures" },
                 { "--report-path", "report-path" },
                 { "--report-format", "report-format" },
-                { "--no-restore", "no-restore" },
             });
             var config = builder.Build();
 
