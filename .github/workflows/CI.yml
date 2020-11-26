@@ -8,8 +8,14 @@ jobs:
     runs-on: ubuntu-16.04
     steps:
       - uses: actions/checkout@v1
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "3.1.x"
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "5.0.100"
       - name: Build Linux
-        run: docker build -f Linux.Dockerfile .
+        uses: cake-build/cake-action@v1
       - name: Vulnerability test (Linux)
         run: docker build -f Linux.Vulnerable.Dockerfile .
 
@@ -18,7 +24,13 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v1
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "3.1.x"
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "5.0.100"
       - name: Build Windows
-        run: docker build -f Windows.Dockerfile .
+        uses: cake-build/cake-action@v1
       - name: Vulnerability test (Windows)
         run: docker build -f Windows.Vulnerable.Dockerfile .
