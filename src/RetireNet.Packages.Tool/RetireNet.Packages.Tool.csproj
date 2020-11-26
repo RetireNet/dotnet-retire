@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
         <PackageId>dotnet-retire</PackageId>
         <ToolCommandName>dotnet-retire</ToolCommandName>
         <Authors>John Korsnes</Authors>
@@ -16,14 +16,26 @@
         <RepositoryUrl>https://github.com/RetireNet/dotnet-retire</RepositoryUrl>
         <PackageIconUrl>https://raw.githubusercontent.com/RetireNet/images/master/nuget/dotnet-retire/icon.512x512.png</PackageIconUrl>
         <RepositoryType>git</RepositoryType>
+        <MsExtensionsVersion31>3.1.10</MsExtensionsVersion31>
+        <MsExtensionsVersion50>5.0.0</MsExtensionsVersion50>
     </PropertyGroup>
+    <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="$(MsExtensionsVersion31)" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="$(MsExtensionsVersion31)" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="$(MsExtensionsVersion31)" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="$(MsExtensionsVersion31)" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="$(MsExtensionsVersion31)" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="$(MsExtensionsVersion31)" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="$(MsExtensionsVersion50)" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="$(MsExtensionsVersion50)" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="$(MsExtensionsVersion50)" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="$(MsExtensionsVersion50)" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="$(MsExtensionsVersion50)" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="$(MsExtensionsVersion50)" />
+    </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.0" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="2.1.0" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.0" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.0" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.0" />
-        <PackageReference Include="Microsoft.Extensions.Options" Version="2.1.0" />
         <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
         <PackageReference Include="NuGet.ProjectModel" Version="4.8.0" />
     </ItemGroup>
