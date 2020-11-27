@@ -38,7 +38,7 @@ namespace RetireNet.Runtimes.BackgroundServices
                 var report = await _reportGenerator.GetReport(AppRunTimeDetails.Build());
                 if (report.IsVulnerable.HasValue && report.IsVulnerable.Value)
                 {
-                    _logger.LogWarning("Running on vulnerable runtime {appruntime}. Security release {securityrelease}", report.AppRuntimeDetails.AppRuntimeVersion, report.SecurityRelease.RuntimeVersion);
+                    _logger.LogWarning("Running on vulnerable runtime {VulnerableRuntime}. Security release {SecurityPatch}", report.AppRuntimeDetails.AppRuntimeVersion, report.SecurityRelease.RuntimeVersion);
 
                 }
                 await Task.Delay(optionsCheckInterval, stoppingToken);
