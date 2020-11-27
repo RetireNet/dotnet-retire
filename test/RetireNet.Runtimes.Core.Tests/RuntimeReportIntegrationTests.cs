@@ -9,7 +9,7 @@ namespace RetireRuntimeMiddleware.Tests
 {
     public class RuntimeReportIntegrationTests
     {
-        [Theory(Skip = "Integration. Run on demand")]
+        [Theory()]
         [InlineData("2.1.11", true)]
         [InlineData("2.1.13", true)]
         [InlineData("2.1.14", true)]
@@ -23,6 +23,7 @@ namespace RetireRuntimeMiddleware.Tests
         [InlineData("3.1.1", true)]
         [InlineData("3.1.5", true)]
         [InlineData("3.1.10", false)]
+        [InlineData("5.0.0", false)]
         public async Task VulnerabilityReports(string version, bool isVulnerable)
         {
             var client = new ReportGenerator();
