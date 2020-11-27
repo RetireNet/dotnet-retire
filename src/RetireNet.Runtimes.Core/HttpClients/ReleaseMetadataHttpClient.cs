@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using RetireNet.Runtimes.Core.HttpClients.Models.Channels;
 
 [assembly: InternalsVisibleTo("RetireNet.Runtimes.Core.Tests")]
@@ -51,14 +51,14 @@ namespace RetireNet.Runtimes.Core.HttpClients
         {
             var getResult = await _httpClient.GetAsync(url);
             var getResultContent = await getResult.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<T>(getResultContent);
+            return JsonSerializer.Deserialize<T>(getResultContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true});
         }
 
         private async Task<T> Get<T>(Uri url)
         {
             var getResult = await _httpClient.GetAsync(url);
             var getResultContent = await getResult.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<T>(getResultContent);
+            return JsonSerializer.Deserialize<T>(getResultContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true});
         }
     }
 }

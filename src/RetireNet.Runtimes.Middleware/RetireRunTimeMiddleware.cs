@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using RetireNet.Runtimes.Core;
 using RetireNet.Runtimes.Core.Clients.Models;
 
@@ -22,10 +22,10 @@ namespace RetireNet.Runtimes.Middleware
         {
             var report = await _client.GetReport(AppRunTimeDetails.Build());
 
-            var json = JsonConvert.SerializeObject(report, new JsonSerializerSettings
+            var json = JsonSerializer.Serialize(report, new JsonSerializerOptions
             {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                NullValueHandling = NullValueHandling.Ignore
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                IgnoreNullValues = true,
             });
 
             context.Response.OnStarting(state =>

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 using RetireNet.Runtimes.Core.Clients.Models;
 
 namespace RetireNet.Runtimes.Core.HttpClients.Models.Channels
@@ -11,11 +11,11 @@ namespace RetireNet.Runtimes.Core.HttpClients.Models.Channels
             CVEs = new List<CVE>();
         }
 
-        [JsonProperty("release-version")]
+        [JsonPropertyName("release-version")]
         public string ReleaseVersion { get; set; }
 
-        [JsonProperty("cve-list")]
-        public IEnumerable<CVE> CVEs { get; set; }
+        [JsonPropertyName("cve-list")]
+        public List<CVE> CVEs { get; set; }
 
         public Runtime Runtime { get; set; }
 

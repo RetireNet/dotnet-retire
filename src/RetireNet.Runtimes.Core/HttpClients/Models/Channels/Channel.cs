@@ -8,7 +8,7 @@ namespace RetireNet.Runtimes.Core.HttpClients.Models.Channels
         {
             Releases = new List<Release>();
         }
-        public IEnumerable<Release> Releases { get; set; }
+        public List<Release> Releases { get; set; }
     }
 }
 

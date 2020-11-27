@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace RetireNet.Runtimes.Core.HttpClients.Models.Index
 {
@@ -10,7 +10,7 @@ namespace RetireNet.Runtimes.Core.HttpClients.Models.Index
             Channels = new List<Channel>();
         }
 
-        [JsonProperty("releases-index")]
+        [JsonPropertyName("releases-index")]
         public IEnumerable<Channel> Channels { get; set; }
     }
 }
