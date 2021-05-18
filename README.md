@@ -15,7 +15,10 @@
 
 
 
-## dotnet-retire
+## ~~dotnet-retire~~
+❗️DEPRECATED❗️
+
+See [this issue for other solutions](https://github.com/RetireNet/dotnet-retire/issues/75).
 
 A `dotnet` CLI extension to check your project for known vulnerabilities.
 
