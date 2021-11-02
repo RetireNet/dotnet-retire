@@ -1,0 +1,17 @@
+branches:
+  master:
+    regex: ^master$
+    mode: ContinuousDeployment
+    tag: ""
+  feature:
+    regex: ^features?[/-]|(?!^master$|^(hotfix|bugfix)(es)?[/-]|^support[/-]|(^(pull|pull\-requests|pr)[/-]))(^.*$)
+    mode: ContinuousDeployment
+    tag: "feature"
+  pull-request:
+    tag: "pull"
+    mode: ContinuousDeployment
+  hotfix:
+    regex: ^(hotfix|bugfix)(es)?[/-]
+    mode: ContinuousDeployment
+    increment: Inherit
+    tag: "bug"
