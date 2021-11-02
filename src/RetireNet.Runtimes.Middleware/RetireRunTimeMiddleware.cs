@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using RetireNet.Runtimes.Core;
@@ -24,7 +25,7 @@ namespace RetireNet.Runtimes.Middleware
             var json = JsonSerializer.Serialize(report, new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                IgnoreNullValues = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             });
 
             context.Response.OnStarting(state =>
