@@ -1,7 +1,6 @@
-namespace RetireNet.Runtimes.BackgroundServices
+namespace RetireNet.Runtimes.BackgroundServices;
+
+public class RetireRuntimeBackgroundServiceOptions
 {
-    public class RetireRuntimeBackgroundServiceOptions
-    {
-        public int CheckInterval { get; set; }
-    }
+    public int CheckInterval { get; set; }
 }

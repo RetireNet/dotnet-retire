@@ -3,6 +3,8 @@
     <PropertyGroup>
         <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
         <RootNamespace>RetireRuntimeMiddleware.Tests</RootNamespace>
+        <LangVersion>preview</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
     <ItemGroup>

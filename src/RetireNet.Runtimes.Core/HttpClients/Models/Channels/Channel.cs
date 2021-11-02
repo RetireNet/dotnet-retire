@@ -1,14 +1,10 @@
-using System.Collections.Generic;
+namespace RetireNet.Runtimes.Core.HttpClients.Models.Channels;
 
-namespace RetireNet.Runtimes.Core.HttpClients.Models.Channels
+internal class Channel
 {
-    internal class Channel
+    public Channel()
     {
-        public Channel()
-        {
-            Releases = new List<Release>();
-        }
-        public List<Release> Releases { get; set; }
+        Releases = new List<Release>();
     }
+    public List<Release> Releases { get; set; }
 }
-
