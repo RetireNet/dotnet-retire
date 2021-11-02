@@ -11,7 +11,8 @@
         <PackageProjectUrl>https://github.com/RetireNet/dotnet-retire</PackageProjectUrl>
         <license>https://raw.githubusercontent.com/RetireNet/dotnet-retire/master/LICENSE</license>
         <RepositoryUrl>https://github.com/RetireNet/dotnet-retire</RepositoryUrl>
-        <PackageIconUrl>https://raw.githubusercontent.com/RetireNet/images/master/nuget/dotnet-retire/icon.512x512.png</PackageIconUrl>
+        <PackageIcon>logo.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         <RepositoryType>git</RepositoryType>
         <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeP2PAssets</TargetsForTfmSpecificBuildOutput>
         <MsExtensionsVersion31>3.1.0</MsExtensionsVersion31>
@@ -24,6 +25,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\RetireNet.Runtimes.Core\RetireNet.Runtimes.Core.csproj" PrivateAssets="All" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="../../images/logo.png" Pack="true" PackagePath="" />
+        <None Include="../../README.md" Pack="true" PackagePath="" />
     </ItemGroup>
 
     <Target Name="IncludeP2PAssets">

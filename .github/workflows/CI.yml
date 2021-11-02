@@ -15,4 +15,4 @@ jobs:
         with:
           dotnet-version: "6.0.100-rc.2.21458.9"
       - name: Test
-        run: dotnet test --verbosity normal
+        run: dotnet test --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --logger "GitHubActions;report-warnings=false"
