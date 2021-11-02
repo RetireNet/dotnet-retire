@@ -1,40 +1,38 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using RetireNet.Runtimes.Core;
 using RetireNet.Runtimes.Core.Clients.Models;
 
-namespace RetireNet.Runtimes.Middleware
+namespace RetireNet.Runtimes.Middleware;
+
+internal class RetireRunTimeMiddleware
 {
-    internal class RetireRunTimeMiddleware
+    private readonly RequestDelegate _next;
+    private readonly ReportGenerator _client;
+
+    public RetireRunTimeMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
-        private readonly ReportGenerator _client;
+        _next = next;
+        _client = new ReportGenerator();
+    }
 
-        public RetireRunTimeMiddleware(RequestDelegate next)
+    public async Task InvokeAsync(HttpContext context)
+    {
+        var report = await _client.GetReport(AppRunTimeDetails.Build());
+
+        var json = JsonSerializer.Serialize(report, new JsonSerializerOptions
         {
-            _next = next;
-            _client = new ReportGenerator();
-        }
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        });
 
-        public async Task InvokeAsync(HttpContext context)
+        context.Response.OnStarting(state =>
         {
-            var report = await _client.GetReport(AppRunTimeDetails.Build());
+            context.Response.ContentType = "application/json";
+            return Task.CompletedTask;
+        }, null);
 
-            var json = JsonSerializer.Serialize(report, new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-            });
-
-            context.Response.OnStarting(state =>
-            {
-                context.Response.ContentType = "application/json";
-                return Task.CompletedTask;
-            }, null);
-
-            await context.Response.WriteAsync(json);
-        }
+        await context.Response.WriteAsync(json);
     }
 }
