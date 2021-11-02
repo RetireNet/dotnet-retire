@@ -30,6 +30,6 @@ jobs:
         with:
           dotnet-version: "6.0.100-rc.2.21458.9"
       - name: Pack
-        run: dotnet pack source /p:Version=${{ steps.gitversion.outputs.NuGetVersionV2 }}-${{ steps.gitversion.outputs.ShortSha }} /p:InformationalVersion=${{ steps.gitversion.outputs.informationalVersion }} /p:PackageReleaseNotes="https://github.com/$GITHUB_REPOSITORY/releases/tag/${{ steps.gitversion.outputs.NuGetVersionV2 }}" -o ./releases
+        run: dotnet pack src /p:Version=${{ steps.gitversion.outputs.NuGetVersionV2 }}-${{ steps.gitversion.outputs.ShortSha }} /p:InformationalVersion=${{ steps.gitversion.outputs.informationalVersion }} /p:PackageReleaseNotes="https://github.com/$GITHUB_REPOSITORY/releases/tag/${{ steps.gitversion.outputs.NuGetVersionV2 }}" -o ./releases
       - name: Publish
         run: dotnet nuget push ./releases/**/*.nupkg -k=${{ secrets.NUGETORGAPIKEY }} -s=nuget.org
