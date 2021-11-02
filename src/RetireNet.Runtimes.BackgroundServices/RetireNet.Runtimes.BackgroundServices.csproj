@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
+        <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
         <PackageId>RetireNet.Runtimes.BackgroundServices</PackageId>
         <Authors>John Korsnes</Authors>
         <Description>
@@ -14,14 +14,14 @@
         <PackageIconUrl>https://raw.githubusercontent.com/RetireNet/images/master/nuget/dotnet-retire/icon.512x512.png</PackageIconUrl>
         <RepositoryType>git</RepositoryType>
         <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeP2PAssets</TargetsForTfmSpecificBuildOutput>
-        <MsExtensionsVersion31>3.1.0</MsExtensionsVersion31>
+        <MsExtensionsVersion6>6.0.0-*</MsExtensionsVersion6>
         <MsExtensionsVersion50>5.0.0</MsExtensionsVersion50>
     </PropertyGroup>
 
-    <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="$(MsExtensionsVersion31)" />
-        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="$(MsExtensionsVersion31)" />
-        <PackageReference Include="Microsoft.Extensions.Options" Version="$(MsExtensionsVersion31)" />
+    <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="$(MsExtensionsVersion6)" />
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="$(MsExtensionsVersion6)" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="$(MsExtensionsVersion6)" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">

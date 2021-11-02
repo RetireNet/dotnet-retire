@@ -4,33 +4,15 @@ on: [push, pull_request]
 
 jobs:
   ubuntu-16_04:
-    name: ubuntu-16_04
-    runs-on: ubuntu-16.04
+    name: ubuntu
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: "3.1.x"
+          dotnet-version: "5.0.x"
       - uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: "5.0.100"
-      - name: Build Linux
-        uses: cake-build/cake-action@v1
-      - name: Vulnerability test (Linux)
-        run: docker build -f Linux.Vulnerable.Dockerfile .
-
-  windows-latest:
-    name: windows-latest
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: "3.1.x"
-      - uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: "5.0.100"
-      - name: Build Windows
-        uses: cake-build/cake-action@v1
-      - name: Vulnerability test (Windows)
-        run: docker build -f Windows.Vulnerable.Dockerfile .
+          dotnet-version: "6.0.100-rc.2.21458.9"
+      - name: Test
+        run: dotnet test --verbosity normal

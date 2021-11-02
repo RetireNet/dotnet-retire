@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+      - run: echo "ACTIONS_ALLOW_UNSECURE_COMMANDS=true" >> $GITHUB_ENV
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.7
+        with:
+          versionSpec: "5.x"
+      - name: Determine Version
+        id: gitversion
+        uses: gittools/actions/gitversion/execute@v0.9.7
+        with:
+          useConfigFile: true
+      - name: Setup .NET 6
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "6.0.100-rc.2.21458.9"
+      - name: Pack
+        run: dotnet pack src /p:Version=${{ steps.gitversion.outputs.majorMinorPatch }} /p:InformationalVersion=${{ steps.gitversion.outputs.informationalVersion }} /p:PackageReleaseNotes="https://github.com/$GITHUB_REPOSITORY/releases/tag/${{ steps.gitversion.outputs.majorMinorPatch }}" -o ./releases
+      - name: Publish
+        run: dotnet nuget push ./releases/**/*.nupkg -k=${{ secrets.NUGETORGAPIKEY }} -s=nuget.org
+      - name: Generate CHANGELOG.md
+        id: releasenotes
+        run: |
+          gh api repos/$GITHUB_REPOSITORY/releases/generate-notes \
+          -f tag_name="${{ steps.gitversion.outputs.majorMinorPatch }}" \
+          -q .body > CHANGELOG.md
+          echo -e "\n\n" >> CHANGELOG.md
+          git log $(git describe --tags --abbrev=0)..HEAD --oneline >> CHANGELOG.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.gitversion.outputs.majorMinorPatch }}
+          release_name: Release ${{ steps.gitversion.outputs.majorMinorPatch }}
+          body_path: CHANGELOG.md
+          draft: false
+          prerelease: false
