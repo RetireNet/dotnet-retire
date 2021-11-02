@@ -29,7 +29,7 @@ public class ReportGenerator
             };
         }
 
-        var securityRelease = channel?.Releases.FirstOrDefault(r => r.Security);
+        var securityRelease = channel.Releases.FirstOrDefault(r => r.Security);
 
         if (securityRelease == null)
         {

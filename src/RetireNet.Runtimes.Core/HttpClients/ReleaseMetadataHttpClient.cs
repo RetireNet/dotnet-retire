@@ -1,3 +1,4 @@
+using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using RetireNet.Runtimes.Core.HttpClients.Models.Channels;
@@ -45,15 +46,11 @@ internal class ReleaseMetadataHttpClient
 
     private async Task<T> Get<T>(string url)
     {
-        var getResult = await _httpClient.GetAsync(url);
-        var getResultContent = await getResult.Content.ReadAsStringAsync();
-        return JsonSerializer.Deserialize<T>(getResultContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true});
+        return await  _httpClient.GetFromJsonAsync<T>(url, new JsonSerializerOptions { PropertyNameCaseInsensitive = true});
     }
 
     private async Task<T> Get<T>(Uri url)
     {
-        var getResult = await _httpClient.GetAsync(url);
-        var getResultContent = await getResult.Content.ReadAsStringAsync();
-        return JsonSerializer.Deserialize<T>(getResultContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true});
+        return await _httpClient.GetFromJsonAsync<T>(url, new JsonSerializerOptions { PropertyNameCaseInsensitive = true});
     }
 }
