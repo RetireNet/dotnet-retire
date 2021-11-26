@@ -10,9 +10,8 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: "5.0.x"
-      - uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: "6.0.100-rc.2.21458.9"
+          dotnet-version: |
+            5.0.x
+            6.0.x
       - name: Test
         run: dotnet test --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --logger "GitHubActions;report-warnings=false"

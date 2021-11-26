@@ -17,7 +17,7 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <RepositoryType>git</RepositoryType>
         <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeP2PAssets</TargetsForTfmSpecificBuildOutput>
-        <MsExtensionsVersion6>6.0.0-*</MsExtensionsVersion6>
+        <MsExtensionsVersion6>6.0.0</MsExtensionsVersion6>
         <MsExtensionsVersion50>5.0.0</MsExtensionsVersion50>
     </PropertyGroup>
 
